@@ -7,15 +7,15 @@ import pmfi.helper.SetHelper;
 import java.util.*;
 
 public class PossibleWorld<E> implements IPossibleWorldActionable<E>, IPossibleWorldBuilder<E> {
-    private UncertainDatabase uncertainDatabase;
+    private UncertainDatabase<E> uncertainDatabase;
     private List<PossibleWorldItem<E>> possibleWorld;
 
-    public PossibleWorld(UncertainDatabase uncertainDatabase) {
+    public PossibleWorld(UncertainDatabase<E> uncertainDatabase) {
         this.uncertainDatabase = uncertainDatabase;
         possibleWorld = new ArrayList<>();
     }
 
-    private PossibleWorld(UncertainDatabase uncertainDatabase, List<PossibleWorldItem<E>> possibleWorld) {
+    private PossibleWorld(UncertainDatabase<E> uncertainDatabase, List<PossibleWorldItem<E>> possibleWorld) {
         this.uncertainDatabase = uncertainDatabase;
         this.possibleWorld = possibleWorld;
     }
@@ -63,13 +63,48 @@ public class PossibleWorld<E> implements IPossibleWorldActionable<E>, IPossibleW
     private void calculatePossibleWorldProb(List<List<List<E>>> listCombineItem){
         for(List<List<E>> combineItemList : listCombineItem){
             double probPossibleWorld = 1.0;
-
             int indexCombineItem = 0;
 
-            for(List<E> combineItem : combineItemList){
-                List<UncertainItemset> indexCombineItemInUncertainTransactionList = new ArrayList();
+            /*
+            for(List<E> combineItem: combineItemList){
+                List<UncertainItemset> uncertainTransaction
+                        = this.uncertainDatabase
+                        .getUncertainTransactions()
+                        .get(indexCombineItem)
+                        .getTransaction();
 
-//                System.out.println("Index: " + indexCombineItem);
+                Set<UncertainItemset> uncertainItemSet = new HashSet<>(uncertainTransaction);
+
+                Set<UncertainItemset> combineItemSet = new HashSet<>();
+
+                for(E combineItemData : combineItem){
+                    for(UncertainItemset uncertainItemset : uncertainTransaction){
+                        if(uncertainItemset.getItem().equals(combineItemData)){
+                            combineItemSet.add(uncertainItemset);
+                        }
+                    }
+                }
+
+                Set<UncertainItemset> combineItemBelongTransactionSet = new HashSet<>(uncertainItemSet);
+                combineItemBelongTransactionSet.retainAll(combineItemSet);
+
+                Set<UncertainItemset> combineItemNotBelongTransaction = new HashSet<>(uncertainItemSet);
+                combineItemNotBelongTransaction.retainAll(combineItemBelongTransactionSet);
+
+                for(UncertainItemset uncertainItemset : combineItemBelongTransactionSet){
+                    probPossibleWorld *= uncertainItemset.getProbability();
+                }
+
+                for(UncertainItemset uncertainItemset : combineItemBelongTransactionSet){
+                    probPossibleWorld *= 1.0 - uncertainItemset.getProbability();
+                }
+
+                indexCombineItem++;
+            }
+            */
+
+
+            for(List<E> combineItem : combineItemList){
 
                 List<UncertainItemset> uncertainTransaction
                         = this.uncertainDatabase.getUncertainTransactions().get(indexCombineItem).getTransaction();
@@ -83,20 +118,11 @@ public class PossibleWorld<E> implements IPossibleWorldActionable<E>, IPossibleW
                 List<UncertainItemset> uncertainItemsetIndexList = new ArrayList<>();
 
                 for(UncertainItemset uncertainItemset : uncertainTransaction ){
-                    UncertainItemset itemset = new UncertainItemset(uncertainItemset.getItem(), 1 - uncertainItemset.getProbability());
+                    UncertainItemset itemset
+                            = new UncertainItemset(uncertainItemset.getItem(), 1 - uncertainItemset.getProbability());
+
                     uncertainItemsetIndexList.add(itemset);
                 }
-
-//                int currIndex = 0;
-//                for(UncertainItemset uncertainItemset : uncertainTransaction ){
-//                    for(E combineItemData : combineItem){
-//                        if(!uncertainItemset.getItem().equals(combineItemData)){
-//                            UncertainItemset itemset = new UncertainItemset(uncertainItemset.getItem(), uncertainItemset.getProbability());
-//                            uncertainItemsetIndexList.set(currIndex, itemset);
-//                        }
-//                    }
-//                    currIndex++;
-//                }
 
                 for(E combineItemData : combineItem){
                     int index = uncertainTransactionDataList.indexOf(combineItemData);
@@ -108,95 +134,13 @@ public class PossibleWorld<E> implements IPossibleWorldActionable<E>, IPossibleW
                     }
                 }
 
-
-
-//                System.out.println(uncertainItemsetIndexList);
-
                 for(UncertainItemset<E> uncertainItemset : uncertainItemsetIndexList){
                     probPossibleWorld *= uncertainItemset.getProbability();
                 }
 
-
-
-//                boolean hadOccurrence = false;
-//
-//                for(UncertainItemset uncertainItemset : uncertainTransaction){
-//                    if(combineItem.get(0) == null){
-//                        UncertainItemset itemset = new UncertainItemset(uncertainItemset.getItem(), 1 - uncertainItemset.getProbability());
-//                        indexCombineItemInUncertainTransactionList.add(itemset);
-//                    }
-//                    else{
-//                        for(E combineItemData : combineItem){
-//                            if(combineItemData.equals(uncertainItemset.getItem()) && hadOccurrence == false){
-//                                UncertainItemset itemset = new UncertainItemset(uncertainItemset.getItem(), uncertainItemset.getProbability());
-//                                indexCombineItemInUncertainTransactionList.add(itemset);
-//                                hadOccurrence = true;
-//                            }
-//                            else {
-//                                UncertainItemset itemset = new UncertainItemset(uncertainItemset.getItem(), 1 - uncertainItemset.getProbability());
-//                                indexCombineItemInUncertainTransactionList.add(itemset);
-//                            }
-//                        }
-//                    }
-//
-//                }
-//
-//                for(UncertainItemset uncertainItemset : indexCombineItemInUncertainTransactionList){
-//                    probPossibleWorld *= uncertainItemset.getProbability();
-//                }
-
                 indexCombineItem++;
-//
-//                System.out.println(indexCombineItemInUncertainTransactionList);
             }
 
-
-
-            /*
-            for(int i = 0 ; i < combineItem.size(); i++){
-                List<UncertainItemset> uncertainTransaction
-                        = this.uncertainDatabase.getUncertainTransactions().get(i).getTransaction();
-
-                List<E> uncertainItemsetData = new ArrayList<>();
-
-                for(UncertainItemset uncertainItemset : uncertainTransaction){
-                    uncertainItemsetData.add((E) uncertainItemset.getItem());
-                }
-
-                if(combineItem.get(i).size() == 1 && combineItem.get(i).get(0) == null){
-                    for(UncertainItemset<E> uncertainItemset : uncertainTransaction){
-                        probPossibleWorld *= 1.0 - uncertainItemset.getProbability();
-                    }
-                }
-                else {
-                    if(combineItem.get(i).size() == uncertainItemsetData.size()){
-                        for(UncertainItemset<E> uncertainItemset : uncertainTransaction){
-                            probPossibleWorld *= uncertainItemset.getProbability();
-                        }
-                    }
-                    else {
-                        for(UncertainItemset<E> uncertainItemset : uncertainTransaction){
-                            for(int j = 0 ; j < combineItem.get(i).size(); j++) {
-                                if(combineItem.get(i).get(j) != null){
-                                    if(combineItem.get(i).get(j).equals(uncertainItemset.getItem())){
-                                        probPossibleWorld *= uncertainItemset.getProbability();
-                                        break;
-                                    }
-                                    else {
-                                        probPossibleWorld *= 1.0 - uncertainItemset.getProbability();
-                                        break;
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-
-                }
-            }
-
-
-             */
 
             PossibleWorldItem<E> _possibleWorldItem = new PossibleWorldItem<>(combineItemList, probPossibleWorld);
 
@@ -228,7 +172,6 @@ public class PossibleWorld<E> implements IPossibleWorldActionable<E>, IPossibleW
         List<List<List<E>>> listCombineItem = generateCombinations(listAllSubsetInDatabase);
 
         calculatePossibleWorldProb(listCombineItem);
-
     }
 
     public Set<List<E>> getAllDistinctSet(){

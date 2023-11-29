@@ -1,8 +1,11 @@
 package pmfi.entities;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class UncertainDatabase {
+public class UncertainDatabase<E> {
     private List<UncertainTransaction> uncertainTransactions;
 
     public UncertainDatabase(List<UncertainTransaction> uncertainDatabase) {
@@ -15,6 +18,18 @@ public class UncertainDatabase {
 
     public void setUncertainTransactions(List<UncertainTransaction> uncertainTransactions) {
         this.uncertainTransactions = uncertainTransactions;
+    }
+
+    public List<E> getDistinctItem(){
+        Set<E> distinctItemList = new HashSet<>();
+
+        for(UncertainTransaction uncertainTransaction : this.uncertainTransactions){
+            for(UncertainItemset<E> uncertainItemset : uncertainTransaction.getTransaction()){
+                distinctItemList.add(uncertainItemset.getItem());
+            }
+        }
+
+        return new ArrayList<>(distinctItemList);
     }
 
     @Override

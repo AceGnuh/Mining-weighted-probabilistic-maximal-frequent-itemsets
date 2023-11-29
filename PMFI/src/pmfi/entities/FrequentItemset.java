@@ -2,22 +2,44 @@ package pmfi.entities;
 
 import pmfi.functions.IFrequentItemset;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class FrequentItemset<E> implements IFrequentItemset {
+    private UncertainDatabase<E> uncertainDatabase;
     private SupportProbabilisticVector supportProbabilisticVector;
     private List<E> itemInput;
     private List<SupportProbabilisticItem> supportProbabilisticItemList;
     private List<SummedSupportProbabilisticItem> summedSupportProbabilisticItemList;
 
-    public FrequentItemset(SupportProbabilisticVector supportProbabilisticVector, List<E> itemInput) {
+    public FrequentItemset( UncertainDatabase<E> uncertainDatabase, SupportProbabilisticVector supportProbabilisticVector, List<E> itemInput) {
+        this.uncertainDatabase = uncertainDatabase;
         this.supportProbabilisticVector = supportProbabilisticVector;
         this.itemInput = itemInput;
 
         this.supportProbabilisticItemList = supportProbabilisticVector.calculateSupportProbabilistic(itemInput);
         this.summedSupportProbabilisticItemList = supportProbabilisticVector.calculateSummedSupportProbabilistic(itemInput);
+    }
+
+    @Override
+    public int calculateSupport() {
+        int support = 0;
+        //UncertainDatabase uncertainDatabase = this.supportProbabilisticVector.getUncertainDatabase();
+
+        for(UncertainTransaction uncertainTransaction: this.uncertainDatabase.getUncertainTransactions()){
+            List<E> currItemList = new ArrayList<>();
+
+            for(UncertainItemset<E> uncertainItemset : uncertainTransaction.getTransaction()){
+                currItemList.add(uncertainItemset.getItem());
+            }
+
+            if(currItemList.containsAll(this.itemInput)){
+                support++;
+            }
+        }
+        return support;
     }
 
     @Override
@@ -76,7 +98,7 @@ public class FrequentItemset<E> implements IFrequentItemset {
                 //System.out.println("Loading------" + distinctDataset);
 
                 if(distinctDataset.containsAll(distinctIemInput) && !distinctDataset.equals(distinctIemInput)){
-                    FrequentItemset frequentItemset = new FrequentItemset(this.supportProbabilisticVector, distinctSet);
+                    FrequentItemset frequentItemset = new FrequentItemset(this.uncertainDatabase, this.supportProbabilisticVector, distinctSet);
                     if(frequentItemset.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
                         return false;
                     }
@@ -86,5 +108,17 @@ public class FrequentItemset<E> implements IFrequentItemset {
             return true; //ko tìm đc tập bao nào là prob frequent itemset
         }
         return false;
+    }
+
+    @Override
+    public double calculateLowerBound(double expectSupport, double minProbabilisticConfidence) {
+        double result = expectSupport - Math.sqrt(-2 * expectSupport * Math.log(1 - minProbabilisticConfidence));
+        return (double) Math.round(result*10) / 10;
+    }
+
+    @Override
+    public double calculateUpperBound(double expectSupport, double minProbabilisticConfidence) {
+        double result = (2 * expectSupport - Math.log(minProbabilisticConfidence) + Math.sqrt(Math.pow(Math.log(minProbabilisticConfidence), 2) - 8 * expectSupport * Math.log(minProbabilisticConfidence)))/2;
+        return (double) Math.round(result*10) / 10;
     }
 }
