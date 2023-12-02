@@ -141,6 +141,7 @@ public class PossibleWorld<E> implements IPossibleWorldActionable<E>, IPossibleW
                 indexCombineItem++;
             }
 
+            probPossibleWorld = (double) Math.round(probPossibleWorld*10000)/10000;
 
             PossibleWorldItem<E> _possibleWorldItem = new PossibleWorldItem<>(combineItemList, probPossibleWorld);
 
@@ -207,7 +208,7 @@ public class PossibleWorld<E> implements IPossibleWorldActionable<E>, IPossibleW
 
         System.out.println("Possible World");
         for(PossibleWorldItem<E> possibleWorldItem : this.possibleWorld){
-            System.out.println(index + ": \t" + "listPossibleWorldItem=" + possibleWorldItem.getListPossibleWorldItem() +
+            System.out.println(index + ": \t" + "item=" + possibleWorldItem.getListPossibleWorldItem() +
                     ", probability=" + possibleWorldItem.probability +
                     '}');
             ++index;

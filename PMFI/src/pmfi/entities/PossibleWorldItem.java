@@ -30,7 +30,7 @@ public class PossibleWorldItem <E>{
     @Override
     public String toString() {
         return "PossibleWorldItem{" +
-                "listPossibleWorldItem=" + listPossibleWorldItem +
+                "item=" + listPossibleWorldItem +
                 ", probability=" + probability +
                 '}';
     }

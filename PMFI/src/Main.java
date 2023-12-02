@@ -10,16 +10,11 @@ public class Main {
     public static void main(String[] args) {
         long start = System.nanoTime();
 
-        //example Integer data type
-        /*
-        UncertainItemset item1 = new UncertainItemset<>(1, 0.6);
-        UncertainItemset item2 = new UncertainItemset<>(2, 0.7);
-        UncertainItemset item3 = new UncertainItemset<>(1, 0.2);
-        UncertainItemset item4 = new UncertainItemset<>(3, 0.3);
-        */
+
+        examplePossibleWorld();
 
         //example1();
-        example2();
+        //example2();
 
         // get the end time
         long end = System.nanoTime();
@@ -28,6 +23,49 @@ public class Main {
         long execution = (end - start);
         System.out.println("Execution time of Program is");
         System.out.println(execution / 1000000 + " milliseconds");
+    }
+
+    public static void examplePossibleWorld(){
+        //example Integer data type
+        /*
+        UncertainItemset item1 = new UncertainItemset<>(1, 0.6);
+        UncertainItemset item2 = new UncertainItemset<>(2, 0.7);
+        UncertainItemset item3 = new UncertainItemset<>(1, 0.2);
+        UncertainItemset item4 = new UncertainItemset<>(3, 0.3);
+        */
+
+        //String data type
+        UncertainItemset<String> item1 = new UncertainItemset<>("A", 0.6);
+        UncertainItemset<String> item2 = new UncertainItemset<>("B", 0.7);
+
+        UncertainItemset<String> item3 = new UncertainItemset<>("A", 0.2);
+        UncertainItemset<String> item4 = new UncertainItemset<>("C", 0.3);
+
+        UncertainTransaction transaction1
+                = new UncertainTransaction(1, new ArrayList<>(Arrays.asList(item1, item2)));
+        UncertainTransaction transaction2
+                = new UncertainTransaction(2, new ArrayList<>(Arrays.asList(item3, item4)));
+
+        //create uncertain database
+
+        UncertainDatabase uncertainDatabase
+                = new UncertainDatabase<>(new ArrayList<>(
+                Arrays.asList(
+                        transaction1,
+                        transaction2
+                )
+        ));
+
+        System.out.println("Uncertain database");
+        System.out.println(uncertainDatabase);
+
+        PossibleWorld possibleWorld
+                = new PossibleWorld(uncertainDatabase)
+                .build();
+
+        System.out.println("Size of possible world: " + possibleWorld.size());
+
+        possibleWorld.display();
     }
 
     public static void example1(){
