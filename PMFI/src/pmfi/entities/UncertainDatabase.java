@@ -20,12 +20,15 @@ public class UncertainDatabase<E> {
         this.uncertainTransactions = uncertainTransactions;
     }
 
-    public List<E> getDistinctItem(){
-        Set<E> distinctItemList = new HashSet<>();
+    public List<List<E>> getDistinctItem(){
+        Set<List<E>> distinctItemList = new HashSet<>();
 
         for(UncertainTransaction uncertainTransaction : this.uncertainTransactions){
             for(UncertainItemset<E> uncertainItemset : uncertainTransaction.getTransaction()){
-                distinctItemList.add(uncertainItemset.getItem());
+                List<E> item = new ArrayList<>();
+                item.add(uncertainItemset.getItem());
+
+                distinctItemList.add(item);
             }
         }
 

@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Node <E>{
     private ItemsetTuple<E> item;
-    private List<E> child;
+    private List<Node<E>> child;
 
-    public Node(ItemsetTuple<E> item, List<E> child) {
+    public Node(ItemsetTuple<E> item, List<Node<E>> child) {
         this.item = item;
         this.child = child;
     }
@@ -24,11 +24,11 @@ public class Node <E>{
         this.item = item;
     }
 
-    public List<E> getChild() {
+    public List<Node<E>> getChild() {
         return child;
     }
 
-    public void setChild(List<E> child) {
+    public void setChild(List<Node<E>> child) {
         this.child = child;
     }
 

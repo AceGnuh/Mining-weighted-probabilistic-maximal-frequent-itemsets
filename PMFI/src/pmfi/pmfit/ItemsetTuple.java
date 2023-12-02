@@ -1,7 +1,9 @@
 package pmfi.pmfit;
 
+import java.util.List;
+
 public class ItemsetTuple<E> {
-    private E item;
+    private List<E> item;
     private int support;
     private double expectSupport;
     private int probabilisticSuppport;
@@ -12,7 +14,11 @@ public class ItemsetTuple<E> {
         this(null, 0, 0.0, 0, 0.0, 0.0);
     }
 
-    public ItemsetTuple(E item, int support, double expectSupport, int probabilisticSuppport, double lowerBound, double upperBound) {
+    public ItemsetTuple(List<E> item) {
+        this(item, 0, 0.0, 0, 0.0, 0.0);
+    }
+
+    public ItemsetTuple(List<E> item, int support, double expectSupport, int probabilisticSuppport, double lowerBound, double upperBound) {
         this.item = item;
         this.support = support;
         this.expectSupport = expectSupport;
@@ -21,11 +27,11 @@ public class ItemsetTuple<E> {
         this.upperBound = upperBound;
     }
 
-    public E getItem() {
+    public List<E> getItem() {
         return item;
     }
 
-    public void setItem(E item) {
+    public void setItem(List<E> item) {
         this.item = item;
     }
 

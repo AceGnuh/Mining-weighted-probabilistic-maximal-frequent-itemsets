@@ -65,19 +65,33 @@ public class SupportProbabilisticVector<E> implements ISupportProbabilisticVecto
     public List<SummedSupportProbabilisticItem> calculateSummedSupportProbabilistic(List<E> itemInput){
         List<SummedSupportProbabilisticItem> summedSupportProbabilisticVector = new ArrayList<>();
 
-        List<SupportProbabilisticItem> supportProbabilisticVector = this.calculateSupportProbabilistic(itemInput);
+        //List<SupportProbabilisticItem> supportProbabilisticVector = this.calculateSupportProbabilistic(itemInput);
 
         Map<Integer, Double> summedSupportProbMap = new HashMap<>();
 
-        for(SupportProbabilisticItem supportProbabilisticItem : supportProbabilisticVector){
-            Integer frequent = supportProbabilisticItem.getFrequent();
-            Double prob = supportProbabilisticItem.getProbabilistic();
+        for(PossibleWorldItem<E> possibleWorldItem : this.possibleWorld.getPossibleWorld()){
+            int countItemAppear = 0;
 
-            if(summedSupportProbMap.containsKey(supportProbabilisticItem.getFrequent())){
-                summedSupportProbMap.put(frequent, summedSupportProbMap.get(frequent) + prob);
+            for(List<E> possibleWorldItemData : possibleWorldItem.getListPossibleWorldItem() ){
+
+                Set<E> possibleWorldItemDataSet = new HashSet<>(possibleWorldItemData);
+                Set<E> itemInputSet = new HashSet<>(itemInput);
+
+                if(possibleWorldItemDataSet.containsAll(itemInputSet)){
+                    countItemAppear++;
+                }
+            }
+
+//            SupportProbabilisticItem supportProbabilisticItem
+//                    = new SupportProbabilisticItem(countItemAppear, possibleWorldItem.getProbability());
+//
+//            supportProbabilisticVector.add(supportProbabilisticItem);
+
+            if(summedSupportProbMap.containsKey(countItemAppear)){
+                summedSupportProbMap.put(countItemAppear, summedSupportProbMap.get(countItemAppear) + possibleWorldItem.getProbability());
             }
             else {
-                summedSupportProbMap.put(frequent, prob);
+                summedSupportProbMap.put(countItemAppear, possibleWorldItem.getProbability());
             }
         }
 

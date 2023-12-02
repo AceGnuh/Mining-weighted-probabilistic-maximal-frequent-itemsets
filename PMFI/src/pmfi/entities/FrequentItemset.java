@@ -19,7 +19,7 @@ public class FrequentItemset<E> implements IFrequentItemset {
         this.supportProbabilisticVector = supportProbabilisticVector;
         this.itemInput = itemInput;
 
-        this.supportProbabilisticItemList = supportProbabilisticVector.calculateSupportProbabilistic(itemInput);
+        //this.supportProbabilisticItemList = supportProbabilisticVector.calculateSupportProbabilistic(itemInput);
         this.summedSupportProbabilisticItemList = supportProbabilisticVector.calculateSummedSupportProbabilistic(itemInput);
     }
 
@@ -57,7 +57,7 @@ public class FrequentItemset<E> implements IFrequentItemset {
     public double calculateProbabilisticFrequentItemset(int minSupport) {
         double probabilisticFrequentItemset = 0.0;
 
-        for(SupportProbabilisticItem supportProbabilisticItem : this.supportProbabilisticItemList){
+        for(SupportProbabilisticItem supportProbabilisticItem : this.summedSupportProbabilisticItemList){
             if(supportProbabilisticItem.getFrequent() >= minSupport){
                 probabilisticFrequentItemset += supportProbabilisticItem.getProbabilistic();
             }
