@@ -2,7 +2,7 @@ package pmfi.entities;
 
 /**
  * Uncertain Item contains: item and probabilistic of item
- * @param <E>
+ * @param <E> data type of itemset
  */
 public class UncertainItemset<E>{
     private E item;

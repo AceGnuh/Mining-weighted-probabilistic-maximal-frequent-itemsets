@@ -1,7 +1,7 @@
 package pmfi.entities;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Uncertain Transaction contains:
@@ -18,12 +18,8 @@ public class UncertainTransaction<E>{
         this.transaction = transaction;
     }
 
-    public Integer getID() {
-        return ID;
-    }
-
-    public void setID(Integer ID) {
-        this.ID = ID;
+    public UncertainTransaction() {
+        this(0, new ArrayList<>());
     }
 
     public List<UncertainItemset<E>> getTransaction() {
@@ -34,7 +30,7 @@ public class UncertainTransaction<E>{
         this.transaction = transaction;
     }
 
-    public double getProbabilistic(E item){
+    private double getProbabilistic(E item){
         for(UncertainItemset<E> currItem: this.transaction){
             if(currItem.getItem().equals(item)){
                 return currItem.getProbability();
@@ -42,6 +38,16 @@ public class UncertainTransaction<E>{
         }
 
         return 0.0;
+    }
+
+    public double getProbabilistic(List<E> item){
+        double pItem = 1.0;
+
+        for(E currItem: item){
+            pItem *= this.getProbabilistic(currItem);
+        }
+
+        return pItem;
     }
 
     @Override

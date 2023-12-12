@@ -17,6 +17,10 @@ public class UncertainDatabase<E> {
         this.uncertainTransactions = uncertainDatabase;
     }
 
+    public UncertainDatabase() {
+        this(new ArrayList<>());
+    }
+
     public List<UncertainTransaction<E>> getUncertainTransactions() {
         return uncertainTransactions;
     }
@@ -42,10 +46,10 @@ public class UncertainDatabase<E> {
 
     @Override
     public String toString() {
-        String dataUncertainDatabase = "";
+        StringBuilder dataUncertainDatabase = new StringBuilder();
 
         for(UncertainTransaction<E> uncertainTransaction : this.uncertainTransactions){
-            dataUncertainDatabase += "\t"+ uncertainTransaction + "\n";
+            dataUncertainDatabase.append("\t").append(uncertainTransaction).append("\n");
         }
 
         return "UncertainDatabase: \n" + dataUncertainDatabase + '\n';

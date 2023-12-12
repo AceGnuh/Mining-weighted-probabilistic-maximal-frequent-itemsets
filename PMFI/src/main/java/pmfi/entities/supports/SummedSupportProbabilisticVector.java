@@ -24,6 +24,7 @@ public class SummedSupportProbabilisticVector <E>{
 
     public List<Double> getSummedSupportProbabilisticVector() {
         double[] summedSPVector = this.DC(this.uncertainDatabase.getUncertainTransactions(), this.inputItem);
+
         for(int i = 0; i < summedSPVector.length; i++){
             this.summedSupportProbabilisticVector.add(summedSPVector[i]);
         }
@@ -36,13 +37,9 @@ public class SummedSupportProbabilisticVector <E>{
 
         // Base case
         if (n == 1) {
-            double pX = 1.0;
+            double pX = transactions.get(0).getProbabilistic(pattern);
 
-            for(E item : pattern){
-                pX *= transactions.get(0).getProbabilistic(item);
-            }
-
-            return new double[]{round(1 - pX, 3), round(pX, 3)};
+            return new double[]{round(1.0 - pX, 3), round(pX, 3)};
         }
 
         // Divide
@@ -110,5 +107,4 @@ public class SummedSupportProbabilisticVector <E>{
         double scale = Math.pow(10, places);
         return Math.round(value * scale) / scale;
     }
-
 }
