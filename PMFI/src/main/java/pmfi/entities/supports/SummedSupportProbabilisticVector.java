@@ -12,23 +12,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SummedSupportProbabilisticVector <E>{
-    private final List<E> inputItem;
-    private final UncertainDatabase<E> uncertainDatabase;
-    private final List<Double> summedSupportProbabilisticVector;
+    private final double[] summedSupportProbabilisticVector;
 
     public SummedSupportProbabilisticVector(UncertainDatabase<E> uncertainDatabase, List<E> inputItem) {
-        this.inputItem = inputItem;
-        this.uncertainDatabase = uncertainDatabase;
-        this.summedSupportProbabilisticVector = new ArrayList<>();
+        this.summedSupportProbabilisticVector = this.DC(uncertainDatabase.getUncertainTransactions(), inputItem);
     }
 
-    public List<Double> getSummedSupportProbabilisticVector() {
-        double[] summedSPVector = this.DC(this.uncertainDatabase.getUncertainTransactions(), this.inputItem);
-
-        for(int i = 0; i < summedSPVector.length; i++){
-            this.summedSupportProbabilisticVector.add(summedSPVector[i]);
-        }
-
+    public double[] getSummedSupportProbabilisticVector() {
         return summedSupportProbabilisticVector;
     }
 

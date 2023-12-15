@@ -11,7 +11,12 @@ import pmfi.functions.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+/**
+ *
+ * @param <E> data type of item
+ */
 public class FrequentItemset<E> implements ISupport, IBound {
     private final UncertainDatabase<E> uncertainDatabase;
     private final List<E> inputItem;
@@ -27,16 +32,12 @@ public class FrequentItemset<E> implements ISupport, IBound {
         int support = 0;
 
         for(UncertainTransaction<E> uncertainTransaction: this.uncertainDatabase.getUncertainTransactions()){
-            List<E> currItemList = new ArrayList<>();
-
-            for(UncertainItemset<E> uncertainItemset : uncertainTransaction.getTransaction()){
-                currItemList.add(uncertainItemset.getItem());
-            }
-
-            if(new HashSet<>(currItemList).containsAll(this.inputItem)){
+            Set<E> itemsInTransaction = uncertainTransaction.getTransaction().keySet();
+            if(itemsInTransaction.containsAll(this.inputItem)){
                 support++;
             }
         }
+
         return support;
     }
 
@@ -49,7 +50,7 @@ public class FrequentItemset<E> implements ISupport, IBound {
             expectFrequentItemset += probInputItem;
         }
 
-        return (double) Math.round(expectFrequentItemset*1000)/1000;
+        return expectFrequentItemset;
     }
 
     /*
@@ -114,13 +115,11 @@ public class FrequentItemset<E> implements ISupport, IBound {
 
     @Override
     public double calculateLowerBound(double expectSupport, double minProbabilisticConfidence) {
-        double result = expectSupport - Math.sqrt(-2 * expectSupport * Math.log(1 - minProbabilisticConfidence));
-        return (double) Math.round(result*10) / 10;
+        return expectSupport - Math.sqrt(-2 * expectSupport * Math.log(1 - minProbabilisticConfidence));
     }
 
     @Override
     public double calculateUpperBound(double expectSupport, double minProbabilisticConfidence) {
-        double result = (2 * expectSupport - Math.log(minProbabilisticConfidence) + Math.sqrt(Math.pow(Math.log(minProbabilisticConfidence), 2) - 8 * expectSupport * Math.log(minProbabilisticConfidence)))/2;
-        return (double) Math.round(result*10) / 10;
+        return (2 * expectSupport - Math.log(minProbabilisticConfidence) + Math.sqrt(Math.pow(Math.log(minProbabilisticConfidence), 2) - 8 * expectSupport * Math.log(minProbabilisticConfidence)))/2;
     }
 }

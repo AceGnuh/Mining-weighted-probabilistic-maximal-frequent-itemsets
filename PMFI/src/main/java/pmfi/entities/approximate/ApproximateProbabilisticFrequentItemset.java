@@ -24,11 +24,6 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
         double expectation = 0.0;
 
         for(UncertainTransaction<E> transaction : this.uncertainDatabase.getUncertainTransactions()){
-//            double probabilisticItem = 1.0;
-//
-//            for(E item : this.inputItem){
-//                probabilisticItem *= transaction.getProbabilistic(item);
-//            }
             double probabilisticItem = transaction.getProbabilistic(this.inputItem);
 
             expectation += probabilisticItem;
@@ -41,11 +36,6 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
         double variance = 0.0;
 
         for(UncertainTransaction<E> transaction : this.uncertainDatabase.getUncertainTransactions()){
-//            double probabilisticItem = 1.0;
-//
-//            for(E item : this.inputItem){
-//                probabilisticItem *= transaction.getProbabilistic(item);
-//            }
             double probabilisticItem = transaction.getProbabilistic(this.inputItem);
 
             variance += probabilisticItem * (1.0 - probabilisticItem);
@@ -59,8 +49,8 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
         double variance = this.calculateVariance();
         double stdDev = Math.sqrt(variance);
 
-        System.out.println("Mean: " + mean);
-        System.out.println("Variance: " + variance);
+//        System.out.println("Mean: " + mean);
+//        System.out.println("Variance: " + variance);
 
         NormalDistribution normalDistribution = new NormalDistribution(mean, stdDev);
 
@@ -79,7 +69,7 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
 
             Set<Set<E>> allDistinctSetList = new HashSet<>();
 
-            List<List<E>> distinctItemInDatabase = this.uncertainDatabase.getDistinctItem();
+            Set<List<E>> distinctItemInDatabase = this.uncertainDatabase.getDistinctItem();
 
             for(List<E> distinctItem : distinctItemInDatabase){
                 Set<E> tempDistinctItem = new HashSet<>(this.inputItem);

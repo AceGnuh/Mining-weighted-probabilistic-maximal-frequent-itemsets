@@ -6,18 +6,16 @@ import pmfi.entities.approximate.ApproximateProbabilisticFrequentItemset;
 import pmfi.functions.ProbabilisticMaximalFrequentItemsetTree;
 import pmfi.helper.ListHelper;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
-public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
+public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree {
     private Node<E> root;
     private final UncertainDatabase<E> uncertainDatabase;
-    private final int minimumSupport;
+    private final double minimumSupport;
     private final double minimumProbabilisticConfidence;
-    private final List<List<E>> distinctItemList;
+    private final Set<List<E>> distinctItemList;
 
-    public ApproximatePMFIT(UncertainDatabase<E> uncertainDatabase, int minimumSupport, double minimumProbabilisticConfidence) {
+    public ApproximatePMFIT(UncertainDatabase<E> uncertainDatabase, double minimumSupport, double minimumProbabilisticConfidence) {
         this.uncertainDatabase = uncertainDatabase;
         this.distinctItemList = uncertainDatabase.getDistinctItem();
 
@@ -29,8 +27,7 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
      *
      * @return probabilistic maximal frequent item collection
      */
-    @Override
-    public List<List<E>> findAllPMFI(){
+    public Set<List<E>> findAllPMFI(){
         //step 1:
         List<ItemsetTuple<E>> sortedItemList = this.getSortedItemList();
 
@@ -55,7 +52,7 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
         this.root.setChild(childNodeList);
 
         //step 3 - 5:
-        List<List<E>> probabilisticMaximalFrequentItemsetCollection = new ArrayList<>();
+        Set<List<E>> probabilisticMaximalFrequentItemsetCollection = new HashSet<>();
 
         for(int i = 0; i < this.root.getChild().size(); i++){
             int returnValue = this.PMFIM(this.root.getChild().get(i), probabilisticMaximalFrequentItemsetCollection, sortedItemValueList);
@@ -102,6 +99,7 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
 
             ApproximateProbabilisticFrequentItemset<E> approximateProbabilisticFrequentItemset = new ApproximateProbabilisticFrequentItemset<>(this.uncertainDatabase, distinctItem);
             int probabilisticSupport = approximateProbabilisticFrequentItemset.calculateProbabilisticSupport(this.minimumProbabilisticConfidence);
+
             ItemsetTuple<E> itemsetTuple
                     = new ItemsetTuple<>(
                             distinctItem,
@@ -133,7 +131,7 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
      * @param sortedItemValueList
      * @return
      */
-    private int PMFIM(Node<E> node, List<List<E>> probabilisticMaximalFrequentItemsetCollection, List<E> sortedItemValueList){
+    private int PMFIM(Node<E> node, Set<List<E>> probabilisticMaximalFrequentItemsetCollection, List<E> sortedItemValueList){
         int result = -1;
 
         List<List<E>> itemJOrderLargerThanIList = this.getItemJOrderLargerThanI(node.getItem(), sortedItemValueList);
@@ -345,7 +343,6 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
     /**
      * Traversal the PMFI Tree by DFS from root node
      */
-    @Override
     public void preOrder(){
         preOrder(this.root);
     }

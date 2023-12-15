@@ -18,12 +18,11 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
     private final UncertainDatabase<E> uncertainDatabase;
     private final double minimumSupport;
     private final double minimumProbabilisticConfidence;
-    private final List<List<E>> distinctItemList;
+    private final Set<List<E>> distinctItemList;
 
     public PMFIT(UncertainDatabase<E> uncertainDatabase, double minimumSupport, double minimumProbabilisticConfidence) {
         this.uncertainDatabase = uncertainDatabase;
         this.distinctItemList = uncertainDatabase.getDistinctItem();
-
         this.minimumSupport = minimumSupport;
         this.minimumProbabilisticConfidence = minimumProbabilisticConfidence;
     }
@@ -33,17 +32,18 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
      * @return probabilistic maximal frequent item collection
      */
     @Override
-    public List<List<E>> findAllPMFI(){
+    public Set<List<E>> findAllPMFI(){
+        Set<List<E>> probabilisticMaximalFrequentItemsetCollection = new HashSet<>();
+
         //step 1:
         List<ItemsetTuple<E>> sortedItemList = this.getSortedItemList();
+        List<E> sortedItemValueList = new ArrayList<>();
 
-        System.out.println();
-        System.out.println("Sorted Items List");
+        System.out.println("\nSorted Items List: ");
         for(ItemsetTuple<E> itemsetTuple : sortedItemList){
             System.out.println(itemsetTuple);
         }
 
-        List<E> sortedItemValueList = new ArrayList<>();
         for(ItemsetTuple<E> sortedItem : sortedItemList){
             sortedItemValueList.add(sortedItem.getItem().get(0));
         }
@@ -52,38 +52,17 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
         this.root = new Node<>(new ItemsetTuple<>(new ArrayList<>()));
 
         //step 3 - 5:
-        List<List<E>> probabilisticMaximalFrequentItemsetCollection = new ArrayList<>();
+        for(ItemsetTuple<E> item: sortedItemList){
+            Node<E> chilNode = new Node<>(item);
 
-        List<Node<E>> childNodeList = new ArrayList<>();
-        for(ItemsetTuple<E> chilNode: sortedItemList){
-            childNodeList.add(new Node<>(chilNode));
-        }
+            this.root.getChild().add(chilNode);
 
-//        this.root.setChild(childNodeList);
+            int returnValue = this.PMFIM(chilNode, probabilisticMaximalFrequentItemsetCollection, sortedItemValueList);
 
-        for(int i = 0; i < childNodeList.size(); i++){
-            Node<E> currChildNode = childNodeList.get(i);
-            this.root.getChild().add(currChildNode);
-
-            int returnValue = this.PMFIM(currChildNode, probabilisticMaximalFrequentItemsetCollection, sortedItemValueList);
-
-            if(returnValue == 1) {
+            if(returnValue == 1) { // find last item in sorted list
                 break;
             }
-//            System.out.println();
-//            System.out.println(this.root.getChild().get(i) + " return value: " + returnValue);
-//            System.out.println();
-
-//            if (returnValue == 1){
-                //this.root.getChild().subList(i + 1, this.root.getChild().size() - 1).clear();
-//                for(int j = this.root.getChild().size() - 1; j > i; j--){
-//                    this.root.getChild().remove(j);
-//                }
-//                break;
-//            }
         }
-
-//        this.PMFIM(this.root, probabilisticMaximalFrequentItemsetCollection, sortedItemValueList);
 
         return probabilisticMaximalFrequentItemsetCollection;
     }
@@ -92,11 +71,11 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
      * @return  sorted item list order by expect support
 
      */
-    private List<ItemsetTuple<E>> getSortedItemList() {
+    public List<ItemsetTuple<E>> getSortedItemList() {
         List<ItemsetTuple<E>> sortedItemList = new ArrayList<>();
 
         for(List<E> distinctItem : this.distinctItemList){
-            FrequentItemset<E> frequentItemset = new FrequentItemset<E>(this.uncertainDatabase, distinctItem);
+            FrequentItemset<E> frequentItemset = new FrequentItemset<>(this.uncertainDatabase, distinctItem);
 
             int support = frequentItemset.calculateSupport();
 
@@ -105,6 +84,7 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
                 continue;
             }
 
+            //calc expected support and upper bound of item
             double expectSupport = frequentItemset.calculateExpectedSupport();
             double upperBound = frequentItemset.calculateUpperBound(expectSupport, this.minimumProbabilisticConfidence);
 
@@ -127,12 +107,7 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
         }
 
         //sorted by the increase of expect support
-        sortedItemList.sort(new Comparator<ItemsetTuple<E>>() {
-            @Override
-            public int compare(ItemsetTuple<E> o1, ItemsetTuple<E> o2) {
-                return Double.compare(o1.getExpectSupport(), o2.getExpectSupport());
-            }
-        });
+        sortedItemList.sort((o1, o2) -> Double.compare(o1.getExpectSupport(), o2.getExpectSupport()));
 
         return sortedItemList;
     }
@@ -143,8 +118,11 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
      * @param probabilisticMaximalFrequentItemsetCollection
      * @param sortedItemValueList
      * @return
+     * -1 if it is infrequent item;
+     * 0 if it is probabilistic frequent item;
+     * 1 if it is probabilistic maximal frequent item;
      */
-    private int PMFIM(Node<E> node, List<List<E>> probabilisticMaximalFrequentItemsetCollection, List<E> sortedItemValueList){
+    private int PMFIM(Node<E> node, Set<List<E>> probabilisticMaximalFrequentItemsetCollection, List<E> sortedItemValueList){
         int result = -1;
 
         List<List<E>> itemJOrderLargerThanIList = this.getItemJOrderLargerThanI(node.getItem(), sortedItemValueList);
@@ -154,29 +132,24 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
         System.out.println("Item J Order Larger Than I List: " + itemJOrderLargerThanIList );
 
         for (int i = 0; i < itemJOrderLargerThanIList.size(); i++) {
-
             List<E> itemJ = itemJOrderLargerThanIList.get(i);
             List<E> itemJList = new ArrayList<>(itemJ);
 
             //---
-            Node<E> tempNode = new Node<>(new ItemsetTuple<>(new ArrayList<>(itemJList)));
+            ItemsetTuple<E> itemsetTuple = new ItemsetTuple<>(itemJList);
+            Node<E> tempNode = new Node<>(itemsetTuple);
 
             List<Node<E>> tempChild = node.getChild();
             tempChild.add(tempNode);
-
             node.setChild(tempChild);
             //---
 
             if (ListHelper.isSubListAtEnd(sortedItemValueList, itemJList))
             {
-                /*
-                SupportProbabilisticVector<E> supportProbabilisticVector = new SupportProbabilisticVector<>(this.possibleWorld, this.uncertainDatabase);
-                FrequentItemset<E> frequentItemset = new FrequentItemset<>(this.uncertainDatabase, supportProbabilisticVector, itemJList);
-                */
+                ProbabilisticFrequentItemset<E> probabilisticFrequentItemset = new ProbabilisticFrequentItemset<>(this.uncertainDatabase, distinctItemList, itemJList);
 
-                ProbabilisticFrequentItemset<E> probabilisticFrequentItemset = new ProbabilisticFrequentItemset<>(this.uncertainDatabase, itemJList);
                 if (probabilisticFrequentItemset.isProbabilisticMaximalFrequentItemset(this.minimumSupport, this.minimumProbabilisticConfidence)) {
-                    System.out.println("sos maximal");
+                    System.out.println("Found maximal!!!");
 
                     if (!probabilisticMaximalFrequentItemsetCollection.contains(itemJList)) {
                         probabilisticMaximalFrequentItemsetCollection.add(itemJList);
@@ -187,11 +160,8 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
                 }
             }
 
-            System.out.println("I Item: " + node.getItem().getItem());
-            System.out.println("J Item: " + itemJList);
-            System.out.println("Node of I: " + node);
+            //System.out.println("J Item: " + itemJList);
             System.out.println("I union J: " + itemJList);
-            System.out.println("Node of I union J: " + tempNode);
 
             if (probabilisticMaximalFrequentItemsetCollection.contains(itemJList)) {
                 System.out.println("Frequent Node: " + node);
@@ -199,9 +169,6 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
 
                 System.out.println(node.getItem().getItem() + "return value: " + result);
 
-                if (result == -1){
-                    continue;
-                }
 
                 if (result == 0 || result == 1){
                     break;
@@ -218,6 +185,7 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
             double upperBound = frequentItemset.calculateUpperBound(expectSupport, this.minimumProbabilisticConfidence);
 
             System.out.println("Support: " + support);
+            System.out.println("Expected Support: " + expectSupport);
             System.out.println("Lower bound: " + lowerBound);
             System.out.println("Upper bound: " + upperBound);
 
@@ -241,11 +209,7 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
                 System.out.println("Frequent Node: " + tempNode);
                 result = PMFIM(tempNode, probabilisticMaximalFrequentItemsetCollection, sortedItemValueList);
 
-                System.out.println(node.getItem().getItem() + "return value: " + result);
-
-                if (result == -1){
-                    continue;
-                }
+                System.out.println(node.getItem().getItem() + " return value: " + result);
 
                 if (result == 0 || result == 1){
                     break;
@@ -253,14 +217,8 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
 
 
             } else {
-                /*
-                SupportProbabilisticVector<E> supportProbabilisticVector = new SupportProbabilisticVector<>(this.possibleWorld, this.uncertainDatabase);
-                frequentItemset.setSummedSupportProbabilisticItemList(supportProbabilisticVector);
-                */
                 ProbabilisticFrequentItemset<E> probabilisticFrequentItemset = new ProbabilisticFrequentItemset<>(this.uncertainDatabase, itemJList);
-
                 int probabilisticSupport = probabilisticFrequentItemset.calculateProbabilisticSupport(this.minimumProbabilisticConfidence);
-
 
                 System.out.println("Probabilistic support: " + probabilisticSupport);
 
@@ -269,10 +227,6 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
                     result = PMFIM(tempNode, probabilisticMaximalFrequentItemsetCollection, sortedItemValueList);
 
                     System.out.println(node.getItem().getItem() + " return value: " + result);
-
-                    if (result == -1){
-                        continue;
-                    }
 
                     if (result == 0 || result == 1){
                         break;
@@ -302,10 +256,9 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
             }
             return 0;
         }
+
         return result;
     }
-
-
 
     /**
      *

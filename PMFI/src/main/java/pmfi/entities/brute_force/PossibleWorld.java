@@ -37,6 +37,7 @@ public class PossibleWorld<E> {
         this.possibleWorld = possibleWorld;
     }
 
+    /*
     private List<List<E>> getListSetTransactionItem(){
         List<List<E>> listSetTransactionItem = new ArrayList<>();
 
@@ -197,5 +198,7 @@ public class PossibleWorld<E> {
                 "possibleWorld=" + possibleWorld +
                 '}';
     }
+
+     */
 
 }
