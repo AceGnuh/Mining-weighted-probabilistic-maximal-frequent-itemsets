@@ -13,6 +13,10 @@ import java.util.Map;
  */
 public class UncertainTransaction<E>{
     private Integer ID;
+
+    /**
+     * key: data of itemset; value: probability of itemset;
+     */
     private final Map<E, Double> transaction;
 
     public UncertainTransaction(Integer ID, Map<E, Double> transaction) {

@@ -14,37 +14,48 @@ import pmfi.pmfit.PMFIT;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class Main {
+public class Main<E> {
 
     public static void main(String[] args) {
 
-//        String path = Paths.get("").toAbsolutePath().toString();
-//        path += "\\src\\main\\java\\pmfi\\datasets\\";
-//
-//        String pathDataset = path + "connect4.txt";
-//        double mean = 0.78;
+        String path = Paths.get("").toAbsolutePath().toString();
+        path += "\\src\\main\\java\\pmfi\\datasets\\";
+
+//        String pathDataset = path + "T40I10D100K.txt";  //PMFITree: 124s; APMFITree: 14s (support 0.1, confidence: 0.9)
+//        double mean = 0.79;                             //PMFITree: 8s; APMFITree: 6s (support 1, confidence: 0.9)
+//        double variance = 0.61;                         //PMFITree: 8s; APMFITree: 6s (support 0.5, confidence: 0.9)
+
+//        String pathDataset = path + "connect4.txt";     //PMFITree: 154ss; APMFITree: 15s (support 0.1, confidence: 0.9)
+//        double mean = 0.78;                             //PMFITree: 154ss; APMFITree: 15s (support 0.5, confidence: 0.9)
 //        double variance = 0.65;
-//
-//        double minSupport = 0.9;
-//        double minConfidence = 0.01;
-//
-//        MyDataset myDataset = new MyDataset(pathDataset, mean, variance);
-//        UncertainDatabase uncertainDatabase = myDataset.getUncertainDatabase();
-//        System.out.println(uncertainDatabase);
-//
-//        //run algorithms
-//        PMFIT pmfit = new PMFIT(uncertainDatabase, minSupport, minConfidence);
-////        for(Object itemsetTuple : pmfit.getSortedItemList()){
-////            System.out.println(itemsetTuple);
-////        }
 
+        String pathDataset = path + "accidents.txt";  //PMFITree: 653; APMFITree: 152s (support 0.1, confidence: 0.9)
+        double mean = 0.5;                            //PMFITree: 37; APMFITree: 30s (support 1, confidence: 0.9)
+        double variance = 0.58;
+
+//
+        MyDataset myDataset = new MyDataset(pathDataset, mean, variance);
+        UncertainDatabase uncertainDatabase = myDataset.getUncertainDatabase();
+        System.out.println(uncertainDatabase);
+
+        int lengthDb = myDataset.getUncertainDatabase().getUncertainTransactions().size();
+
+        double minSupport = 1;
+        double minConfidence = 0.9;
+
+        //run algorithms
+        ApproximatePMFIT pmfit = new ApproximatePMFIT(uncertainDatabase, minSupport, minConfidence);
+//        for(Object itemsetTuple : pmfit.getSortedItemList()){
+//            System.out.println(itemsetTuple);
+//        }
+//
         long start = System.nanoTime();
-
-//        pmfit.findAllPMFI();
+//
+        pmfit.findAllPMFI();
 
 
         //example1();
-        example2();
+        //example2();
 
         //exampleApproximatePMFIT();
 

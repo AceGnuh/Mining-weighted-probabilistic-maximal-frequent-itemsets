@@ -49,6 +49,10 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
         double variance = this.calculateVariance();
         double stdDev = Math.sqrt(variance);
 
+        if(stdDev == 0){
+            return 0;
+        }
+
 //        System.out.println("Mean: " + mean);
 //        System.out.println("Variance: " + variance);
 

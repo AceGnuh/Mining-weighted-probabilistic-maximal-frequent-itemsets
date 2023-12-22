@@ -92,6 +92,10 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
             double expectSupport = frequentItemset.calculateExpectedSupport();
             double upperBound = frequentItemset.calculateUpperBound(expectSupport, this.minimumProbabilisticConfidence);
 
+            if(expectSupport <= 0){
+                continue;
+            }
+
             //eliminate item with upper bound < min support
             if(upperBound < this.minimumSupport){
                 continue;

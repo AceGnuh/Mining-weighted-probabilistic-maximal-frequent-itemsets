@@ -64,6 +64,9 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
             }
         }
 
+        //int returnValue = this.PMFIM(this.root, probabilisticMaximalFrequentItemsetCollection, sortedItemValueList);
+
+
         return probabilisticMaximalFrequentItemsetCollection;
     }
 
@@ -87,6 +90,10 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
             //calc expected support and upper bound of item
             double expectSupport = frequentItemset.calculateExpectedSupport();
             double upperBound = frequentItemset.calculateUpperBound(expectSupport, this.minimumProbabilisticConfidence);
+
+            if(expectSupport <= 0){
+                continue;
+            }
 
             //eliminate item with upper bound < min support
             if(upperBound < this.minimumSupport){
@@ -164,6 +171,7 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
             System.out.println("I union J: " + itemJList);
 
             if (probabilisticMaximalFrequentItemsetCollection.contains(itemJList)) {
+            //if(isCoveredByPMFICollection(probabilisticMaximalFrequentItemsetCollection, itemJList)){
                 System.out.println("Frequent Node: " + node);
                 result = PMFIM(tempNode, probabilisticMaximalFrequentItemsetCollection, sortedItemValueList);
 
@@ -215,6 +223,9 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
                     break;
                 }
 
+//                if (result == 1){
+//                    break;
+//                }
 
             } else {
                 ProbabilisticFrequentItemset<E> probabilisticFrequentItemset = new ProbabilisticFrequentItemset<>(this.uncertainDatabase, itemJList);
@@ -231,6 +242,9 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
                     if (result == 0 || result == 1){
                         break;
                     }
+//                    if (result == 1){
+//                        break;
+//                    }
 
                 } else {
                     tempChild.remove(node.getChild().size() - 1);
@@ -258,6 +272,18 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
         }
 
         return result;
+    }
+
+    private boolean isCoveredByPMFICollection(Set<List<E>> probabilisticMaximalFrequentItemsetCollection, List<E> currItem){
+        for(List<E> itemPMFI : probabilisticMaximalFrequentItemsetCollection){
+            Set<E> itemPMFISet = new HashSet<>(itemPMFI);
+            Set<E> currItemSet = new HashSet<>(currItem);
+
+            if(itemPMFISet.containsAll(currItemSet)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
