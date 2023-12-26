@@ -28,7 +28,7 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
     }
 
     /**
-     *
+     * Build Algorithm to find all probabilistic maximal frequent itemsets
      * @return probabilistic maximal frequent item collection
      */
     @Override
@@ -64,15 +64,12 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
             }
         }
 
-        //int returnValue = this.PMFIM(this.root, probabilisticMaximalFrequentItemsetCollection, sortedItemValueList);
-
-
         return probabilisticMaximalFrequentItemsetCollection;
     }
 
     /**
+     * Get distinct item in database and sorted increase by its expect support
      * @return  sorted item list order by expect support
-
      */
     public List<ItemsetTuple<E>> getSortedItemList() {
         List<ItemsetTuple<E>> sortedItemList = new ArrayList<>();
@@ -120,7 +117,7 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
     }
 
     /**
-     *
+     * Apply algorithm to find itemset is probabilistic maximal frequent itemset
      * @param node
      * @param probabilisticMaximalFrequentItemsetCollection
      * @param sortedItemValueList
@@ -273,24 +270,24 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
 
         return result;
     }
-
-    private boolean isCoveredByPMFICollection(Set<List<E>> probabilisticMaximalFrequentItemsetCollection, List<E> currItem){
-        for(List<E> itemPMFI : probabilisticMaximalFrequentItemsetCollection){
-            Set<E> itemPMFISet = new HashSet<>(itemPMFI);
-            Set<E> currItemSet = new HashSet<>(currItem);
-
-            if(itemPMFISet.containsAll(currItemSet)){
-                return true;
-            }
-        }
-        return false;
-    }
+//
+//    private boolean isCoveredByPMFICollection(Set<List<E>> probabilisticMaximalFrequentItemsetCollection, List<E> currItem){
+//        for(List<E> itemPMFI : probabilisticMaximalFrequentItemsetCollection){
+//            Set<E> itemPMFISet = new HashSet<>(itemPMFI);
+//            Set<E> currItemSet = new HashSet<>(currItem);
+//
+//            if(itemPMFISet.containsAll(currItemSet)){
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     /**
-     *
+     * Get Items J order larger than current item I in sorted item list
      * @param itemI
      * @param sortedItemList
-     * @return
+     * @return Item order larger than current item in sorted item list
      */
     private List<List<E>> getItemJOrderLargerThanI(ItemsetTuple<E> itemI, List<E> sortedItemList){
         List<List<E>> itemJOrderLargerThanI = new ArrayList<>();

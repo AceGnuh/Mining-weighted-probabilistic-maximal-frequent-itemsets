@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- *
+ * Provide method calculate support, expect support, lower and upper bound of itemset
  * @param <E> data type of item
  */
 public class FrequentItemset<E> implements ISupport, IBound {
@@ -27,6 +27,10 @@ public class FrequentItemset<E> implements ISupport, IBound {
         this.inputItem = inputItem;
     }
 
+    /**
+     * Calculate lower support of itemset (count the number of itemset appear in database)
+     * @return support of itemset
+     */
     @Override
     public int calculateSupport() {
         int support = 0;
@@ -41,6 +45,10 @@ public class FrequentItemset<E> implements ISupport, IBound {
         return support;
     }
 
+    /**
+     * Calculate lower expect support of itemset (sum probability of itemset in database)
+     * @return expect support of itemset
+     */
     @Override
     public double calculateExpectedSupport() {
         double expectFrequentItemset = 0.0;
@@ -53,71 +61,23 @@ public class FrequentItemset<E> implements ISupport, IBound {
         return expectFrequentItemset;
     }
 
-    /*
-    @Override
-    public double calculateProbabilisticFrequentItemset(int minSupport) {
-        double probabilisticFrequentItemset = 0.0;
-
-        for(SummedSupportProbabilisticItem supportProbabilisticItem : this.summedSupportProbabilisticItemList){
-            if(supportProbabilisticItem.getFrequent() >= minSupport){
-                probabilisticFrequentItemset += supportProbabilisticItem.getProbabilistic();
-            }
-        }
-
-        return (double) Math.round(probabilisticFrequentItemset*1000)/1000;
-    }
-
-    @Override
-    public int calculateProbabilisticSupport(double minProbabilisticConfidence) {
-        int numItemInputOccurrence = this.summedSupportProbabilisticItemList.size();
-
-        for(int i = numItemInputOccurrence; i >= 0; i--){
-            double currProbabilisticFrequentItemset = this.calculateProbabilisticFrequentItemset(i);
-
-            if (currProbabilisticFrequentItemset >= minProbabilisticConfidence){
-                return i;
-            }
-        }
-
-        return 0;
-    }
-
-    @Override
-    public boolean isProbabilisticFrequentItemset(int minSupport, double minProbabilisticConfidence) {
-        return this.calculateProbabilisticSupport(minProbabilisticConfidence) >= minSupport;
-    }
-
-    @Override
-    public boolean isProbabilisticMaximalFrequentItemset(int minSupport, double minProbabilisticConfidence) {
-        if(this.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
-            Set<List<E>> allDistinctSetList = this.supportProbabilisticVector.getPossibleWorld().getAllDistinctSet();
-
-            for(List<E> distinctSet : allDistinctSetList){
-                Set<E> distinctDataset = new HashSet<>(distinctSet);
-                Set<E> distinctIemInput = new HashSet<>(this.inputItem);
-
-                //System.out.println("Loading------" + distinctDataset);
-
-                if(distinctDataset.containsAll(distinctIemInput) && !distinctDataset.equals(distinctIemInput)){
-                    FrequentItemset<E> frequentItemset = new FrequentItemset<>(this.uncertainDatabase, this.supportProbabilisticVector, distinctSet);
-                    if(frequentItemset.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
-                        System.out.println("---" + distinctSet);
-                        return false;
-                    }
-                }
-            }
-
-            return true; //ko tìm đc tập bao nào là prob frequent itemset
-        }
-        return false;
-    }
+    /**
+     * Calculate lower bound of itemset with minimum probabilistic confidence
+     * @param expectSupport
+     * @param minProbabilisticConfidence
+     * @return lower bound of itemset
      */
-
     @Override
     public double calculateLowerBound(double expectSupport, double minProbabilisticConfidence) {
         return expectSupport - Math.sqrt(-2 * expectSupport * Math.log(1 - minProbabilisticConfidence));
     }
 
+    /**
+     * Calculate upper bound of itemset with minimum probabilistic confidence
+     * @param expectSupport
+     * @param minProbabilisticConfidence
+     * @return upper bound of itemset
+     */
     @Override
     public double calculateUpperBound(double expectSupport, double minProbabilisticConfidence) {
         return (2 * expectSupport - Math.log(minProbabilisticConfidence) + Math.sqrt(Math.pow(Math.log(minProbabilisticConfidence), 2) - 8 * expectSupport * Math.log(minProbabilisticConfidence)))/2;

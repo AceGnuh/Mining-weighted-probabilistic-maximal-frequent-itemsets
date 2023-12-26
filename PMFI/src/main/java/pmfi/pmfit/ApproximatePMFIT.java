@@ -24,7 +24,7 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
     }
 
     /**
-     *
+     * Build Algorithm to find all approximate probabilistic maximal frequent itemsets
      * @return probabilistic maximal frequent item collection
      */
     public Set<List<E>> findAllPMFI(){
@@ -73,8 +73,8 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
     }
 
     /**
+     * Get distinct item in database and sorted increase by its probabilistic support
      * @return  sorted item list order by expect support
-
      */
     private List<ItemsetTuple<E>> getSortedItemList() {
         List<ItemsetTuple<E>> sortedItemList = new ArrayList<>();
@@ -129,11 +129,14 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
     }
 
     /**
-     *
+     * Apply algorithm to find itemset is approximate probabilistic maximal frequent
      * @param node
      * @param probabilisticMaximalFrequentItemsetCollection
      * @param sortedItemValueList
      * @return
+     * -1 if it is infrequent item;
+     * 0 if it is approximate probabilistic frequent item;
+     * 1 if it is approximate probabilistic maximal frequent item;
      */
     private int PMFIM(Node<E> node, Set<List<E>> probabilisticMaximalFrequentItemsetCollection, List<E> sortedItemValueList){
         int result = -1;
@@ -303,10 +306,10 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
 
 
     /**
-     *
+     * Get Items J order larger than current item I in sorted item list
      * @param itemI
      * @param sortedItemList
-     * @return
+     * @return Item order larger than current item in sorted item list
      */
     private List<List<E>> getItemJOrderLargerThanI(ItemsetTuple<E> itemI, List<E> sortedItemList){
         List<List<E>> itemJOrderLargerThanI = new ArrayList<>();

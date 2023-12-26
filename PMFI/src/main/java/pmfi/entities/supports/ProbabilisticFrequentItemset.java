@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- *
+ * Provide method calculate probabilistic support, whether itemset is frequent and itemset is maximal frequent
  * @param <E> data type of item
  */
 public class ProbabilisticFrequentItemset<E> implements IProbabilistic {
@@ -27,11 +27,6 @@ public class ProbabilisticFrequentItemset<E> implements IProbabilistic {
     }
 
     public ProbabilisticFrequentItemset(UncertainDatabase<E> uncertainDatabase, List<E> inputItem) {
-//        this.uncertainDatabase = uncertainDatabase;
-////        this.inputItem = inputItem;
-////        SummedSupportProbabilisticVector<E> summedSupportProbabilisticVector = new SummedSupportProbabilisticVector<>(uncertainDatabase, inputItem);
-////        this.summedSupportProbabilisticData = summedSupportProbabilisticVector.getSummedSupportProbabilisticVector();
-////
         this(uncertainDatabase, new HashSet<>(), inputItem);
     }
 
@@ -40,7 +35,7 @@ public class ProbabilisticFrequentItemset<E> implements IProbabilistic {
     }
 
     /**
-     *
+     * Calculate probabilistic support of itemset with min probabilistic confidence from summed support probabilistic vector
      * @param minimumProbabilisticConfidence
      * @return Probabilistic Support of Itemset
      */
@@ -58,6 +53,7 @@ public class ProbabilisticFrequentItemset<E> implements IProbabilistic {
     }
 
     /**
+     * Whether itemset is probabilistic frequent with min support and min probabilistic confidence
      * @param minSupport
      * @param minProbabilisticConfidence
      * @return Itemset is Probabilistic Frequent
@@ -68,6 +64,7 @@ public class ProbabilisticFrequentItemset<E> implements IProbabilistic {
     }
 
     /**
+     * Whether itemset is probabilistic maximal frequent with min support and min probabilistic confidence
      * @param minSupport
      * @param minProbabilisticConfidence
      * @return Itemset is Probabilistic Maximal Frequent

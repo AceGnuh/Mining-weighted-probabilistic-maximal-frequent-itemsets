@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ *
+ * @param <E> datatype of itemset
+ */
 public class SummedSupportProbabilisticVector <E>{
     private final double[] summedSupportProbabilisticVector;
 
@@ -22,6 +26,12 @@ public class SummedSupportProbabilisticVector <E>{
         return summedSupportProbabilisticVector;
     }
 
+    /**
+     * Using Divide and Conquer method to calculate summed support probabilistic vector of itemset
+     * @param transactions
+     * @param pattern
+     * @return summed support probabilistic vector
+     */
     private double[] DC(List<UncertainTransaction<E>> transactions, List<E> pattern) {
         int n = transactions.size();
 
@@ -60,6 +70,12 @@ public class SummedSupportProbabilisticVector <E>{
          */
     }
 
+    /**
+     * Convolution 2 vector by FFT method
+     * @param f1X
+     * @param f2X
+     * @return convolution of two vectors
+     */
     private double[] convolutionFFT(double[] f1X, double[] f2X){
         // Độ dài của vector kết quả tích chập
         int resultLength = f1X.length + f2X.length - 1;

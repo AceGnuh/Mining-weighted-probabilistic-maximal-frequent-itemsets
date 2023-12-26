@@ -1,56 +1,67 @@
-import pmfi.config.MyDataset;
+import pmfi.utils.MyDataset;
 import pmfi.entities.*;
-import pmfi.entities.brute_force.SummedSupportProbabilisticItem;
-import pmfi.entities.supports.FrequentItemset;
-import pmfi.functions.ProbabilisticMaximalFrequentItemsetTree;
 import pmfi.pmfit.ApproximatePMFIT;
-import pmfi.entities.brute_force.PossibleWorld;
-import pmfi.entities.brute_force.SupportProbabilisticVector;
-import pmfi.entities.supports.ProbabilisticFrequentItemset;
 import pmfi.entities.supports.SummedSupportProbabilisticVector;
-import pmfi.pmfit.ItemsetTuple;
 import pmfi.pmfit.PMFIT;
 
 import java.nio.file.Paths;
 import java.util.*;
 
-public class Main<E> {
-
+public class Main {
+    private static long MB = 1024 * 1024;
+    private static long MILI_SECOND = 1000 * 1000;
     public static void main(String[] args) {
+
+        Runtime runtime = Runtime.getRuntime();
 
         String path = Paths.get("").toAbsolutePath().toString();
         path += "\\src\\main\\java\\pmfi\\datasets\\";
 
-//        String pathDataset = path + "T40I10D100K.txt";  //PMFITree: 124s; APMFITree: 14s (support 0.1, confidence: 0.9)
-//        double mean = 0.79;                             //PMFITree: 8s; APMFITree: 6s (support 1, confidence: 0.9)
-//        double variance = 0.61;                         //PMFITree: 8s; APMFITree: 6s (support 0.5, confidence: 0.9)
+        //PMFITree: 13s; APMFITree: 6s (relative support 0.9, confidence: 0.1)
+        //PMFITree: 14s; APMFITree: 6s (relative support 0.9, confidence: 0.01)
+        //PMFITree: 12.7s; APMFITree: 6s (relative support 0.9, confidence: 0.01)
+        String pathDataset = path + "T40I10D100K.txt";  //PMFITree: 124s; 503MB. APMFITree: 14s (support 0.1, confidence: 0.9)
+        double mean = 0.79;                             //PMFITree: 8s; APMFITree: 6s (support 1, confidence: 0.9)
+        double variance = 0.61;                         //PMFITree: 8s; APMFITree: 6s (support 0.5, confidence: 0.9)
 
-//        String pathDataset = path + "connect4.txt";     //PMFITree: 154ss; APMFITree: 15s (support 0.1, confidence: 0.9)
-//        double mean = 0.78;                             //PMFITree: 154ss; APMFITree: 15s (support 0.5, confidence: 0.9)
+
+        //PMFITree: 154ss; APMFITree: 15s (support 0.1, confidence: 0.9)
+        //PMFITree: 154ss; APMFITree: 15s (support 0.5, confidence: 0.9)
+        //PMFITree: 1.8; APMFITree: 1.2s (relative support 0.9, confidence: 0.1)
+        //PMFITree: 1.7; APMFITree: 1.2s (relative support 0.9, confidence: 0.01)
+//        String pathDataset = path + "connect4.txt";
+//        double mean = 0.78;
 //        double variance = 0.65;
 
-        String pathDataset = path + "accidents.txt";  //PMFITree: 653; APMFITree: 152s (support 0.1, confidence: 0.9)
-        double mean = 0.5;                            //PMFITree: 37; APMFITree: 30s (support 1, confidence: 0.9)
-        double variance = 0.58;
 
-//
+
+//        String pathDataset = path + "accidents.txt";  //PMFITree: 653; APMFITree: 152s (support 0.1, confidence: 0.9)
+//        double mean = 0.5;                            //PMFITree: 37; APMFITree: 30s (support 1, confidence: 0.9)
+//        double variance = 0.58;
+
+
+
+//        String pathDataset = path + "GAZELLE.txt";  //PMFITree: 3; APMFITree: 1.5s  (support 0.1, confidence: 0.9)
+//        double mean = 0.94;                         //PMFITree: ; APMFITree:  (support 0.01, confidence: 0.9)
+//        double variance = 0.08;
+
         MyDataset myDataset = new MyDataset(pathDataset, mean, variance);
         UncertainDatabase uncertainDatabase = myDataset.getUncertainDatabase();
         System.out.println(uncertainDatabase);
 
+        //the number of transaction in database
         int lengthDb = myDataset.getUncertainDatabase().getUncertainTransactions().size();
 
-        double minSupport = 1;
-        double minConfidence = 0.9;
+        double minSupport = 0.9 * lengthDb;
+        double minConfidence = 0.001;
 
         //run algorithms
-        ApproximatePMFIT pmfit = new ApproximatePMFIT(uncertainDatabase, minSupport, minConfidence);
-//        for(Object itemsetTuple : pmfit.getSortedItemList()){
-//            System.out.println(itemsetTuple);
-//        }
-//
+        PMFIT pmfit = new PMFIT(uncertainDatabase, minSupport, minConfidence);
+
+        //get time and memory at start algorithm
         long start = System.nanoTime();
-//
+        long memoryTotal = runtime.totalMemory();
+
         pmfit.findAllPMFI();
 
 
@@ -59,16 +70,20 @@ public class Main<E> {
 
         //exampleApproximatePMFIT();
 
-
         System.out.println();
 
-        // get the end time
+        // get time and memory at end algorithm
         long end = System.nanoTime();
+        long memoryFree = runtime.freeMemory();
 
         // execution time in seconds
         long execution = (end - start);
+        long memoryUsage = Math.abs(memoryTotal - memoryFree);
+
         System.out.println("Execution time of Program is");
-        System.out.println(execution / 1000000 + " milliseconds");
+        System.out.println(execution / MILI_SECOND + " milliseconds");
+        System.out.println("Memory usage: ");
+        System.out.println(memoryUsage / MB + " MB");
     }
 
 
@@ -113,9 +128,6 @@ public class Main<E> {
 
         SummedSupportProbabilisticVector summedSupportProbabilisticVector = new SummedSupportProbabilisticVector(uncertainDatabase, inputItem);
         System.out.println(Arrays.toString(summedSupportProbabilisticVector.getSummedSupportProbabilisticVector()));
-//        for(Double o : summedSupportProbabilisticVector.getSummedSupportProbabilisticVector()){
-//            System.out.println(o);
-//        }
 
         PMFIT pmfit = new PMFIT(uncertainDatabase, minimumSupport, minProbabilisticConfidence);
 

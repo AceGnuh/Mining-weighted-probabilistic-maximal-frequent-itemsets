@@ -1,4 +1,4 @@
-package pmfi.config;
+package pmfi.utils;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
 import pmfi.entities.UncertainDatabase;
@@ -49,12 +49,12 @@ public class MyDataset<E> {
 
                     //double probabilisticData = calcProbabilistic(tempData, this.mean, this.variance);
 
-                    double probabilisticData = distribution.probability(tempData - 0.5, tempData + 0.5);
+                    double probabilisticData = distribution.probability(tempData - 1, tempData + 1);
                     //UncertainItemset<Integer> uncertainItemset = new UncertainItemset<>(tempData, probabilisticData);
 
-                    if (probabilisticData > 0){ //Math.pow(10, -200)) { // xs item đủ lớn
+                    //if (probabilisticData > 0){ //Math.pow(10, -200)) { // xs item đủ lớn
                         curTransaction.getTransaction().put((E) s, probabilisticData);
-                    }
+                    //}
                 }
 
                 curTransaction.setID(++currIdTransaction);

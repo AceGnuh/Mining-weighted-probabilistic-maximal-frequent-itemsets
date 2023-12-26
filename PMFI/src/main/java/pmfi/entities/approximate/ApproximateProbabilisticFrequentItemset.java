@@ -11,6 +11,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ *
+ * @param <E> datatype of itemset
+ */
 public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilistic {
     private final UncertainDatabase<E> uncertainDatabase;
     private final List<E> inputItem;
@@ -20,6 +24,10 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
         this.inputItem = inputItem;
     }
 
+    /**
+     * Calculate expectation of itemset
+     * @return expectation of itemset
+     */
     private double calculateExpectation(){
         double expectation = 0.0;
 
@@ -32,6 +40,10 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
         return expectation;
     }
 
+    /**
+     * Calculate Variance of itemset
+     * @return variance of itemset
+     */
     private double calculateVariance(){
         double variance = 0.0;
 
@@ -44,6 +56,11 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
         return variance;
     }
 
+    /**
+     * Calculate approximate probabilistic support of itemset from expectation and variance with min probabilistic confidence
+     * @param minProbabilisticConfidence
+     * @return
+     */
     public int calculateProbabilisticSupport(double minProbabilisticConfidence) {
         double mean = this.calculateExpectation();
         double variance = this.calculateVariance();
@@ -53,21 +70,29 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
             return 0;
         }
 
-//        System.out.println("Mean: " + mean);
-//        System.out.println("Variance: " + variance);
-
         NormalDistribution normalDistribution = new NormalDistribution(mean, stdDev);
 
         double cumulativeProbability = normalDistribution.cumulativeProbability(1.0 - minProbabilisticConfidence);
 
         return (int) (Math.pow(cumulativeProbability, -1) * Math.sqrt(variance) + mean);
-        //return (int) ((1.0 / cumulativeProbability) * Math.sqrt(variance) + mean);
     }
 
+    /**
+     * Whether Itemset is approximate probabilistic frequent with min support and min probabilistic confidence
+     * @param minSupport
+     * @param minProbabilisticConfidence
+     * @return Itemset is approximate probabilistic frequent
+     */
     public boolean isProbabilisticFrequentItemset(double minSupport, double minProbabilisticConfidence) {
         return this.calculateProbabilisticSupport(minProbabilisticConfidence) >= minSupport;
     }
 
+    /**
+     * Whether Itemset is approximate probabilistic maximal frequent with min support and min probabilistic confidence
+     * @param minSupport
+     * @param minProbabilisticConfidence
+     * @return Itemset is approximate probabilistic maximal frequent
+     */
     public boolean isProbabilisticMaximalFrequentItemset(double minSupport, double minProbabilisticConfidence) {
         if(this.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
 

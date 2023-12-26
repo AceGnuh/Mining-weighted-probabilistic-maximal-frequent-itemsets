@@ -36,24 +36,8 @@ public class UncertainTransaction<E>{
         this.ID = ID;
     }
 
-    /*
-    private double getProbabilistic(E item){
-
-//        for(UncertainItemset<E> currItem: this.transaction){
-//            if(currItem.getItem().equals(item)){
-//                return currItem.getProbability();
-//            }
-//        }
-//
-//        return 0.0;
-
-
-        return transaction.getOrDefault(item, 0.0);
-    }
-    */
-
     /**
-     * get probabilistic of item in transaction
+     * Get probability of itemset in transaction
      * @param itemset
      * @return probabilistic of item in transaction
      */

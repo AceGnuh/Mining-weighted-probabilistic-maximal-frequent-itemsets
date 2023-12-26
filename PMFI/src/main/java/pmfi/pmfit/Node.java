@@ -3,8 +3,18 @@ package pmfi.pmfit;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @param <E> data type of itemset
+ */
 public class Node <E>{
+    /**
+     * data of node
+     */
     private ItemsetTuple<E> item;
+    /**
+     * list child node of node
+     */
     private List<Node<E>> child;
 
     public Node(ItemsetTuple<E> item, List<Node<E>> child) {
