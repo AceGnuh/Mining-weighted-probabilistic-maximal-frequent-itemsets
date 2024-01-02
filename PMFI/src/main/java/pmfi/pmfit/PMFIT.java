@@ -28,7 +28,7 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
     }
 
     /**
-     * Build Algorithm to find all probabilistic maximal frequent itemsets
+     * Implement algorithm to find all probabilistic maximal frequent itemsets
      * @return probabilistic maximal frequent item collection
      */
     @Override
@@ -328,7 +328,6 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
     /**
      * Traversal the PMFI Tree by DFS from root node
      */
-    @Override
     public void preOrder(){
         preOrder(this.root);
     }

@@ -30,7 +30,7 @@ public class SummedSupportProbabilisticVector <E>{
      * Using Divide and Conquer method to calculate summed support probabilistic vector of itemset
      * @param transactions
      * @param pattern
-     * @return summed support probabilistic vector
+     * @return Summed support probabilistic vector
      */
     private double[] DC(List<UncertainTransaction<E>> transactions, List<E> pattern) {
         int n = transactions.size();
