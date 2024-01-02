@@ -152,14 +152,12 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
             List<E> itemJ = itemJOrderLargerThanIList.get(i);
             List<E> itemJList = new ArrayList<>(itemJ);
 
-
-
             if (ListHelper.isSubListAtEnd(sortedItemValueList, itemJList))
             {
 
                 //ProbabilisticFrequentItemset<E> probabilisticFrequentItemset = new ProbabilisticFrequentItemset<>(this.uncertainDatabase, itemJList);
                 ApproximateProbabilisticFrequentItemset<E> approximateProbabilisticFrequentItemset = new ApproximateProbabilisticFrequentItemset<>(this.uncertainDatabase, itemJList);
-                if (approximateProbabilisticFrequentItemset.isProbabilisticMaximalFrequentItemset(this.minimumSupport, this.minimumProbabilisticConfidence)) {
+                if (approximateProbabilisticFrequentItemset.isProbabilisticMaximalFrequentItemset(this.minimumSupport, this.minimumProbabilisticConfidence, sortedItemValueList)) {
                     //---
                     Node<E> tempNode = new Node<>(new ItemsetTuple<>(new ArrayList<>(itemJList)));
 

@@ -152,7 +152,7 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
             {
                 ProbabilisticFrequentItemset<E> probabilisticFrequentItemset = new ProbabilisticFrequentItemset<>(this.uncertainDatabase, distinctItemList, itemJList);
 
-                if (probabilisticFrequentItemset.isProbabilisticMaximalFrequentItemset(this.minimumSupport, this.minimumProbabilisticConfidence)) {
+                if (probabilisticFrequentItemset.isProbabilisticMaximalFrequentItemset(this.minimumSupport, this.minimumProbabilisticConfidence, sortedItemValueList)) {
                     System.out.println("Found maximal!!!");
 
                     if (!probabilisticMaximalFrequentItemsetCollection.contains(itemJList)) {

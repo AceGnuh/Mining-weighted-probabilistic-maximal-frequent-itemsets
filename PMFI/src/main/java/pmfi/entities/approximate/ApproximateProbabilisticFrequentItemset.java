@@ -125,4 +125,34 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
         }
         return false;
     }
+
+    /**
+     * Whether itemset is probabilistic maximal frequent with min support and min probabilistic confidence
+     * @param minSupport
+     * @param minProbabilisticConfidence
+     * @return Itemset is Probabilistic Maximal Frequent
+     */
+    public boolean isProbabilisticMaximalFrequentItemset(double minSupport, double minProbabilisticConfidence, List<E> sortedItemValueList) {
+        if(this.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
+            for(E distinctItem : sortedItemValueList){
+                Set<E> tempDistinctItem = new HashSet<>(this.inputItem);
+                tempDistinctItem.add(distinctItem);
+
+                Set<E> distinctIemInput = new HashSet<>(this.inputItem);
+
+                if(tempDistinctItem.containsAll(distinctIemInput) && !tempDistinctItem.equals(distinctIemInput)){
+                    ProbabilisticFrequentItemset<E> frequentItemset = new ProbabilisticFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
+
+                    if(frequentItemset.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
+                        //System.out.println("---" + distinctSet +" : is probabilistic maximal frequent itemset");
+                        return false;
+                    }
+                }
+            }
+
+            return true; //ko tìm đc tập bao nào là prob frequent itemset
+        }
+
+        return false;
+    }
 }
