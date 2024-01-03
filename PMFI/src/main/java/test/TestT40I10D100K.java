@@ -2,7 +2,7 @@ package test;
 
 import pmfi.entities.UncertainDatabase;
 import pmfi.pmfit.PMFIT;
-import pmfi.utils.MyDataset;
+import pmfi.utils.DatasetUtil;
 
 import java.nio.file.Paths;
 
@@ -36,12 +36,12 @@ public class TestT40I10D100K {
         double mean = 0.79;
         double variance = 0.61;
 
-        MyDataset myDataset = new MyDataset(pathDataset, mean, variance);
-        UncertainDatabase uncertainDatabase = myDataset.getUncertainDatabase();
+        DatasetUtil datasetUtil = new DatasetUtil(pathDataset, mean, variance);
+        UncertainDatabase uncertainDatabase = datasetUtil.getUncertainDatabase();
         System.out.println(uncertainDatabase);
 
         //the number of transaction in database
-        int lengthDb = myDataset.getUncertainDatabase().getUncertainTransactions().size();
+        int lengthDb = datasetUtil.getUncertainDatabase().getUncertainTransactions().size();
 
 //        double minSupport = 0.7;
 //        double minConfidence = 0.9;

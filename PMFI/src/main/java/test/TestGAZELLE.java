@@ -2,7 +2,7 @@ package test;
 
 import pmfi.entities.UncertainDatabase;
 import pmfi.pmfit.PMFIT;
-import pmfi.utils.MyDataset;
+import pmfi.utils.DatasetUtil;
 
 import java.nio.file.Paths;
 
@@ -37,12 +37,12 @@ public class TestGAZELLE {
         double mean = 0.94;
         double variance = 0.08;
 
-        MyDataset myDataset = new MyDataset(pathDataset, mean, variance);
-        UncertainDatabase uncertainDatabase = myDataset.getUncertainDatabase();
+        DatasetUtil datasetUtil = new DatasetUtil(pathDataset, mean, variance);
+        UncertainDatabase uncertainDatabase = datasetUtil.getUncertainDatabase();
         System.out.println(uncertainDatabase);
 
         //the number of transaction in database
-        int lengthDb = myDataset.getUncertainDatabase().getUncertainTransactions().size();
+        int lengthDb = datasetUtil.getUncertainDatabase().getUncertainTransactions().size();
 
         //run algorithms
         PMFIT pmfit = new PMFIT(uncertainDatabase, minSupport, minConfidence);

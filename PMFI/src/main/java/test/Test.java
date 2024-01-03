@@ -4,9 +4,7 @@ import pmfi.entities.UncertainDatabase;
 import pmfi.entities.UncertainTransaction;
 import pmfi.entities.supports.SummedSupportProbabilisticVector;
 import pmfi.pmfit.PMFIT;
-import pmfi.utils.MyDataset;
 
-import java.nio.file.Paths;
 import java.util.*;
 
 /**

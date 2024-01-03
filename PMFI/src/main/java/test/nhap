@@ -66,12 +66,12 @@
 //        double mean = 0.94;
 //        double variance = 0.08;
 
-//        MyDataset myDataset = new MyDataset(pathDataset, mean, variance);
-//        UncertainDatabase uncertainDatabase = myDataset.getUncertainDatabase();
+//        MyDataset datasetUtil = new MyDataset(pathDataset, mean, variance);
+//        UncertainDatabase uncertainDatabase = datasetUtil.getUncertainDatabase();
 //        System.out.println(uncertainDatabase);
 //
 //        //the number of transaction in database
-//        int lengthDb = myDataset.getUncertainDatabase().getUncertainTransactions().size();
+//        int lengthDb = datasetUtil.getUncertainDatabase().getUncertainTransactions().size();
 //
 //        double minSupport = 0.7;
 //        double minConfidence = 0.9;
