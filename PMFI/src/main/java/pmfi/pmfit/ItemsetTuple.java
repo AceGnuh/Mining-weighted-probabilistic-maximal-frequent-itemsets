@@ -1,38 +1,48 @@
 package pmfi.pmfit;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemsetTuple<E> {
-    private List<E> item;
+    private List<E> itemset;
     private int support;
     private double expectSupport;
     private int probabilisticSupport;
     private double lowerBound;
     private double upperBound;
 
+    /**
+     * list child node of node
+     */
+    private List<ItemsetTuple<E>> child;
+
     public ItemsetTuple() {
-        this(null, 0, 0.0, 0, 0.0, 0.0);
+        this(null, 0, 0.0, 0, 0.0, 0.0, new ArrayList<>());
     }
 
-    public ItemsetTuple(List<E> item) {
-        this(item, 0, 0.0, 0, 0.0, 0.0);
+    public ItemsetTuple(List<E> itemset) {
+        this(itemset, 0, 0.0, 0, 0.0, 0.0, new ArrayList<>());
+    }
+    public ItemsetTuple(E item) {
+        this(new ArrayList<>(List.of(item)), 0, 0.0, 0, 0.0, 0.0, new ArrayList<>());
     }
 
-    public ItemsetTuple(List<E> item, int support, double expectSupport, int probabilisticSupport, double lowerBound, double upperBound) {
-        this.item = item;
+    public ItemsetTuple(List<E> itemset, int support, double expectSupport, int probabilisticSupport, double lowerBound, double upperBound, List<ItemsetTuple<E>> child) {
+        this.itemset = itemset;
         this.support = support;
         this.expectSupport = expectSupport;
         this.probabilisticSupport = probabilisticSupport;
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
+        this.child = child;
     }
 
-    public List<E> getItem() {
-        return item;
+    public List<E> getItemset() {
+        return itemset;
     }
 
-    public void setItem(List<E> item) {
-        this.item = item;
+    public void setItemset(List<E> itemset) {
+        this.itemset = itemset;
     }
 
     public int getSupport() {
@@ -75,10 +85,18 @@ public class ItemsetTuple<E> {
         this.upperBound = upperBound;
     }
 
+    public List<ItemsetTuple<E>> getChild() {
+        return child;
+    }
+
+    public void setChild(List<ItemsetTuple<E>> child) {
+        this.child = child;
+    }
+
     @Override
     public String toString() {
         return "ItemsetTuple{" +
-                "item=" + item +
+                "item=" + itemset +
                 ", support=" + support +
                 ", expectSupport=" + expectSupport +
                 ", probabilisticSupport=" + probabilisticSupport +

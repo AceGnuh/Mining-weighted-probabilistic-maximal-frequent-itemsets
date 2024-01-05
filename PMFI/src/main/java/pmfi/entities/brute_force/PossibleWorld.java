@@ -1,9 +1,6 @@
 package pmfi.entities.brute_force;
 
 import pmfi.entities.UncertainDatabase;
-import pmfi.entities.UncertainItemset;
-import pmfi.entities.UncertainTransaction;
-import pmfi.helper.SetHelper;
 
 import java.util.*;
 

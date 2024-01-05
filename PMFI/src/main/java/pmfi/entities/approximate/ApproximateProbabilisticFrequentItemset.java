@@ -13,15 +13,15 @@ import java.util.Set;
 
 /**
  *
- * @param <E> datatype of itemset
+ * @param <E> type of items
  */
 public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilistic {
     private final UncertainDatabase<E> uncertainDatabase;
-    private final List<E> inputItem;
+    private final List<E> inputItemset;
 
-    public ApproximateProbabilisticFrequentItemset(UncertainDatabase<E> uncertainDatabase, List<E> inputItem) {
+    public ApproximateProbabilisticFrequentItemset(UncertainDatabase<E> uncertainDatabase, List<E> inputItemset) {
         this.uncertainDatabase = uncertainDatabase;
-        this.inputItem = inputItem;
+        this.inputItemset = inputItemset;
     }
 
     /**
@@ -31,8 +31,9 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
     private double calculateExpectation(){
         double expectation = 0.0;
 
-        for(UncertainTransaction<E> transaction : this.uncertainDatabase.getUncertainTransactions()){
-            double probabilisticItem = transaction.getProbabilistic(this.inputItem);
+        //sum of probability itemset in UD
+        for(UncertainTransaction<E> transaction : this.uncertainDatabase.getUncertainDatabase()){
+            double probabilisticItem = transaction.getProbabilistic(this.inputItemset);
 
             expectation += probabilisticItem;
         }
@@ -47,8 +48,9 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
     private double calculateVariance(){
         double variance = 0.0;
 
-        for(UncertainTransaction<E> transaction : this.uncertainDatabase.getUncertainTransactions()){
-            double probabilisticItem = transaction.getProbabilistic(this.inputItem);
+        //sum of probability * (1 - probability) itemset in UD
+        for(UncertainTransaction<E> transaction : this.uncertainDatabase.getUncertainDatabase()){
+            double probabilisticItem = transaction.getProbabilistic(this.inputItemset);
 
             variance += probabilisticItem * (1.0 - probabilisticItem);
         }
@@ -62,16 +64,17 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
      * @return
      */
     public int calculateProbabilisticSupport(double minProbabilisticConfidence) {
+        //calc mean and standard deviation of itemset
         double mean = this.calculateExpectation();
         double variance = this.calculateVariance();
         double stdDev = Math.sqrt(variance);
 
         if(stdDev == 0){
-            return 0;
+            return 0; //can't use normal distribution
         }
 
+        //using cumulative probability to calculate probabilistic support of itemset
         NormalDistribution normalDistribution = new NormalDistribution(mean, stdDev);
-
         double cumulativeProbability = normalDistribution.cumulativeProbability(1.0 - minProbabilisticConfidence);
 
         return (int) (Math.pow(cumulativeProbability, -1) * Math.sqrt(variance) + mean);
@@ -88,42 +91,39 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
     }
 
     /**
-     * Whether Itemset is approximate probabilistic maximal frequent with min support and min probabilistic confidence
+     * Whether itemset is probabilistic maximal frequent with min support and min probabilistic confidence
      * @param minSupport
      * @param minProbabilisticConfidence
-     * @return Itemset is approximate probabilistic maximal frequent
+     * @return Itemset is Probabilistic Maximal Frequent
      */
+    @Override
     public boolean isProbabilisticMaximalFrequentItemset(double minSupport, double minProbabilisticConfidence) {
+        //whether current itemset X is frequent
         if(this.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
 
-            Set<Set<E>> allDistinctSetList = new HashSet<>();
+            //traversal itemset Y so that itemset Y cover current itemset X
+            for(E distinctItem : uncertainDatabase.getDistinctItem()){
+                //generate itemset Y
+                Set<E> tempDistinctItem = new HashSet<>(this.inputItemset);
+                tempDistinctItem.add(distinctItem);
 
-            Set<List<E>> distinctItemInDatabase = this.uncertainDatabase.getDistinctItem();
+                //current itemset X
+                Set<E> distinctIemInput = new HashSet<>(this.inputItemset);
 
-            for(List<E> distinctItem : distinctItemInDatabase){
-                Set<E> tempDistinctItem = new HashSet<>(this.inputItem);
-                tempDistinctItem.add(distinctItem.get(0));
-
-                allDistinctSetList.add(tempDistinctItem);
-            }
-
-            for(Set<E> distinctSet : allDistinctSetList){
-                Set<E> distinctDataset = new HashSet<>(distinctSet);
-                Set<E> distinctIemInput = new HashSet<>(this.inputItem);
-
-                if(distinctDataset.containsAll(distinctIemInput) && !distinctDataset.equals(distinctIemInput)){
-                    ProbabilisticFrequentItemset<E> frequentItemset = new ProbabilisticFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(distinctSet));
+                //if itemset Y is frequent -> itemset X is infrequent
+                if(tempDistinctItem.containsAll(distinctIemInput) && !tempDistinctItem.equals(distinctIemInput)){
+                    ApproximateProbabilisticFrequentItemset<E> frequentItemset = new ApproximateProbabilisticFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
 
                     if(frequentItemset.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
-                        System.out.println("---" + distinctSet +" : is probabilistic maximal frequent itemset");
                         return false;
                     }
                 }
             }
 
-            return true; //ko tìm đc tập bao nào là prob frequent itemset
+            return true; //Not found any frequent itemset Y
         }
-        return false;
+
+        return false; // current itemset is not frequent
     }
 
     /**
@@ -134,23 +134,27 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
      */
     public boolean isProbabilisticMaximalFrequentItemset(double minSupport, double minProbabilisticConfidence, List<E> sortedItemValueList) {
         if(this.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
+            //traversal itemset Y so that itemset Y cover current itemset X
             for(E distinctItem : sortedItemValueList){
-                Set<E> tempDistinctItem = new HashSet<>(this.inputItem);
+
+                //generate itemset Y
+                Set<E> tempDistinctItem = new HashSet<>(this.inputItemset);
                 tempDistinctItem.add(distinctItem);
 
-                Set<E> distinctIemInput = new HashSet<>(this.inputItem);
+                //current itemset X
+                Set<E> distinctIemInput = new HashSet<>(this.inputItemset);
 
+                //if itemset Y is frequent -> itemset X is infrequent
                 if(tempDistinctItem.containsAll(distinctIemInput) && !tempDistinctItem.equals(distinctIemInput)){
-                    ProbabilisticFrequentItemset<E> frequentItemset = new ProbabilisticFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
+                    ApproximateProbabilisticFrequentItemset<E> frequentItemset = new ApproximateProbabilisticFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
 
                     if(frequentItemset.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
-                        //System.out.println("---" + distinctSet +" : is probabilistic maximal frequent itemset");
                         return false;
                     }
                 }
             }
 
-            return true; //ko tìm đc tập bao nào là prob frequent itemset
+            return true; //Not found any frequent itemset Y
         }
 
         return false;

@@ -32,11 +32,12 @@ public class DatasetUtil<E> {
         //init Normal Distribution
         NormalDistribution distribution = new NormalDistribution(mean, Math.sqrt(variance));
 
-        //doc dataset
+        //read dataset
         try{
             File myObj = new File(filePath);
             Scanner sc = new Scanner(myObj);
 
+            //get transaction in dataset
             int currIdTransaction = 0;
             while (sc.hasNextLine()){
                 String data = sc.nextLine();
@@ -47,18 +48,13 @@ public class DatasetUtil<E> {
                 for (String s : dataLineTransaction) {
                     int tempData = Integer.parseInt(s);
 
-                    //double probabilisticData = calcProbabilistic(tempData, this.mean, this.variance);
-
+                    //using normal distribution to calculate probabilistic for item
                     double probabilisticData = distribution.probability(tempData - 1, tempData + 1);
-                    //UncertainItemset<Integer> uncertainItemset = new UncertainItemset<>(tempData, probabilisticData);
-
-                    //if (probabilisticData > 0){ //Math.pow(10, -200)) { // xs item đủ lớn
-                        curTransaction.getTransaction().put((E) s, probabilisticData);
-                    //}
+                    curTransaction.getTransaction().put((E) s, probabilisticData);
                 }
 
                 curTransaction.setID(++currIdTransaction);
-                _uncertainDatabase.getUncertainTransactions().add(curTransaction);
+                _uncertainDatabase.getUncertainDatabase().add(curTransaction);
             }
 
             sc.close();

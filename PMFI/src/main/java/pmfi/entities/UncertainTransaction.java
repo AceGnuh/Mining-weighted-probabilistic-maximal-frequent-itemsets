@@ -9,7 +9,7 @@ import java.util.Map;
  * Uncertain Transaction contains:
  * - id of transaction
  * - transaction is map with key: itemset and value: probabilistic of itemset
- * @param <E> data type of itemset
+ * @param <E> type of items
  */
 public class UncertainTransaction<E>{
     private Integer ID;
@@ -44,8 +44,8 @@ public class UncertainTransaction<E>{
     public double getProbabilistic(List<E> itemset){
         double pItem = 1.0;
 
-        for(E currItem: itemset){
-            pItem *= transaction.getOrDefault(currItem, 0.0);
+        for(E item: itemset){
+            pItem *= transaction.getOrDefault(item, 0.0);
         }
 
         return pItem;

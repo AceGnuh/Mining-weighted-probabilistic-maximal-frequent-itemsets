@@ -42,7 +42,7 @@ public class TestGAZELLE {
         System.out.println(uncertainDatabase);
 
         //the number of transaction in database
-        int lengthDb = datasetUtil.getUncertainDatabase().getUncertainTransactions().size();
+        int lengthDb = datasetUtil.getUncertainDatabase().getUncertainDatabase().size();
 
         //run algorithms
         PMFIT pmfit = new PMFIT(uncertainDatabase, minSupport, minConfidence);

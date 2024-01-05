@@ -2,13 +2,13 @@ package pmfi.entities;
 
 /**
  * Uncertain Item contains: item and probabilistic of item
- * @param <E> data type of itemset
+ * @param <E> type of items
  */
-public class UncertainItemset<E>{
+public class UncertainItem<E>{
     private E item;
     private double probability;
 
-    public UncertainItemset(E item, double probability) {
+    public UncertainItem(E item, double probability) {
         this.item = item;
         this.probability = probability;
     }

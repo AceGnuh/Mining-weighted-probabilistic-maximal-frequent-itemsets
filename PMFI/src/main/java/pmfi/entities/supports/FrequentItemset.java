@@ -1,30 +1,24 @@
 package pmfi.entities.supports;
 
 import pmfi.entities.UncertainDatabase;
-import pmfi.entities.UncertainItemset;
 import pmfi.entities.UncertainTransaction;
-import pmfi.entities.brute_force.SummedSupportProbabilisticItem;
-import pmfi.entities.brute_force.SupportProbabilisticItem;
-import pmfi.entities.brute_force.SupportProbabilisticVector;
 import pmfi.functions.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 /**
  * Provide method calculate support, expect support, lower and upper bound of itemset
- * @param <E> data type of item
+ * @param <E> type of items
  */
 public class FrequentItemset<E> implements ISupport, IBound {
     private final UncertainDatabase<E> uncertainDatabase;
-    private final List<E> inputItem;
+    private final List<E> inputItemset;
 
-    public FrequentItemset(UncertainDatabase<E> uncertainDatabase, List<E> inputItem)
+    public FrequentItemset(UncertainDatabase<E> uncertainDatabase, List<E> inputItemset)
     {
         this.uncertainDatabase = uncertainDatabase;
-        this.inputItem = inputItem;
+        this.inputItemset = inputItemset;
     }
 
     /**
@@ -35,9 +29,9 @@ public class FrequentItemset<E> implements ISupport, IBound {
     public int calculateSupport() {
         int support = 0;
 
-        for(UncertainTransaction<E> uncertainTransaction: this.uncertainDatabase.getUncertainTransactions()){
+        for(UncertainTransaction<E> uncertainTransaction: this.uncertainDatabase.getUncertainDatabase()){
             Set<E> itemsInTransaction = uncertainTransaction.getTransaction().keySet();
-            if(itemsInTransaction.containsAll(this.inputItem)){
+            if(itemsInTransaction.containsAll(this.inputItemset)){
                 support++;
             }
         }
@@ -53,8 +47,8 @@ public class FrequentItemset<E> implements ISupport, IBound {
     public double calculateExpectedSupport() {
         double expectFrequentItemset = 0.0;
 
-        for(UncertainTransaction<E> uncertainTransaction : this.uncertainDatabase.getUncertainTransactions()){
-            double probInputItem = uncertainTransaction.getProbabilistic(this.inputItem);
+        for(UncertainTransaction<E> uncertainTransaction : this.uncertainDatabase.getUncertainDatabase()){
+            double probInputItem = uncertainTransaction.getProbabilistic(this.inputItemset);
             expectFrequentItemset += probInputItem;
         }
 

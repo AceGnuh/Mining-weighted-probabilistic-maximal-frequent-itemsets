@@ -7,40 +7,34 @@ import java.util.Set;
 
 /**
  * UncertainDatabase contains: List of uncertain transaction
- * @param <E>
+ * @param <E> type of items
  */
 
 public class UncertainDatabase<E> {
-    private final List<UncertainTransaction<E>> uncertainTransactions;
+    private final List<UncertainTransaction<E>> uncertainDatabase;
 
     public UncertainDatabase(List<UncertainTransaction<E>> uncertainDatabase) {
-        this.uncertainTransactions = uncertainDatabase;
+        this.uncertainDatabase = uncertainDatabase;
     }
 
     public UncertainDatabase() {
         this(new ArrayList<>());
     }
 
-    public List<UncertainTransaction<E>> getUncertainTransactions() {
-        return uncertainTransactions;
+    public List<UncertainTransaction<E>> getUncertainDatabase() {
+        return uncertainDatabase;
     }
 
     /**
-     *
+     * get distinct item in UD
      * @return distinct item in database
      */
-    public Set<List<E>> getDistinctItem(){
-        Set<List<E>> distinctItemList = new HashSet<>();
+    public Set<E> getDistinctItem(){
+        Set<E> distinctItemList = new HashSet<>();
 
-        for(UncertainTransaction<E> uncertainTransaction : this.uncertainTransactions){
-            for(E uncertainItem : uncertainTransaction.getTransaction().keySet()){
-                List<E> item = new ArrayList<>(List.of(uncertainItem));
-                //item.add(uncertainItem);
-
-                distinctItemList.add(item);
-            }
-            //Set<E> distinctItemInTransaction = uncertainTransaction.getTransaction().keySet();
-            //distinctItemList.addAll(uncertainTransaction.getTransaction().keySet());
+        for(UncertainTransaction<E> uncertainTransaction : this.uncertainDatabase){
+            //add all key set into distinct item list
+            distinctItemList.addAll(uncertainTransaction.getTransaction().keySet());
         }
 
         return distinctItemList;
@@ -50,7 +44,7 @@ public class UncertainDatabase<E> {
     public String toString() {
         StringBuilder dataUncertainDatabase = new StringBuilder();
 
-        for(UncertainTransaction<E> uncertainTransaction : this.uncertainTransactions){
+        for(UncertainTransaction<E> uncertainTransaction : this.uncertainDatabase){
             dataUncertainDatabase.append("\t").append(uncertainTransaction).append("\n");
         }
 

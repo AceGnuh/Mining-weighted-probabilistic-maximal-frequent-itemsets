@@ -13,13 +13,13 @@ import java.util.List;
 
 /**
  *
- * @param <E> datatype of itemset
+ * @param <E> type of items
  */
 public class SummedSupportProbabilisticVector <E>{
     private final double[] summedSupportProbabilisticVector;
 
-    public SummedSupportProbabilisticVector(UncertainDatabase<E> uncertainDatabase, List<E> inputItem) {
-        this.summedSupportProbabilisticVector = this.DC(uncertainDatabase.getUncertainTransactions(), inputItem);
+    public SummedSupportProbabilisticVector(UncertainDatabase<E> uncertainDatabase, List<E> inputItemset) {
+        this.summedSupportProbabilisticVector = this.DC(uncertainDatabase.getUncertainDatabase(), inputItemset);
     }
 
     public double[] getSummedSupportProbabilisticVector() {
@@ -51,7 +51,6 @@ public class SummedSupportProbabilisticVector <E>{
         double[] f2X = DC(D2, pattern);
 
         // Convolution using FFT
-
         return convolutionFFT(f1X, f2X);
 
         // Convolution

@@ -27,7 +27,7 @@ public class TestAccidents {
         //PMFITree: 17s, 1446MB; APMFITree: 19s, 1539MB (relative support 0.9, confidence: 0.1)
         //-----
         //PMFITree: 800s, 1900MB; APMFITree: 247s, 3110MB (support 0.08, confidence: 0.9)
-        //PMFITree: 780s, 3352MB; APMFITree: 196s, 3282MB (support 0.1, confidence: 0.9)
+        //PMFITree: 754s, 3352MB; APMFITree: 196s, 3282MB (support 0.1, confidence: 0.9)
         //PMFITree: 53s, 2419MB ; APMFITree: 49s, 2758MB (support 0.2, confidence: 0.9)
         //PMFITree: 49s, 2419MB ; APMFITree: 43s, 1630MB (support 0.5, confidence: 0.9)
         //PMFITree: 45s, 2080MB; APMFITree: 40s, 2599MB (support 0.9, confidence: 0.9)
@@ -43,7 +43,7 @@ public class TestAccidents {
         System.out.println(uncertainDatabase);
 
         //the number of transaction in database
-        int lengthDb = datasetUtil.getUncertainDatabase().getUncertainTransactions().size();
+        int lengthDb = datasetUtil.getUncertainDatabase().getUncertainDatabase().size();
 
 //        double minSupport = 0.7;
 //        double minConfidence = 0.9;

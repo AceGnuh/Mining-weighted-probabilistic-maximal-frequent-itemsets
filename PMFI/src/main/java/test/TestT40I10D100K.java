@@ -41,7 +41,7 @@ public class TestT40I10D100K {
         System.out.println(uncertainDatabase);
 
         //the number of transaction in database
-        int lengthDb = datasetUtil.getUncertainDatabase().getUncertainTransactions().size();
+        int lengthDb = datasetUtil.getUncertainDatabase().getUncertainDatabase().size();
 
 //        double minSupport = 0.7;
 //        double minConfidence = 0.9;

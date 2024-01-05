@@ -2,7 +2,10 @@ package test;
 
 import pmfi.entities.UncertainDatabase;
 import pmfi.entities.UncertainTransaction;
+import pmfi.entities.approximate.ApproximateProbabilisticFrequentItemset;
 import pmfi.entities.supports.SummedSupportProbabilisticVector;
+import pmfi.functions.ProbabilisticMaximalFrequentItemsetTree;
+import pmfi.pmfit.ApproximatePMFIT;
 import pmfi.pmfit.PMFIT;
 
 import java.util.*;
@@ -57,12 +60,16 @@ public class Test {
         SummedSupportProbabilisticVector summedSupportProbabilisticVector = new SummedSupportProbabilisticVector(uncertainDatabase, inputItem);
         System.out.println(Arrays.toString(summedSupportProbabilisticVector.getSummedSupportProbabilisticVector()));
 
-        PMFIT pmfit = new PMFIT(uncertainDatabase, minimumSupport, minProbabilisticConfidence);
+        ProbabilisticMaximalFrequentItemsetTree pmfit = new ApproximatePMFIT(uncertainDatabase, minimumSupport, minProbabilisticConfidence);
 
         //Probabilistic maximal frequent itemset
         System.out.println();
         System.out.println("Probabilistic Frequent Itemset Tree: " + pmfit.findAllPMFI());
 
+        ////Probabilistic maximal frequent itemset tree
+        System.out.println();
+        System.out.println("Probabilistic Frequent Itemset Tree with pre-order");
+        pmfit.preOrder();
     }
 
     /**
@@ -135,15 +142,15 @@ public class Test {
         int minimumSupport = 3;
         double minProbabilisticConfidence = 0.1;
 
-        PMFIT pmfit = new PMFIT(uncertainDatabase, minimumSupport, minProbabilisticConfidence);
+        ProbabilisticMaximalFrequentItemsetTree pmfit = new PMFIT(uncertainDatabase, minimumSupport, minProbabilisticConfidence);
 
         //Probabilistic maximal frequent itemset
         System.out.println();
         System.out.println("Probabilistic Maximal Frequent Itemset Collection: " + pmfit.findAllPMFI());
 
-        //System.out.println();
-        //System.out.println("Probabilistic Frequent Itemset Tree with pre-order");
-        //pmfit.preOrder();
+        System.out.println();
+        System.out.println("Probabilistic Frequent Itemset Tree with pre-order");
+        pmfit.preOrder();
     }
 
 
