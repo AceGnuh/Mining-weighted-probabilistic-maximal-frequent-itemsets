@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 /**
  *
- * @param <E> data type of itemset
+ * @param <E> data type of item
  */
 public class DatasetUtil<E> {
     private final UncertainDatabase<E> uncertainDatabase;
@@ -20,7 +20,7 @@ public class DatasetUtil<E> {
     }
 
     /**
-     * Read dataset, return uncertain database with probabilistic of each item
+     * Read dataset and return uncertain database
      * @param filePath path of dataset
      * @param mean
      * @param variance

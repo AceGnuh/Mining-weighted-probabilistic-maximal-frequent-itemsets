@@ -55,12 +55,12 @@ public class Test {
 
         int minimumSupport = 1;
         double minProbabilisticConfidence = 0.1;
-        List inputItem = new ArrayList(List.of("A"));
+//        List inputItem = new ArrayList(List.of("A"));
+//
+//        SummedSupportProbabilisticVector summedSupportProbabilisticVector = new SummedSupportProbabilisticVector(uncertainDatabase, inputItem);
+//        System.out.println(Arrays.toString(summedSupportProbabilisticVector.getSummedSupportProbabilisticVector()));
 
-        SummedSupportProbabilisticVector summedSupportProbabilisticVector = new SummedSupportProbabilisticVector(uncertainDatabase, inputItem);
-        System.out.println(Arrays.toString(summedSupportProbabilisticVector.getSummedSupportProbabilisticVector()));
-
-        ProbabilisticMaximalFrequentItemsetTree pmfit = new ApproximatePMFIT(uncertainDatabase, minimumSupport, minProbabilisticConfidence);
+        ProbabilisticMaximalFrequentItemsetTree pmfit = new PMFIT(uncertainDatabase, minimumSupport, minProbabilisticConfidence);
 
         //Probabilistic maximal frequent itemset
         System.out.println();

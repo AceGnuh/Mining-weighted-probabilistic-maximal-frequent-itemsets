@@ -61,7 +61,7 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
     /**
      * Calculate approximate probabilistic support of itemset from expectation and variance with min probabilistic confidence
      * @param minProbabilisticConfidence
-     * @return
+     * @return approximate probabilistic support of itemset
      */
     public int calculateProbabilisticSupport(double minProbabilisticConfidence) {
         //calc mean and standard deviation of itemset

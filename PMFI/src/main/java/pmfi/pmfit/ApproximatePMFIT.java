@@ -154,6 +154,7 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
                     System.out.println("Found maximal!!!");
 
                     if (!probabilisticMaximalFrequentItemsetCollection.contains(itemsetJ)) {
+                        //add itemset into ApproximatePMFI collection
                         probabilisticMaximalFrequentItemsetCollection.add(itemsetJ);
                         System.out.println("PMFI collection: " + probabilisticMaximalFrequentItemsetCollection);
 
@@ -164,6 +165,8 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
 
             if (probabilisticMaximalFrequentItemsetCollection.contains(itemsetJ)) {
                 System.out.println("Frequent Node: " + node);
+
+                //calc recursion ApproximatePMFIM()
                 result = ApproximatePMFIM(tempNode, probabilisticMaximalFrequentItemsetCollection, sortedItemList);
 
                 System.out.println(node.getItemset() + "return value: " + result);
@@ -205,6 +208,8 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
 
             if (lowerBound >= this.minimumSupport) {
                 System.out.println("Frequent Node: " + tempNode);
+
+                //calc recursion ApproximatePMFIM()
                 result = ApproximatePMFIM(tempNode, probabilisticMaximalFrequentItemsetCollection, sortedItemList);
 
                 System.out.println(node.getItemset() + " return value: " + result);
@@ -223,6 +228,8 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
 
                 if (approximateProbabilisticSupport >= this.minimumSupport) {
                     System.out.println("Frequent Node: " + tempNode);
+
+                    //calc recursion ApproximatePMFIM()
                     result = ApproximatePMFIM(tempNode, probabilisticMaximalFrequentItemsetCollection, sortedItemList);
 
                     System.out.println(node.getItemset() + " return value: " + result);
@@ -232,6 +239,7 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
                     }
 
                 } else {
+                    //eliminate node which is invalid condition
                     tempChild.remove(node.getChild().size() - 1);
                     node.setChild(tempChild);
                     System.out.println(node.getItemset() + " return value: " + result);
@@ -242,17 +250,10 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
         }
 
         if (node.getChild().isEmpty() && !probabilisticMaximalFrequentItemsetCollection.contains(node.getItemset())) {
+            //add itemset into ApproximatePMFI collection
             probabilisticMaximalFrequentItemsetCollection.add(node.getItemset());
             System.out.println("PMFI collection: " + probabilisticMaximalFrequentItemsetCollection);
 
-//            if(!itemJOrderLargerThanIList.isEmpty()){
-//                if(itemJOrderLargerThanIList.get(itemJOrderLargerThanIList.size() - 1).equals(node.getItemset())){
-//                    return 0;
-//                }
-//                else {
-//                    return -1;
-//                }
-//            }
             return 0;
         }
 
