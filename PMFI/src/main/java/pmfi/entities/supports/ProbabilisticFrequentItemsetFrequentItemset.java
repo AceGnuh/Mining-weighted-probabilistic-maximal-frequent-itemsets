@@ -1,7 +1,7 @@
 package pmfi.entities.supports;
 
 import pmfi.entities.UncertainDatabase;
-import pmfi.functions.IProbabilistic;
+import pmfi.functions.IProbabilisticFrequentItemset;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,13 +12,13 @@ import java.util.Set;
  * Provide method calculate probabilistic support, whether itemset is frequent and itemset is maximal frequent
  * @param <E> type of items
  */
-public class ProbabilisticFrequentItemset<E> implements IProbabilistic {
+public class ProbabilisticFrequentItemsetFrequentItemset<E> implements IProbabilisticFrequentItemset {
     private UncertainDatabase<E> uncertainDatabase;
     private List<E> inputItemset;
     private double[] summedSupportProbabilisticData;
     private Set<E> distinctItemDatabase;
 
-    public ProbabilisticFrequentItemset(UncertainDatabase<E> uncertainDatabase, Set<E> distinctItemDatabase, List<E> inputItemset) {
+    public ProbabilisticFrequentItemsetFrequentItemset(UncertainDatabase<E> uncertainDatabase, Set<E> distinctItemDatabase, List<E> inputItemset) {
         this.uncertainDatabase = uncertainDatabase;
         this.inputItemset = inputItemset;
         SummedSupportProbabilisticVector<E> summedSupportProbabilisticVector = new SummedSupportProbabilisticVector<>(uncertainDatabase, inputItemset);
@@ -26,7 +26,7 @@ public class ProbabilisticFrequentItemset<E> implements IProbabilistic {
         this.distinctItemDatabase = distinctItemDatabase;
     }
 
-    public ProbabilisticFrequentItemset(UncertainDatabase<E> uncertainDatabase, List<E> inputItem) {
+    public ProbabilisticFrequentItemsetFrequentItemset(UncertainDatabase<E> uncertainDatabase, List<E> inputItem) {
         this(uncertainDatabase, new HashSet<>(), inputItem);
     }
 
@@ -85,7 +85,7 @@ public class ProbabilisticFrequentItemset<E> implements IProbabilistic {
 
                 //if itemset Y is frequent -> itemset X is infrequent
                 if(tempDistinctItem.containsAll(distinctIemInput) && !tempDistinctItem.equals(distinctIemInput)){
-                    ProbabilisticFrequentItemset<E> frequentItemset = new ProbabilisticFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
+                    ProbabilisticFrequentItemsetFrequentItemset<E> frequentItemset = new ProbabilisticFrequentItemsetFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
 
                     if(frequentItemset.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
                         return false;
@@ -105,10 +105,10 @@ public class ProbabilisticFrequentItemset<E> implements IProbabilistic {
      * @param minProbabilisticConfidence
      * @return Itemset is Probabilistic Maximal Frequent
      */
-    public boolean isProbabilisticMaximalFrequentItemset(double minSupport, double minProbabilisticConfidence, List<E> sortedItemValueList) {
+    public boolean isProbabilisticMaximalFrequentItemset(double minSupport, double minProbabilisticConfidence, List<E> itemLargerThanCurrentItemsetList) {
         if(this.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
             //traversal itemset Y so that itemset Y cover current itemset X
-            for(E distinctItem : sortedItemValueList){
+            for(E distinctItem : itemLargerThanCurrentItemsetList){
 
                 //generate itemset Y
                 Set<E> tempDistinctItem = new HashSet<>(this.inputItemset);
@@ -119,7 +119,7 @@ public class ProbabilisticFrequentItemset<E> implements IProbabilistic {
 
                 //if itemset Y is frequent -> itemset X is infrequent
                 if(tempDistinctItem.containsAll(distinctIemInput) && !tempDistinctItem.equals(distinctIemInput)){
-                    ProbabilisticFrequentItemset<E> frequentItemset = new ProbabilisticFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
+                    ProbabilisticFrequentItemsetFrequentItemset<E> frequentItemset = new ProbabilisticFrequentItemsetFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
 
                     if(frequentItemset.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
                         return false;
@@ -130,6 +130,6 @@ public class ProbabilisticFrequentItemset<E> implements IProbabilistic {
             return true; //Not found any frequent itemset Y
         }
 
-        return false;
+        return false; //Itemset is not probabilistic maximal frequent
     }
 }

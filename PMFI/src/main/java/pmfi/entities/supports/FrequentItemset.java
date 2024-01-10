@@ -11,7 +11,7 @@ import java.util.Set;
  * Provide method calculate support, expect support, lower and upper bound of itemset
  * @param <E> type of items
  */
-public class FrequentItemset<E> implements ISupport, IBound {
+public class FrequentItemset<E> implements IFrequentItemset, IBound {
     private final UncertainDatabase<E> uncertainDatabase;
     private final List<E> inputItemset;
 

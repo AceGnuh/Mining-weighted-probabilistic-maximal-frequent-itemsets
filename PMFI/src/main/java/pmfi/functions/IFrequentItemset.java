@@ -1,6 +1,6 @@
 package pmfi.functions;
 
-public interface ISupport{
+public interface IFrequentItemset {
     int calculateSupport();
     double calculateExpectedSupport();
 }

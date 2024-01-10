@@ -49,7 +49,7 @@ public class DatasetUtil<E> {
                     int tempData = Integer.parseInt(s);
 
                     //using normal distribution to calculate probabilistic for item
-                    double probabilisticData = distribution.probability(tempData - 1, tempData + 1);
+                    double probabilisticData = distribution.probability(tempData - 0.5, tempData + 0.5);
                     curTransaction.getTransaction().put((E) s, probabilisticData);
                 }
 

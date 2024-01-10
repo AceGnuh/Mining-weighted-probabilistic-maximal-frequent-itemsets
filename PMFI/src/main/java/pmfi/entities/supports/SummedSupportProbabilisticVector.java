@@ -42,7 +42,7 @@ public class SummedSupportProbabilisticVector <E>{
             return new double[]{round(1.0 - pX, 3), round(pX, 3)};
         }
 
-        // Divide
+        // Divide UD into 2 part
         List<UncertainTransaction<E>> D1 = transactions.subList(0, n / 2);
         List<UncertainTransaction<E>> D2 = transactions.subList(n / 2, n);
 

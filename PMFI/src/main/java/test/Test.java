@@ -2,10 +2,7 @@ package test;
 
 import pmfi.entities.UncertainDatabase;
 import pmfi.entities.UncertainTransaction;
-import pmfi.entities.approximate.ApproximateProbabilisticFrequentItemset;
-import pmfi.entities.supports.SummedSupportProbabilisticVector;
 import pmfi.functions.ProbabilisticMaximalFrequentItemsetTree;
-import pmfi.pmfit.ApproximatePMFIT;
 import pmfi.pmfit.PMFIT;
 
 import java.util.*;

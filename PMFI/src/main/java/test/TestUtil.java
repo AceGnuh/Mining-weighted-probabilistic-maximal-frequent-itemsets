@@ -1,6 +1,8 @@
 package test;
 
 import pmfi.entities.UncertainDatabase;
+import pmfi.functions.ProbabilisticMaximalFrequentItemsetTree;
+import pmfi.pmfit.ApproximatePMFIT;
 import pmfi.pmfit.PMFIT;
 import pmfi.utils.DatasetUtil;
 
@@ -23,7 +25,7 @@ public class TestUtil {
         int lengthDb = datasetUtil.getUncertainDatabase().getUncertainDatabase().size();
 
         //run algorithms
-        PMFIT pmfit = new PMFIT(uncertainDatabase, minSupport, minConfidence);
+        ProbabilisticMaximalFrequentItemsetTree pmfit = new PMFIT(uncertainDatabase, minSupport, minConfidence);
 
         //get time at start algorithm
         long start = System.nanoTime();
@@ -64,7 +66,7 @@ public class TestUtil {
         double minSupport = lengthDb * minRelativeSupport;
 
         //run algorithms
-        PMFIT pmfit = new PMFIT(uncertainDatabase, minSupport, minConfidence);
+        ProbabilisticMaximalFrequentItemsetTree pmfit = new ApproximatePMFIT(uncertainDatabase, minSupport, minConfidence);
 
         //get time at start algorithm
         long start = System.nanoTime();

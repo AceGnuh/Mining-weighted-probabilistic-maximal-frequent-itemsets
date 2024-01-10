@@ -15,7 +15,7 @@ public class UncertainTransaction<E>{
     private Integer ID;
 
     /**
-     * key: data of itemset; value: probability of itemset;
+     * key: item; value: probability of item;
      */
     private final Map<E, Double> transaction;
 
@@ -39,7 +39,7 @@ public class UncertainTransaction<E>{
     /**
      * Get probability of itemset in transaction
      * @param itemset
-     * @return probabilistic of item in transaction
+     * @return probabilistic of itemset in transaction
      */
     public double getProbabilistic(List<E> itemset){
         double pItem = 1.0;

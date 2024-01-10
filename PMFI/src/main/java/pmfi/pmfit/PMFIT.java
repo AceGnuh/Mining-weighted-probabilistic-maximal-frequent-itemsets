@@ -2,7 +2,7 @@ package pmfi.pmfit;
 
 import pmfi.entities.supports.FrequentItemset;
 import pmfi.entities.UncertainDatabase;
-import pmfi.entities.supports.ProbabilisticFrequentItemset;
+import pmfi.entities.supports.ProbabilisticFrequentItemsetFrequentItemset;
 import pmfi.functions.ProbabilisticMaximalFrequentItemsetTree;
 import pmfi.helper.ListHelper;
 
@@ -85,6 +85,7 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
                     this.minimumProbabilisticConfidence
             );
 
+            //eliminate item have expected support <= 0
             if(expectSupport <= 0){
                 continue;
             }
@@ -153,8 +154,8 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
             // -> add them into PMFI collection
             if (ListHelper.isSubListAtEnd(sortedItemList, itemsetJ))
             {
-                ProbabilisticFrequentItemset<E> probabilisticFrequentItemset
-                        = new ProbabilisticFrequentItemset<>(this.uncertainDatabase, distinctItemList, itemsetJ);
+                ProbabilisticFrequentItemsetFrequentItemset<E> probabilisticFrequentItemset
+                        = new ProbabilisticFrequentItemsetFrequentItemset<>(this.uncertainDatabase, distinctItemList, itemsetJ);
 
                 if (probabilisticFrequentItemset.isProbabilisticMaximalFrequentItemset(
                                 this.minimumSupport,
@@ -175,7 +176,7 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
 
             if (probabilisticMaximalFrequentItemsetCollection.contains(itemsetJ)) {
                 System.out.println("Frequent Node: " + node);
-                //calc recursion PMFIM()
+                //recursive call PMFIM()
                 result = PMFIM(tempNode, probabilisticMaximalFrequentItemsetCollection, sortedItemList);
 
                 System.out.println(node.getItemset() + "return value: " + result);
@@ -221,7 +222,7 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
             //if lower bound is larger than min support -> call PMFIM()
             if (lowerBound >= this.minimumSupport) {
                 System.out.println("Frequent Node: " + tempNode);
-                //calc recursion PMFIM()
+                //recursive call PMFIM()
                 result = PMFIM(tempNode, probabilisticMaximalFrequentItemsetCollection, sortedItemList);
 
                 System.out.println(node.getItemset() + " return value: " + result);
@@ -232,14 +233,14 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
 
             } else {
                 //calc probabilistic support of itemset
-                ProbabilisticFrequentItemset<E> probabilisticFrequentItemset = new ProbabilisticFrequentItemset<>(this.uncertainDatabase, itemsetJ);
+                ProbabilisticFrequentItemsetFrequentItemset<E> probabilisticFrequentItemset = new ProbabilisticFrequentItemsetFrequentItemset<>(this.uncertainDatabase, itemsetJ);
                 int probabilisticSupport = probabilisticFrequentItemset.calculateProbabilisticSupport(this.minimumProbabilisticConfidence);
 
                 System.out.println("Probabilistic support: " + probabilisticSupport);
 
                 if (probabilisticSupport >= this.minimumSupport) {
                     System.out.println("Frequent Node: " + tempNode);
-                    //calc recursion PMFIM()
+                    //recursive call PMFIM()
                     result = PMFIM(tempNode, probabilisticMaximalFrequentItemsetCollection, sortedItemList);
 
                     System.out.println(node.getItemset() + " return value: " + result);

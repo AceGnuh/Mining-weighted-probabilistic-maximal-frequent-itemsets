@@ -3,8 +3,7 @@ package pmfi.entities.approximate;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import pmfi.entities.UncertainDatabase;
 import pmfi.entities.UncertainTransaction;
-import pmfi.entities.supports.ProbabilisticFrequentItemset;
-import pmfi.functions.IProbabilistic;
+import pmfi.functions.IProbabilisticFrequentItemset;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,11 +14,11 @@ import java.util.Set;
  *
  * @param <E> type of items
  */
-public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilistic {
+public class ApproximateProbabilisticFrequentItemsetFrequentItemset<E> implements IProbabilisticFrequentItemset {
     private final UncertainDatabase<E> uncertainDatabase;
     private final List<E> inputItemset;
 
-    public ApproximateProbabilisticFrequentItemset(UncertainDatabase<E> uncertainDatabase, List<E> inputItemset) {
+    public ApproximateProbabilisticFrequentItemsetFrequentItemset(UncertainDatabase<E> uncertainDatabase, List<E> inputItemset) {
         this.uncertainDatabase = uncertainDatabase;
         this.inputItemset = inputItemset;
     }
@@ -112,7 +111,7 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
 
                 //if itemset Y is frequent -> itemset X is infrequent
                 if(tempDistinctItem.containsAll(distinctIemInput) && !tempDistinctItem.equals(distinctIemInput)){
-                    ApproximateProbabilisticFrequentItemset<E> frequentItemset = new ApproximateProbabilisticFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
+                    ApproximateProbabilisticFrequentItemsetFrequentItemset<E> frequentItemset = new ApproximateProbabilisticFrequentItemsetFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
 
                     if(frequentItemset.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
                         return false;
@@ -146,7 +145,7 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
 
                 //if itemset Y is frequent -> itemset X is infrequent
                 if(tempDistinctItem.containsAll(distinctIemInput) && !tempDistinctItem.equals(distinctIemInput)){
-                    ApproximateProbabilisticFrequentItemset<E> frequentItemset = new ApproximateProbabilisticFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
+                    ApproximateProbabilisticFrequentItemsetFrequentItemset<E> frequentItemset = new ApproximateProbabilisticFrequentItemsetFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
 
                     if(frequentItemset.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
                         return false;
