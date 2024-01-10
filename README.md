@@ -3,7 +3,7 @@
 
 > Báo cáo: chứa file Report
 
-> PMFI: tfolder chứa source code
+> PMFI: chứa source code
 
 > Tài liệu: chứa các tài liệu tham khảo
 
