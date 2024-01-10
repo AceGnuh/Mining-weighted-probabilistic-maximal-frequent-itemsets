@@ -11,7 +11,11 @@
 
 ## How to run project ?
 
-> Dùng command line: javac Main.java -> java Main
+### Compile code
+> javac Main.java 
+
+### Run
+> java Main.java
 
 ## Structure of project:
 
