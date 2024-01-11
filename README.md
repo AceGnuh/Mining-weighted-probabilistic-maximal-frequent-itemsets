@@ -3,7 +3,7 @@
 
 > Báo cáo: chứa file Report
 
-> PMFI: tfolder chứa source code
+> PMFI: chứa source code
 
 > Tài liệu: chứa các tài liệu tham khảo
 
@@ -11,7 +11,11 @@
 
 ## How to run project ?
 
-> Dùng command line: javac Main.java -> java Main
+### Compile code
+> javac Main.java 
+
+### Run
+> java Main.java
 
 ## Structure of project:
 
