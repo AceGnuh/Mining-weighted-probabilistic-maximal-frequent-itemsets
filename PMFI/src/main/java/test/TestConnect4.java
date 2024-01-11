@@ -26,8 +26,8 @@ public class TestConnect4 {
      * @param minSupport minimum support
      * @param minConfidence minimum confidence
      */
-    public static void testMinimumSupport(double minSupport, double minConfidence){
-        TestUtil.testMinSupport(nameDataset, mean, variance, minSupport, minConfidence);
+    public static void testPMFI(double minSupport, double minConfidence){
+        TestUtil.testPMFI(nameDataset, mean, variance, minSupport, minConfidence);
     }
 
     /**
@@ -35,7 +35,7 @@ public class TestConnect4 {
      * @param minRelativeSupport minimum relative support
      * @param minConfidence minimum confidence
      */
-    public static void testMinimumConfidence(double minRelativeSupport, double minConfidence){
-        TestUtil.testMinConfidence(nameDataset, mean, variance, minRelativeSupport, minConfidence);
+    public static void testApproximatePMFIT(double minRelativeSupport, double minConfidence){
+        TestUtil.testApproximatePMFIT(nameDataset, mean, variance, minRelativeSupport, minConfidence);
     }
 }

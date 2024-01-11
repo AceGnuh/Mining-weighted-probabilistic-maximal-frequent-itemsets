@@ -25,20 +25,20 @@ public class TestAccidents {
     //PMFITree: 37s, 2751MB; APMFITree: 33s, 2079MB (support 1, confidence: 0.9)
     //-----
     /**
-     * Run test min support and min confidence for dataset Accidents
+     * Run Algorithm to find all PMFIT
      * @param minSupport minimum support
      * @param minConfidence minimum confidence
      */
-    public static void testMinimumSupport(double minSupport, double minConfidence){
-        TestUtil.testMinSupport(nameDataset, mean, variance, minSupport, minConfidence);
+    public static void testPMFI(double minSupport, double minConfidence){
+        TestUtil.testPMFI(nameDataset, mean, variance, minSupport, minConfidence);
     }
 
     /**
-     * Run test min support and min confidence for dataset Accidents
+     * Run Algorithm to find all ApproximatePMFIT
      * @param minRelativeSupport minimum relative support
      * @param minConfidence minimum confidence
      */
-    public static void testMinimumConfidence(double minRelativeSupport, double minConfidence){
-        TestUtil.testMinConfidence(nameDataset, mean, variance, minRelativeSupport, minConfidence);
+    public static void testApproximatePMFIT(double minRelativeSupport, double minConfidence){
+        TestUtil.testApproximatePMFIT(nameDataset, mean, variance, minRelativeSupport, minConfidence);
     }
 }

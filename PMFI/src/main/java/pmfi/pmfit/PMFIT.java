@@ -2,7 +2,7 @@ package pmfi.pmfit;
 
 import pmfi.entities.supports.FrequentItemset;
 import pmfi.entities.UncertainDatabase;
-import pmfi.entities.supports.ProbabilisticFrequentItemsetFrequentItemset;
+import pmfi.entities.supports.ProbabilisticFrequentItemset;
 import pmfi.functions.ProbabilisticMaximalFrequentItemsetTree;
 import pmfi.helper.ListHelper;
 
@@ -86,9 +86,9 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
             );
 
             //eliminate item have expected support <= 0
-            if(expectSupport <= 0){
-                continue;
-            }
+//            if(expectSupport <= 0){
+//                continue;
+//            }
 
             //eliminate item with upper bound < min support
             if(upperBound < this.minimumSupport){
@@ -154,8 +154,8 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
             // -> add them into PMFI collection
             if (ListHelper.isSubListAtEnd(sortedItemList, itemsetJ))
             {
-                ProbabilisticFrequentItemsetFrequentItemset<E> probabilisticFrequentItemset
-                        = new ProbabilisticFrequentItemsetFrequentItemset<>(this.uncertainDatabase, distinctItemList, itemsetJ);
+                ProbabilisticFrequentItemset<E> probabilisticFrequentItemset
+                        = new ProbabilisticFrequentItemset<>(this.uncertainDatabase, distinctItemList, itemsetJ);
 
                 if (probabilisticFrequentItemset.isProbabilisticMaximalFrequentItemset(
                                 this.minimumSupport,
@@ -233,7 +233,7 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
 
             } else {
                 //calc probabilistic support of itemset
-                ProbabilisticFrequentItemsetFrequentItemset<E> probabilisticFrequentItemset = new ProbabilisticFrequentItemsetFrequentItemset<>(this.uncertainDatabase, itemsetJ);
+                ProbabilisticFrequentItemset<E> probabilisticFrequentItemset = new ProbabilisticFrequentItemset<>(this.uncertainDatabase, itemsetJ);
                 int probabilisticSupport = probabilisticFrequentItemset.calculateProbabilisticSupport(this.minimumProbabilisticConfidence);
 
                 System.out.println("Probabilistic support: " + probabilisticSupport);

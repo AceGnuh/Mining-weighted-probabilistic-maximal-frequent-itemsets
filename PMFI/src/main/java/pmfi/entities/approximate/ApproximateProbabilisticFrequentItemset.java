@@ -14,11 +14,11 @@ import java.util.Set;
  *
  * @param <E> type of items
  */
-public class ApproximateProbabilisticFrequentItemsetFrequentItemset<E> implements IProbabilisticFrequentItemset {
+public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisticFrequentItemset {
     private final UncertainDatabase<E> uncertainDatabase;
     private final List<E> inputItemset;
 
-    public ApproximateProbabilisticFrequentItemsetFrequentItemset(UncertainDatabase<E> uncertainDatabase, List<E> inputItemset) {
+    public ApproximateProbabilisticFrequentItemset(UncertainDatabase<E> uncertainDatabase, List<E> inputItemset) {
         this.uncertainDatabase = uncertainDatabase;
         this.inputItemset = inputItemset;
     }
@@ -32,9 +32,9 @@ public class ApproximateProbabilisticFrequentItemsetFrequentItemset<E> implement
 
         //sum of probability itemset in UD
         for(UncertainTransaction<E> transaction : this.uncertainDatabase.getUncertainDatabase()){
-            double probabilisticItem = transaction.getProbabilistic(this.inputItemset);
+            double probabilisticItemset = transaction.getProbabilistic(this.inputItemset);
 
-            expectation += probabilisticItem;
+            expectation += probabilisticItemset;
         }
 
         return expectation;
@@ -49,12 +49,31 @@ public class ApproximateProbabilisticFrequentItemsetFrequentItemset<E> implement
 
         //sum of probability * (1 - probability) itemset in UD
         for(UncertainTransaction<E> transaction : this.uncertainDatabase.getUncertainDatabase()){
-            double probabilisticItem = transaction.getProbabilistic(this.inputItemset);
+            double probabilisticItemset = transaction.getProbabilistic(this.inputItemset);
 
-            variance += probabilisticItem * (1.0 - probabilisticItem);
+            variance += probabilisticItemset * (1.0 - probabilisticItemset);
         }
 
         return variance;
+    }
+
+    /**
+     * Calculate mean and variance of itemset in UD
+     * @return mean and variance of itemset
+     */
+    public Pair<Double, Double> calculateMeanAndVariance(){
+        double expectation = 0.0;
+        double variance = 0.0;
+
+        //sum of probability * (1 - probability) itemset in UD
+        for(UncertainTransaction<E> transaction : this.uncertainDatabase.getUncertainDatabase()){
+            double probabilisticItemset = transaction.getProbabilistic(this.inputItemset);
+
+            expectation += probabilisticItemset;
+            variance += probabilisticItemset * (1.0 - probabilisticItemset);
+        }
+
+        return new Pair<>(expectation, variance);
     }
 
     /**
@@ -64,8 +83,11 @@ public class ApproximateProbabilisticFrequentItemsetFrequentItemset<E> implement
      */
     public int calculateProbabilisticSupport(double minProbabilisticConfidence) {
         //calc mean and standard deviation of itemset
-        double mean = this.calculateExpectation();
-        double variance = this.calculateVariance();
+        //first : mean; second : variance
+        Pair<Double, Double> meanAndVariance = calculateMeanAndVariance();
+
+        double mean = meanAndVariance.getFirst();
+        double variance = meanAndVariance.getSecond();
         double stdDev = Math.sqrt(variance);
 
         if(stdDev == 0){
@@ -111,7 +133,7 @@ public class ApproximateProbabilisticFrequentItemsetFrequentItemset<E> implement
 
                 //if itemset Y is frequent -> itemset X is infrequent
                 if(tempDistinctItem.containsAll(distinctIemInput) && !tempDistinctItem.equals(distinctIemInput)){
-                    ApproximateProbabilisticFrequentItemsetFrequentItemset<E> frequentItemset = new ApproximateProbabilisticFrequentItemsetFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
+                    ApproximateProbabilisticFrequentItemset<E> frequentItemset = new ApproximateProbabilisticFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
 
                     if(frequentItemset.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
                         return false;
@@ -145,7 +167,7 @@ public class ApproximateProbabilisticFrequentItemsetFrequentItemset<E> implement
 
                 //if itemset Y is frequent -> itemset X is infrequent
                 if(tempDistinctItem.containsAll(distinctIemInput) && !tempDistinctItem.equals(distinctIemInput)){
-                    ApproximateProbabilisticFrequentItemsetFrequentItemset<E> frequentItemset = new ApproximateProbabilisticFrequentItemsetFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
+                    ApproximateProbabilisticFrequentItemset<E> frequentItemset = new ApproximateProbabilisticFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
 
                     if(frequentItemset.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
                         return false;

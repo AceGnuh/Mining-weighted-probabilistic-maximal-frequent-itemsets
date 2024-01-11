@@ -6,6 +6,7 @@ import pmfi.entities.UncertainTransaction;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -39,6 +40,9 @@ public class DatasetUtil<E> {
 
             //get transaction in dataset
             int currIdTransaction = 0;
+
+            Random random = new Random(12345L);
+
             while (sc.hasNextLine()){
                 String data = sc.nextLine();
                 String[] dataLineTransaction = data.split(" ");
@@ -46,11 +50,23 @@ public class DatasetUtil<E> {
                 UncertainTransaction<E> curTransaction = new UncertainTransaction<>();
 
                 for (String s : dataLineTransaction) {
-                    int tempData = Integer.parseInt(s);
+//                    int tempData = Integer.parseInt(s);
 
                     //using normal distribution to calculate probabilistic for item
-                    double probabilisticData = distribution.probability(tempData - 0.5, tempData + 0.5);
-                    curTransaction.getTransaction().put((E) s, probabilisticData);
+//                    double probabilisticData = distribution.probability(tempData - 0.5, tempData + 0.5);
+//                    curTransaction.getTransaction().put((E) s, probabilisticData);
+                    double prob = mean + random.nextGaussian() * Math.sqrt(variance);
+
+                    //validate probability in range (0, 1)
+                    if(prob <= 0 ){
+                        prob = 0.1;
+                    }
+
+                    if(prob >= 1){
+                        prob = 0.9;
+                    }
+
+                    curTransaction.getTransaction().put((E) s, prob);
                 }
 
                 curTransaction.setID(++currIdTransaction);

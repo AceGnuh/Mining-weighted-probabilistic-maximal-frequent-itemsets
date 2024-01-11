@@ -2,8 +2,7 @@ package pmfi.pmfit;
 
 import pmfi.entities.supports.FrequentItemset;
 import pmfi.entities.UncertainDatabase;
-import pmfi.entities.approximate.ApproximateProbabilisticFrequentItemsetFrequentItemset;
-import pmfi.entities.supports.ProbabilisticFrequentItemsetFrequentItemset;
+import pmfi.entities.approximate.ApproximateProbabilisticFrequentItemset;
 import pmfi.functions.ProbabilisticMaximalFrequentItemsetTree;
 import pmfi.helper.ListHelper;
 
@@ -78,9 +77,9 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
             double expectSupport = frequentItemset.calculateExpectedSupport();
             double upperBound = frequentItemset.calculateUpperBound(expectSupport, this.minimumProbabilisticConfidence);
 
-            if(expectSupport <= 0){
-                continue;
-            }
+//            if(expectSupport <= 0){
+//                continue;
+//            }
 
             //eliminate item with upper bound < min support
             if(upperBound < this.minimumSupport){
@@ -88,7 +87,8 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
             }
 
             //calc approximate probabilistic support of item
-            ApproximateProbabilisticFrequentItemsetFrequentItemset<E> approximateProbabilisticFrequentItemset = new ApproximateProbabilisticFrequentItemsetFrequentItemset<>(uncertainDatabase, List.of(distinctItem));
+            ApproximateProbabilisticFrequentItemset<E> approximateProbabilisticFrequentItemset
+                    = new ApproximateProbabilisticFrequentItemset<>(uncertainDatabase, List.of(distinctItem));
             int approximateProbabilisticSupport = approximateProbabilisticFrequentItemset
                     .calculateProbabilisticSupport(minimumProbabilisticConfidence);
 
@@ -148,9 +148,11 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
 
             if (ListHelper.isSubListAtEnd(sortedItemList, itemsetJ))
             {
-                ProbabilisticFrequentItemsetFrequentItemset<E> probabilisticFrequentItemset = new ProbabilisticFrequentItemsetFrequentItemset<>(this.uncertainDatabase, distinctItemList, itemsetJ);
+                ApproximateProbabilisticFrequentItemset<E> probabilisticFrequentItemset
+                        = new ApproximateProbabilisticFrequentItemset<>(this.uncertainDatabase, itemsetJ);
 
-                if (probabilisticFrequentItemset.isProbabilisticMaximalFrequentItemset(this.minimumSupport, this.minimumProbabilisticConfidence, sortedItemList)) {
+                if (probabilisticFrequentItemset
+                        .isProbabilisticMaximalFrequentItemset(this.minimumSupport, this.minimumProbabilisticConfidence, sortedItemList)) {
                     System.out.println("Found maximal!!!");
 
                     if (!probabilisticMaximalFrequentItemsetCollection.contains(itemsetJ)) {
@@ -220,7 +222,7 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
 
             } else {
                 //calc approximate probabilistic support of item
-                ApproximateProbabilisticFrequentItemsetFrequentItemset<E> approximateProbabilisticFrequentItemset = new ApproximateProbabilisticFrequentItemsetFrequentItemset<>(uncertainDatabase, tempNode.getItemset());
+                ApproximateProbabilisticFrequentItemset<E> approximateProbabilisticFrequentItemset = new ApproximateProbabilisticFrequentItemset<>(uncertainDatabase, tempNode.getItemset());
                 int approximateProbabilisticSupport = approximateProbabilisticFrequentItemset
                         .calculateProbabilisticSupport(minimumProbabilisticConfidence);
 

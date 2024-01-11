@@ -2,24 +2,23 @@ import test.*;
 
 public class Main {
     public static void main(String[] args) {
-        double minimumSupport = 0.5;
-        double minRelativeSupport = 0.9;
-        double minimumConfidence = 0.9;
+        double minimumSupport = 0.9;
+        double minimumConfidence = 0.001;
 
         //Test.example1();
-        //Test.example2();
+//        Test.example2();
 
-        TestT40I10D100K.testMinimumSupport(minimumSupport, minimumConfidence);
-        //TestT40I10D100K.testMinimumConfidence(minRelativeSupport, minimumConfidence);
+//        TestT40I10D100K.testPMFI(minimumSupport, minimumConfidence);
+//        TestT40I10D100K.testApproximatePMFIT(minimumSupport, minimumConfidence);
 
-//        TestConnect4.testMinimumSupport(minimumSupport, minimumConfidence);
-//        TestConnect4.testMinimumConfidence(minRelativeSupport, minimumConfidence);
+//        TestConnect4.testPMFI(minimumSupport, minimumConfidence);
+//        TestConnect4.testApproximatePMFIT(minimumSupport, minimumConfidence);
 
-//        TestAccidents.testMinimumSupport(minimumSupport, minimumConfidence);
-//        TestAccidents.testMinimumConfidence(minRelativeSupport, minimumConfidence);
+//        TestAccidents.testPMFI(minimumSupport, minimumConfidence);
+//        TestAccidents.testApproximatePMFIT(minimumSupport, minimumConfidence);
 
-//        TestGAZELLE.testMinimumSupport(minimumSupport, minimumConfidence);
-//        TestGAZELLE.testMinimumConfidence(minRelativeSupport, minimumConfidence);
+//        TestGAZELLE.testPMFI(minimumSupport, minimumConfidence);
+//        TestGAZELLE.testApproximatePMFIT(minimumSupport, minimumConfidence);
 
     }
 

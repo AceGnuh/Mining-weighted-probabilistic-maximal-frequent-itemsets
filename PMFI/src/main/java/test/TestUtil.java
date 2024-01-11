@@ -13,7 +13,16 @@ public class TestUtil {
     private static long MILI_SECOND = 1000 * 1000;
     private static String path = Paths.get("").toAbsolutePath() + "\\src\\main\\java\\pmfi\\datasets\\";
     private static Runtime runtime = Runtime.getRuntime();
-    public static void testMinSupport(String nameDataset, double mean, double variance, double minSupport, double minConfidence){
+
+    /**
+     * Calculate run time of PMFI algorithm
+     * @param nameDataset
+     * @param mean
+     * @param variance
+     * @param minSupport
+     * @param minConfidence
+     */
+    public static void testPMFI(String nameDataset, double mean, double variance, double minSupport, double minConfidence){
         String pathDataset = path + nameDataset;
 
         //read dataset
@@ -23,6 +32,9 @@ public class TestUtil {
 
         //the number of transaction in database
         int lengthDb = datasetUtil.getUncertainDatabase().getUncertainDatabase().size();
+
+        //set min support
+        minSupport = minSupport * lengthDb;
 
         //run algorithms
         ProbabilisticMaximalFrequentItemsetTree pmfit = new PMFIT(uncertainDatabase, minSupport, minConfidence);
@@ -53,7 +65,15 @@ public class TestUtil {
         System.out.println(memoryUsage / MB + " MB");
     }
 
-    public static void testMinConfidence(String nameDataset, double mean, double variance, double minRelativeSupport, double minConfidence){
+    /**
+     * Calculate run time of Approximate PMFI algorithm
+     * @param nameDataset
+     * @param mean
+     * @param variance
+     * @param minRelativeSupport
+     * @param minConfidence
+     */
+    public static void testApproximatePMFIT(String nameDataset, double mean, double variance, double minSupport, double minConfidence){
         String pathDataset = path + nameDataset;
 
         //read dataset
@@ -63,7 +83,7 @@ public class TestUtil {
 
         //the number of transaction in database
         int lengthDb = datasetUtil.getUncertainDatabase().getUncertainDatabase().size();
-        double minSupport = lengthDb * minRelativeSupport;
+        minSupport = lengthDb * minSupport;
 
         //run algorithms
         ProbabilisticMaximalFrequentItemsetTree pmfit = new ApproximatePMFIT(uncertainDatabase, minSupport, minConfidence);

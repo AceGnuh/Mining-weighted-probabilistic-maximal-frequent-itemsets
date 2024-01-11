@@ -12,13 +12,13 @@ import java.util.Set;
  * Provide method calculate probabilistic support, whether itemset is frequent and itemset is maximal frequent
  * @param <E> type of items
  */
-public class ProbabilisticFrequentItemsetFrequentItemset<E> implements IProbabilisticFrequentItemset {
+public class ProbabilisticFrequentItemset<E> implements IProbabilisticFrequentItemset {
     private UncertainDatabase<E> uncertainDatabase;
     private List<E> inputItemset;
     private double[] summedSupportProbabilisticData;
     private Set<E> distinctItemDatabase;
 
-    public ProbabilisticFrequentItemsetFrequentItemset(UncertainDatabase<E> uncertainDatabase, Set<E> distinctItemDatabase, List<E> inputItemset) {
+    public ProbabilisticFrequentItemset(UncertainDatabase<E> uncertainDatabase, Set<E> distinctItemDatabase, List<E> inputItemset) {
         this.uncertainDatabase = uncertainDatabase;
         this.inputItemset = inputItemset;
         SummedSupportProbabilisticVector<E> summedSupportProbabilisticVector = new SummedSupportProbabilisticVector<>(uncertainDatabase, inputItemset);
@@ -26,7 +26,7 @@ public class ProbabilisticFrequentItemsetFrequentItemset<E> implements IProbabil
         this.distinctItemDatabase = distinctItemDatabase;
     }
 
-    public ProbabilisticFrequentItemsetFrequentItemset(UncertainDatabase<E> uncertainDatabase, List<E> inputItem) {
+    public ProbabilisticFrequentItemset(UncertainDatabase<E> uncertainDatabase, List<E> inputItem) {
         this(uncertainDatabase, new HashSet<>(), inputItem);
     }
 
@@ -85,7 +85,7 @@ public class ProbabilisticFrequentItemsetFrequentItemset<E> implements IProbabil
 
                 //if itemset Y is frequent -> itemset X is infrequent
                 if(tempDistinctItem.containsAll(distinctIemInput) && !tempDistinctItem.equals(distinctIemInput)){
-                    ProbabilisticFrequentItemsetFrequentItemset<E> frequentItemset = new ProbabilisticFrequentItemsetFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
+                    ProbabilisticFrequentItemset<E> frequentItemset = new ProbabilisticFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
 
                     if(frequentItemset.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
                         return false;
@@ -119,7 +119,7 @@ public class ProbabilisticFrequentItemsetFrequentItemset<E> implements IProbabil
 
                 //if itemset Y is frequent -> itemset X is infrequent
                 if(tempDistinctItem.containsAll(distinctIemInput) && !tempDistinctItem.equals(distinctIemInput)){
-                    ProbabilisticFrequentItemsetFrequentItemset<E> frequentItemset = new ProbabilisticFrequentItemsetFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
+                    ProbabilisticFrequentItemset<E> frequentItemset = new ProbabilisticFrequentItemset<>(this.uncertainDatabase, new ArrayList<>(tempDistinctItem));
 
                     if(frequentItemset.isProbabilisticFrequentItemset(minSupport, minProbabilisticConfidence)){
                         return false;
