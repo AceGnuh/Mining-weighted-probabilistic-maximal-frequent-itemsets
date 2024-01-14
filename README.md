@@ -3,9 +3,11 @@
 
 > Báo cáo: chứa file Report
 
-> PMFI: chứa source code
+> PMFI: chứa source code bài báo (chưa cải biên ban đầu) Probabilistic maximal frequent itemset mining methods over uncertain databases
 
 > Tài liệu: chứa các tài liệu tham khảo
+
+> wPFI: chứa code bài báo Efficient weighted probabilistic frequent itemset mining in uncertain databases 
 
 # Source code:
 
