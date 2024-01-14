@@ -1,7 +1,7 @@
 
 # Weighted probabilistic frequent itemset over uncertain database
 
-## Caaus trúc project
+## Cấu trúc project
 
 >
 - algorithm: chứa thuật toán (giải thuật, 2 chiến lược generate candidate)
