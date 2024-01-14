@@ -14,23 +14,23 @@
 ## How to run project ?
 
 ### Compile code
-> javac Main.java 
+- javac Main.java 
 
 ### Run
-> java Main.java
+- java Main.java
 
 ## Structure of project:
 
->  test: chứa các class để test các dataset
+-  test: chứa các class để test các dataset
 
->  dataset: chứa các dataset
+-  dataset: chứa các dataset
 
->  utils: chứa code đọc các dataset
+-  utils: chứa code đọc các dataset
 
->  entities: chứa các class để định nghĩa uncertain database, uncertain transaction, uncertain database
+-  entities: chứa các class để định nghĩa uncertain database, uncertain transaction, uncertain database
 
->  entities/supports: chứa các class tính toán support, expected support, summed support probabilistic vector, probabilistic support,...
+-  entities/supports: chứa các class tính toán support, expected support, summed support probabilistic vector, probabilistic support,...
 
->  pmfit: chứa class implement thuật toán: Probabilistic Maximal Frequent Itemset Tree, Approximate Probabilistic Maximal Frequent Itemset Tree, Node Tree,...
+-  pmfit: chứa class implement thuật toán: Probabilistic Maximal Frequent Itemset Tree, Approximate Probabilistic Maximal Frequent Itemset Tree, Node Tree,...
 
->  functions: chứa các interface
+-  functions: chứa các interface
