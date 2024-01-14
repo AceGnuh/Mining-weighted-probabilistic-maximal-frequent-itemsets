@@ -17,7 +17,7 @@
 - javac Main.java 
 
 ### Run
-- java Main.java
+- java Main
 
 ## Structure of project:
 
