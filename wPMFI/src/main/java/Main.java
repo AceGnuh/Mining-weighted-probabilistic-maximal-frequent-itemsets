@@ -1,10 +1,11 @@
-import test.*;
+import wPFI.test.Test;
+import wPFI.test.TestRunTimeUtil;
 
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        String nameDataset = "accidents.txt";
+        String nameDataset = "connect4.txt";
         double[] minimumSupport = { 0.1};
         double[] minimumConfidence = {0.6};
         double scaleFactor = 0.6;
@@ -21,7 +22,7 @@ public class Main {
             System.out.println(Arrays.toString(runTimes[i]));
         }
 
-        //Test.example1();
+//        Test.example1();
 //        Test.example2();
 
     }

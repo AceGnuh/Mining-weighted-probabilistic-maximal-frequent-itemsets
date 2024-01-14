@@ -1,4 +1,4 @@
-package test;
+package wPFI.test;
 
 public class TestRunTimeUtil {
     static double mean = 0.5;

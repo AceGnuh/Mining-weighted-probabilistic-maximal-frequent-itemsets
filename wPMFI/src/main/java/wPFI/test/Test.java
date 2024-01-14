@@ -1,4 +1,4 @@
-package test;
+package wPFI.test;
 
 import wPFI.algorithm.AlgoW_PFI_Apriori;
 import wPFI.entities.UncertainDatabase;

@@ -72,6 +72,7 @@ public class AlgoW_PFI_Apriori <E> {
     private Set<Set<E>> Scan_Find_Size_k_wPFI(Set<Set<E>> candidateK) {
         Set<Set<E>> wPFICollection = new HashSet<>();
 
+        //check itemset is wPFI
         for(Set<E> itemset : candidateK){
             ProbabilisticFrequentItemset probabilisticFrequentItemset
                     = new ProbabilisticFrequentItemset(uncertainDatabase, weightedTable, itemset);

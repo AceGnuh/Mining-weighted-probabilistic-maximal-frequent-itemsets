@@ -1,9 +1,9 @@
 
-#RUN TIME
+# RUN TIME
 
  ----------------------------------------------------------------------------------------
 
-##Dataset: connect4
+## Dataset: connect4
 >Min Support: [0.1, 0.15, 0.2, 0.25, 0.35]
 - Run Time:    [276,   87,  51,   13,    8] (s) - using probability model
 - Run Time:    [637,  126, 130,   21,   15] (s) - not using probability model
@@ -14,7 +14,7 @@
 
 ----------------------------------------------------------------------------------------
 
-##T4100K - 10K line
+## T4100K - 10K line
 >Min Support: [0.25, 0.2, 0.15, 0.1, 0.05]
 - Run Time: [24839, 25886, 29260, 28863, 79606] (s)
 
@@ -24,10 +24,10 @@
 
 ----------------------------------------------------------------------------------------
 
-##Accidents - 10K line
+## Accidents - 10K line
 >Min Support: [0.05, 0.1, 0.15, 0.2, 0.25, 0.3] - Min confidence: 0.6
 - Run Time:    [ 256,  63,   39,  14,   10,  12] (s) - probability model
-Run Time:    [ 835, 214,  123,  45,   26,  26] (s) - not using probability model
+- Run Time:    [ 835, 214,  123,  45,   26,  26] (s) - not using probability model
 
 
 > Min confidence: [ 0.9, 0.8,  0.6,  0.4,   0.3,   0.2] - Min support: 0.1n

@@ -1,4 +1,4 @@
-package test;
+package wPFI.test;
 
 import wPFI.algorithm.AlgoW_PFI_Apriori;
 import wPFI.entities.UncertainDatabase;
@@ -11,7 +11,7 @@ import java.util.Set;
 public class TestUtil {
     private static long MB = 1024 * 1024;
     private static long MILI_SECOND = 1000 * 1000;
-    private static String path = Paths.get("").toAbsolutePath() + "\\src\\main\\java\\pmfi\\datasets\\";
+    private static String path = Paths.get("").toAbsolutePath() + "\\src\\main\\java\\wPFI\\datasets\\";
     private static Runtime runtime = Runtime.getRuntime();
 
     /**
