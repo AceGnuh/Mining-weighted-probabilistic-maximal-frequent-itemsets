@@ -36,7 +36,7 @@ public class AlgoW_PFI_Apriori <E> {
      * @param isProbabilityModelBase
      * @return wPFI collection
      */
-    public Set<Set<E>> runAlgorithm(double scaleFactor, boolean isProbabilityModelBase){
+    public Set<Set<Set<E>>> runAlgorithm(double scaleFactor, boolean isProbabilityModelBase){
         //Itemset I is the set of all the distinct itemset in Uncertain database (size-1 itemset)
         Set<Set<E>> I = uncertainDatabase.getDistinctItemset();
 
@@ -45,7 +45,8 @@ public class AlgoW_PFI_Apriori <E> {
         System.out.println(wPFI_k);
 
         // Add WPFIk-1 into WPFI.
-        Set<Set<E>> wPFI = new HashSet<>(wPFI_k);
+        Set<Set<Set<E>>> wPFI = new HashSet<>();
+        wPFI.add(wPFI_k);
 
         //current size
         int k = 2;
@@ -54,7 +55,10 @@ public class AlgoW_PFI_Apriori <E> {
         while(!wPFI_k.isEmpty()){
             Set<Set<E>> Ck = wPFIAprioriGen(wPFI_k, I, scaleFactor, isProbabilityModelBase);
             wPFI_k = Scan_Find_Size_k_wPFI(Ck); // size k
-            wPFI.addAll(wPFI_k);
+
+            if(!wPFI_k.isEmpty()){
+                wPFI.add(wPFI_k);
+            }
 
             System.out.printf("size-%d wPFI:%n", k);
             System.out.println(wPFI_k);
@@ -76,6 +80,9 @@ public class AlgoW_PFI_Apriori <E> {
         for(Set<E> itemset : candidateK){
             ProbabilisticFrequentItemset probabilisticFrequentItemset
                     = new ProbabilisticFrequentItemset(uncertainDatabase, weightedTable, itemset);
+
+//            System.out.print("Itemset: " + itemset + "-*-");
+//            System.out.println(Arrays.toString(probabilisticFrequentItemset.getSummedSupportProbabilisticData()));
 
             if(probabilisticFrequentItemset
                     .isWeightedProbabilisticFrequentItemset(minSupport, minConfidence)
