@@ -16,10 +16,11 @@ public class TestConnect4 {
     //PMFITree: 1s, 377MB; APMFITree: 1.2s, 371MB (relative support 0.9, confidence: 0.01)
     //PMFITree: 1s, 369MB ; APMFITree: 1s, 371MB (relative support 0.9, confidence: 0.1)
     //-----
-    //PMFITree: 4s, 1050MB; APMFITree: 3.2s, 578MB (support 0.3, confidence: 0.9)
-    //PMFITree: 3.3s, 981MB; APMFITree: 3.1s, 443MB (support 0.5, confidence: 0.9)
-    //PMFITree: 3.4s, 1050MB; APMFITree: 2.9s, 773MB (support 0.7, confidence: 0.9)
-    //PMFITree: 2.7s, 529MB; APMFITree: 2.7s, 684MB (support 0.9, confidence: 0.9)
+    //PMFITree: 156s, 1222MB; APMFITree: 151s, 578MB (support 0.3, confidence: 0.9)
+    //PMFITree: 22s, 1050MB; APMFITree: 17s, 578MB (support 0.4, confidence: 0.9)
+    //PMFITree: 14s, 981MB; APMFITree: 12s, 443MB (support 0.5, confidence: 0.9)
+    //PMFITree: 2s, 1050MB; APMFITree: 1s, 773MB (support 0.7, confidence: 0.9)
+    //PMFITree: 1s, 529MB; APMFITree: 1s, 684MB (support 0.9, confidence: 0.9)
     //-----
     /**
      * Run test min support and min confidence for dataset Connect4

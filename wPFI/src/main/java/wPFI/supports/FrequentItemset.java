@@ -1,8 +1,7 @@
-package pmfi.entities.supports;
+package wPFI.supports;
 
-import pmfi.entities.UncertainDatabase;
-import pmfi.entities.UncertainTransaction;
-import pmfi.functions.*;
+import wPFI.entities.UncertainDatabase;
+import wPFI.entities.UncertainTransaction;
 
 import java.util.List;
 import java.util.Set;
@@ -11,11 +10,11 @@ import java.util.Set;
  * Provide method calculate support, expect support, lower and upper bound of itemset
  * @param <E> type of items
  */
-public class FrequentItemset<E> implements IFrequentItemset, IBound {
+public class FrequentItemset<E>  {
     private final UncertainDatabase<E> uncertainDatabase;
-    private final List<E> inputItemset;
+    private final Set<E> inputItemset;
 
-    public FrequentItemset(UncertainDatabase<E> uncertainDatabase, List<E> inputItemset)
+    public FrequentItemset(UncertainDatabase<E> uncertainDatabase, Set<E> inputItemset)
     {
         this.uncertainDatabase = uncertainDatabase;
         this.inputItemset = inputItemset;
@@ -25,7 +24,6 @@ public class FrequentItemset<E> implements IFrequentItemset, IBound {
      * Calculate lower support of itemset (count the number of itemset appear in database)
      * @return support of itemset
      */
-    @Override
     public int calculateSupport() {
         int support = 0;
 
@@ -43,7 +41,6 @@ public class FrequentItemset<E> implements IFrequentItemset, IBound {
      * Calculate lower expect support of itemset (sum probability of itemset in database)
      * @return expect support of itemset
      */
-    @Override
     public double calculateExpectedSupport() {
         double expectFrequentItemset = 0.0;
 
@@ -61,9 +58,8 @@ public class FrequentItemset<E> implements IFrequentItemset, IBound {
      * @param minProbabilisticConfidence
      * @return lower bound of itemset
      */
-    @Override
     public double calculateLowerBound(double expectSupport, double minProbabilisticConfidence) {
-        return expectSupport - Math.sqrt(-2 * expectSupport * Math.log(1.0 - minProbabilisticConfidence));
+        return expectSupport - Math.sqrt(-2 * expectSupport * Math.log(1 - minProbabilisticConfidence));
     }
 
     /**
@@ -72,7 +68,6 @@ public class FrequentItemset<E> implements IFrequentItemset, IBound {
      * @param minProbabilisticConfidence
      * @return upper bound of itemset
      */
-    @Override
     public double calculateUpperBound(double expectSupport, double minProbabilisticConfidence) {
         return (2 * expectSupport - Math.log(minProbabilisticConfidence) + Math.sqrt(Math.pow(Math.log(minProbabilisticConfidence), 2) - 8 * expectSupport * Math.log(minProbabilisticConfidence)))/2;
     }

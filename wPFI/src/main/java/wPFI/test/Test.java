@@ -4,6 +4,8 @@ import wPFI.algorithm.AlgoW_PFI_Apriori;
 import wPFI.entities.UncertainDatabase;
 import wPFI.entities.UncertainTransaction;
 import wPFI.entities.WeightedTable;
+import wPFI.supports.ProbabilisticFrequentItemset;
+import wPFI.supports.SummedSupportProbabilisticVector;
 
 import java.util.*;
 
@@ -164,17 +166,17 @@ public class Test {
         System.out.println("Weighted Probabilistic Frequent Itemsets:");
         System.out.println(result);
 
-//        Set inputItemset = new HashSet(List.of("A", "E", "D"));
-//
-//        SummedSupportProbabilisticVector summedSupportProbabilisticVector = new SummedSupportProbabilisticVector(uncertainDatabase, inputItemset);
-//        System.out.println(Arrays.toString(summedSupportProbabilisticVector.getSummedSupportProbabilisticVector()));
-//
-//        ProbabilisticFrequentItemset probabilisticFrequentItemsetFrequentItemset
-//                = new ProbabilisticFrequentItemset(uncertainDatabase, weightedTable, inputItemset );
-//        double weightedProbabilisticItemset = probabilisticFrequentItemsetFrequentItemset
-//                .calculateWeightedProbabilisticItemset(minimumSupport);
-//
-//        System.out.println(inputItemset + " : w PFI : " + weightedProbabilisticItemset);
+        Set inputItemset = new HashSet(List.of("A", "C"));
+
+        SummedSupportProbabilisticVector summedSupportProbabilisticVector = new SummedSupportProbabilisticVector(uncertainDatabase, inputItemset);
+        System.out.println(Arrays.toString(summedSupportProbabilisticVector.getSummedSupportProbabilisticVector()));
+
+        ProbabilisticFrequentItemset probabilisticFrequentItemsetFrequentItemset
+                = new ProbabilisticFrequentItemset(uncertainDatabase, weightedTable, inputItemset );
+        double weightedProbabilisticItemset = probabilisticFrequentItemsetFrequentItemset
+                .calculateWeightedProbabilisticItemset(minimumSupport);
+
+        System.out.println(inputItemset + " : w PFI : " + weightedProbabilisticItemset);
     }
 
 

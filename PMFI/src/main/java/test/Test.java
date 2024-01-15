@@ -3,6 +3,7 @@ package test;
 import pmfi.entities.UncertainDatabase;
 import pmfi.entities.UncertainTransaction;
 import pmfi.functions.ProbabilisticMaximalFrequentItemsetTree;
+import pmfi.pmfit.ApproximatePMFIT;
 import pmfi.pmfit.PMFIT;
 
 import java.util.*;
@@ -146,8 +147,6 @@ public class Test {
         System.out.println("Probabilistic Maximal Frequent Itemset Collection: " + pmfit.findAllPMFI());
 
         System.out.println();
-        System.out.println("Probabilistic Frequent Itemset Tree with pre-order");
-        pmfit.preOrder();
     }
 
 

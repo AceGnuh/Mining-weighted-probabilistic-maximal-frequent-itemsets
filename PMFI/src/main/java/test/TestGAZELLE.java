@@ -19,9 +19,10 @@ public class TestGAZELLE {
     //PMFITree: 1.4s, 49MB; APMFITree: 1.4s, 46MB  (relative support 0.9, confidence: 0.001)
     //PMFITree: 1.6s, 46MB; APMFITree: 1.5s, 58MBs  (relative support 0.9, confidence: 0.0001)
     //-----
-    //PMFITree: 3.5s, 105MB; APMFITree: 3s, 245MB  (support 1, confidence: 0.9)
-    //PMFITree: 4s, 76MB; APMFITree: 3.3s, 309MB  (support 0.1, confidence: 0.9)
-    //PMFITree: 5s, 144MB; APMFITree: 4s, 294MB  (support 0.01, confidence: 0.9)
+    //PMFITree: 1s, 105MB; APMFITree: 1s, 46MB  (support 1, confidence: 0.9)
+    //PMFITree: 4s, 76MB; APMFITree: 1s, 51MB  (support 0.1, confidence: 0.9)
+    //PMFITree: 25s, 144MB; APMFITree: 14s, 104MB  (support 0.01, confidence: 0.9)
+    //PMFITree: 109s, 144MB; APMFITree: 81s, 294MB  (support 0.005, confidence: 0.9)
     //-----
     /**
      * Run test min support and min confidence for dataset GAZELLE

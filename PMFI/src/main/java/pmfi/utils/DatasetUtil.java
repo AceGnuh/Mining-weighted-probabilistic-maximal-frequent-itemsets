@@ -53,8 +53,6 @@ public class DatasetUtil<E> {
 //                    int tempData = Integer.parseInt(s);
 
                     //using normal distribution to calculate probabilistic for item
-//                    double probabilisticData = distribution.probability(tempData - 0.5, tempData + 0.5);
-//                    curTransaction.getTransaction().put((E) s, probabilisticData);
                     double prob = mean + random.nextGaussian() * Math.sqrt(variance);
 
                     //validate probability in range (0, 1)

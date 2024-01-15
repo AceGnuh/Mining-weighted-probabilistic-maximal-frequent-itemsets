@@ -4,6 +4,7 @@ import org.apache.commons.math3.distribution.PoissonDistribution;
 import wPFI.entities.UncertainDatabase;
 import wPFI.entities.UncertainTransaction;
 import wPFI.entities.WeightedTable;
+import wPFI.supports.FrequentItemset;
 import wPFI.supports.ProbabilisticFrequentItemset;
 
 import java.util.*;
@@ -78,17 +79,32 @@ public class AlgoW_PFI_Apriori <E> {
 
         //check itemset is wPFI
         for(Set<E> itemset : candidateK){
-            ProbabilisticFrequentItemset probabilisticFrequentItemset
-                    = new ProbabilisticFrequentItemset(uncertainDatabase, weightedTable, itemset);
 
-//            System.out.print("Itemset: " + itemset + "-*-");
-//            System.out.println(Arrays.toString(probabilisticFrequentItemset.getSummedSupportProbabilisticData()));
+            //using chernoff bound
+            FrequentItemset<E> frequentItemset = new FrequentItemset<>(uncertainDatabase, itemset);
 
-            if(probabilisticFrequentItemset
-                    .isWeightedProbabilisticFrequentItemset(minSupport, minConfidence)
-            ){
+            double expectedSupport = frequentItemset.calculateExpectedSupport();
+            double upperBound = frequentItemset.calculateUpperBound(expectedSupport, minConfidence);
+            double lowerBound = frequentItemset.calculateLowerBound(expectedSupport, minConfidence);
+
+            if(upperBound < minSupport){
+                continue;
+            }
+
+            if(lowerBound >= minSupport){
                 wPFICollection.add(itemset);
             }
+            else{
+                ProbabilisticFrequentItemset probabilisticFrequentItemset
+                        = new ProbabilisticFrequentItemset(uncertainDatabase, weightedTable, itemset);
+
+                if(probabilisticFrequentItemset
+                        .isWeightedProbabilisticFrequentItemset(minSupport, minConfidence)
+                ){
+                    wPFICollection.add(itemset);
+                }
+            }
+
         }
 
         return wPFICollection;

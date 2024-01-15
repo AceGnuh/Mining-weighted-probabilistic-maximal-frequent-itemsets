@@ -17,12 +17,12 @@ public class TestAccidents {
     //PMFITree: 20s, 1526MB; APMFITree: 16s, 1349MB (relative support 0.9, confidence: 0.01)
     //PMFITree: 17s, 1446MB; APMFITree: 19s, 1539MB (relative support 0.9, confidence: 0.1)
     //-----
-    //PMFITree: 800s, 1900MB; APMFITree: 247s, 3110MB (support 0.08, confidence: 0.9)
-    //PMFITree: 754s, 3352MB; APMFITree: 196s, 3282MB (support 0.1, confidence: 0.9)
-    //PMFITree: 53s, 2419MB ; APMFITree: 49s, 2758MB (support 0.2, confidence: 0.9)
-    //PMFITree: 49s, 2419MB ; APMFITree: 43s, 1630MB (support 0.5, confidence: 0.9)
-    //PMFITree: 45s, 2080MB; APMFITree: 40s, 2599MB (support 0.9, confidence: 0.9)
-    //PMFITree: 37s, 2751MB; APMFITree: 33s, 2079MB (support 1, confidence: 0.9)
+    //PMFITree: s, 1900MB; APMFITree: s, 3110MB (support 0.08, confidence: 0.9)
+    //PMFITree: 595s, 800MB; APMFITree: 254s, 733MB (support 0.1, confidence: 0.9)
+    //PMFITree: 65s, 2583MB ; APMFITree: 47s, 2198MB (support 0.3, confidence: 0.9)
+    //PMFITree: 14s, 2419MB ; APMFITree: 12s, 1630MB (support 0.5, confidence: 0.9)
+    //PMFITree: 15s, 2080MB; APMFITree: 14s, 2599MB (support 0.9, confidence: 0.9)
+    //PMFITree: 17s, 2751MB; APMFITree: 12s, 2079MB (support 1, confidence: 0.9)
     //-----
     /**
      * Run Algorithm to find all PMFIT

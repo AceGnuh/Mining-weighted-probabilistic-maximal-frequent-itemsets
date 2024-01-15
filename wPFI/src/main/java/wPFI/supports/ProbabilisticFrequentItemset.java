@@ -50,6 +50,7 @@ public class ProbabilisticFrequentItemset<E> {
             probabilisticOfSupportItem += summedSupportProbabilisticData[i];
 
         }
+
         return probabilisticOfSupportItem;
     }
 

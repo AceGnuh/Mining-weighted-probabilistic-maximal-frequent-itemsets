@@ -108,7 +108,7 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
      * @return Itemset is approximate probabilistic frequent
      */
     public boolean isProbabilisticFrequentItemset(double minSupport, double minProbabilisticConfidence) {
-        return this.calculateProbabilisticSupport(minProbabilisticConfidence) >= minSupport;
+        return calculateProbabilisticSupport(minProbabilisticConfidence) >= minSupport;
     }
 
     /**
