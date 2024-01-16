@@ -21,23 +21,6 @@ public class FrequentItemset<E>  {
     }
 
     /**
-     * Calculate lower support of itemset (count the number of itemset appear in database)
-     * @return support of itemset
-     */
-    public int calculateSupport() {
-        int support = 0;
-
-        for(UncertainTransaction<E> uncertainTransaction: this.uncertainDatabase.getUncertainDatabase()){
-            Set<E> itemsInTransaction = uncertainTransaction.getTransaction().keySet();
-            if(itemsInTransaction.containsAll(this.inputItemset)){
-                support++;
-            }
-        }
-
-        return support;
-    }
-
-    /**
      * Calculate lower expect support of itemset (sum probability of itemset in database)
      * @return expect support of itemset
      */

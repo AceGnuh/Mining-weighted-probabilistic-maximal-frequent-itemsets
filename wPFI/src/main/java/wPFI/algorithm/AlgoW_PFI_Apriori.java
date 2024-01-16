@@ -81,20 +81,20 @@ public class AlgoW_PFI_Apriori <E> {
         for(Set<E> itemset : candidateK){
 
             //using chernoff bound
-            FrequentItemset<E> frequentItemset = new FrequentItemset<>(uncertainDatabase, itemset);
-
-            double expectedSupport = frequentItemset.calculateExpectedSupport();
-            double upperBound = frequentItemset.calculateUpperBound(expectedSupport, minConfidence);
-            double lowerBound = frequentItemset.calculateLowerBound(expectedSupport, minConfidence);
-
-            if(upperBound < minSupport){
-                continue;
-            }
-
-            if(lowerBound >= minSupport){
-                wPFICollection.add(itemset);
-            }
-            else{
+//            FrequentItemset<E> frequentItemset = new FrequentItemset<>(uncertainDatabase, itemset);
+//
+//            double expectedSupport = frequentItemset.calculateExpectedSupport();
+//            double upperBound = frequentItemset.calculateUpperBound(expectedSupport, minConfidence);
+//            double lowerBound = frequentItemset.calculateLowerBound(expectedSupport, minConfidence);
+//
+//            if(upperBound < minSupport){
+//                continue;
+//            }
+//
+//            if(lowerBound >= minSupport){
+//                wPFICollection.add(itemset);
+//            }
+//            else{
                 ProbabilisticFrequentItemset probabilisticFrequentItemset
                         = new ProbabilisticFrequentItemset(uncertainDatabase, weightedTable, itemset);
 
@@ -103,7 +103,7 @@ public class AlgoW_PFI_Apriori <E> {
                 ){
                     wPFICollection.add(itemset);
                 }
-            }
+//            }
 
         }
 

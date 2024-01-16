@@ -54,12 +54,24 @@ public class ProbabilisticFrequentItemset<E> {
         return probabilisticOfSupportItem;
     }
 
+    /**
+     * This method calculate Weighted Probabilistic of Itemset
+     * @param minimumSupport
+     * @return Weighted Probabilistic of Itemset
+     */
     public double calculateWeightedProbabilisticItemset(double minimumSupport){
         double probabilisticItemset = calculateProbabilisticItemset(minimumSupport);
         double itemsetWeighted = weightedTable.getWeighedItemset(this.inputItemset);
+
         return probabilisticItemset * itemsetWeighted;
     }
 
+    /**
+     * This method check itemset is wPFI
+     * @param minSupport
+     * @param minProbabilisticConfidence
+     * @return whether itemset is wPFI
+     */
     public boolean isWeightedProbabilisticFrequentItemset(double minSupport, double minProbabilisticConfidence) {
         return calculateProbabilisticItemset(minSupport) * weightedTable.getWeighedItemset(inputItemset)
                 >=
