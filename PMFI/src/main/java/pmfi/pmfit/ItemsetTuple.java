@@ -17,7 +17,7 @@ public class ItemsetTuple<E> {
     private List<ItemsetTuple<E>> child;
 
     public ItemsetTuple() {
-        this(null, 0, 0.0, 0, 0.0, 0.0, new ArrayList<>());
+        this(new ArrayList<>(), 0, 0.0, 0, 0.0, 0.0, new ArrayList<>());
     }
 
     public ItemsetTuple(List<E> itemset) {

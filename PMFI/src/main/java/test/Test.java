@@ -94,6 +94,7 @@ public class Test {
         map3.put("C", 0.6);
         map3.put("D", 0.9);
         map3.put("E", 0.5);
+
         UncertainTransaction transaction3
                 = new UncertainTransaction(3, map3);
 
@@ -102,6 +103,7 @@ public class Test {
         map4.put("C", 0.7);
         map4.put("D", 0.8);
         map4.put("E", 0.8);
+
         UncertainTransaction transaction4
                 = new UncertainTransaction(4, map4);
 

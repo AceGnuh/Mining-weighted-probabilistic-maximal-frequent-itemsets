@@ -91,7 +91,7 @@ public class TestUtil {
         //get time at start algorithm
         long start = System.nanoTime();
 
-        pmfit.findAllPMFI();
+        System.out.println(pmfit.findAllPMFI());
 
         //memory when we run algorithm
         long memoryTotal = runtime.totalMemory();

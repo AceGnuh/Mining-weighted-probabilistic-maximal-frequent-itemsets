@@ -3,6 +3,7 @@ package pmfi.pmfit;
 import pmfi.entities.supports.FrequentItemset;
 import pmfi.entities.UncertainDatabase;
 import pmfi.entities.approximate.ApproximateProbabilisticFrequentItemset;
+import pmfi.entities.supports.ProbabilisticFrequentItemset;
 import pmfi.functions.ProbabilisticMaximalFrequentItemsetTree;
 import pmfi.helper.ListHelper;
 
@@ -40,25 +41,7 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
         this.root = new ItemsetTuple<>();
 
         //step 3 - 5:
-        for(E item: sortedItemList){
-            //check itemset is probabilistic frequent itemset
-            ApproximateProbabilisticFrequentItemset<E> probabilisticFrequentItemset = new ApproximateProbabilisticFrequentItemset<>(uncertainDatabase, new ArrayList<>(List.of(item)));
-            if(!probabilisticFrequentItemset.isProbabilisticFrequentItemset(minimumSupport, minimumProbabilisticConfidence)){
-                continue;
-            }
-
-            //add child node into tree
-            ItemsetTuple<E> chilNode = new ItemsetTuple<>(item);
-            this.root.getChild().add(chilNode);
-
-            //call algorithm
-            ItemsetReturnData<E> returnValue = this.ApproximatePMFIM(chilNode, probabilisticMaximalFrequentItemsetCollection, sortedItemList);
-
-            // find last item in sorted list -> break loop
-            if(returnValue.returnValue == 1) {
-                break;
-            }
-        }
+        this.ApproximatePMFIM(root, probabilisticMaximalFrequentItemsetCollection, sortedItemList);
 
         return probabilisticMaximalFrequentItemsetCollection;
     }
@@ -129,43 +112,40 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
      * 0 if it is probabilistic frequent item;
      * 1 if it is probabilistic maximal frequent item;
      */
-    private ItemsetReturnData<E> ApproximatePMFIM(ItemsetTuple<E> node, Set<List<E>> probabilisticMaximalFrequentItemsetCollection, List<E> sortedItemList){
-        ItemsetReturnData<E> result = new ItemsetReturnData(-1);
+    private int ApproximatePMFIM(ItemsetTuple<E> node, Set<List<E>> probabilisticMaximalFrequentItemsetCollection, List<E> sortedItemList){
+        int result = -1;
+        List<E> itemsetOfNode = node.getItemset();
 
-        List<List<E>> itemJOrderLargerThanIList = this.getItemsetJOrderLargerThanI(node, sortedItemList);
+        List<List<E>> itemsetJOrderLargerThanIList = this.getItemsetJOrderLargerThanI(itemsetOfNode, sortedItemList);
 
         System.out.println();
+        System.out.println("-----*-----");
         System.out.println("Current item: " + node.getItemset());
-        System.out.println("Item J Order Larger Than I List: " + itemJOrderLargerThanIList );
+        System.out.println("Item J Order Larger Than I List: " + itemsetJOrderLargerThanIList );
 
-        List<E> itemsetReturn = new ArrayList<>();
+        for (int i = 0; i < itemsetJOrderLargerThanIList.size(); i++) {
+            List<E> itemsetJ = itemsetJOrderLargerThanIList.get(i);
 
-        for (int i = 0; i < itemJOrderLargerThanIList.size(); i++) {
-            List<E> itemsetJ = itemJOrderLargerThanIList.get(i);
-
-            //skip itemset is covered by PFItemset
-            if(new HashSet<>(itemsetReturn).containsAll(itemsetJ)){
-                continue;
-            }
-
-            //---
+            //init temp node and its child
             ItemsetTuple<E> tempNode = new ItemsetTuple<>(itemsetJ);
 
             List<ItemsetTuple<E>> tempChild = node.getChild();
             tempChild.add(tempNode);
             node.setChild(tempChild);
-            //---
 
             //if itemset is sub-set at end of sorted item list
             // and probabilistic maximal frequent itemset
             // -> add them into PMFI collection
             if (ListHelper.isSubListAtEnd(sortedItemList, itemsetJ))
             {
-                ApproximateProbabilisticFrequentItemset<E> probabilisticFrequentItemset
-                        = new ApproximateProbabilisticFrequentItemset<>(uncertainDatabase, itemsetJ);
+                ProbabilisticFrequentItemset<E> probabilisticFrequentItemset
+                        = new ProbabilisticFrequentItemset<>(this.uncertainDatabase, distinctItemList, itemsetJ);
 
-                if (probabilisticFrequentItemset
-                        .isProbabilisticMaximalFrequentItemset(minimumSupport, minimumProbabilisticConfidence, sortedItemList)) {
+                if (probabilisticFrequentItemset.isProbabilisticMaximalFrequentItemset(
+                        this.minimumSupport,
+                        this.minimumProbabilisticConfidence,
+                        sortedItemList)
+                ) {
                     System.out.println("Found maximal!!!");
 
                     if (!probabilisticMaximalFrequentItemsetCollection.contains(itemsetJ)) {
@@ -173,39 +153,40 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
                         probabilisticMaximalFrequentItemsetCollection.add(itemsetJ);
                         System.out.println("PMFI collection: " + probabilisticMaximalFrequentItemsetCollection);
 
-                        return new ItemsetReturnData<>(itemsetJ, 1);
+                        return 1; // found maximal
                     }
                 }
             }
 
-            if (probabilisticMaximalFrequentItemsetCollection.contains(itemsetJ)) {
+            if (isCollectionContainItemset(probabilisticMaximalFrequentItemsetCollection, itemsetJ)) {
                 System.out.println("Frequent Node: " + node);
-
-                //calc recursion ApproximatePMFIM()
+                //recursive call PMFIM()
                 result = ApproximatePMFIM(tempNode, probabilisticMaximalFrequentItemsetCollection, sortedItemList);
-                itemsetReturn = result.itemset;
 
                 System.out.println(node.getItemset() + "return value: " + result);
 
-                if (result.returnValue == 1 || result.returnValue == 0){
+                if (result == 1){
                     break;
                 }
 
                 continue;
             }
 
+            //calc support, expected support, lower and upper bound of itemset
             FrequentItemset<E> frequentItemset = new FrequentItemset<>(uncertainDatabase, tempNode.getItemset());
             int support = frequentItemset.calculateSupport();
             double expectSupport = frequentItemset.calculateExpectedSupport();
             double lowerBound = frequentItemset.calculateLowerBound(expectSupport, minimumProbabilisticConfidence);
             double upperBound = frequentItemset.calculateUpperBound(expectSupport, minimumProbabilisticConfidence);
 
+            System.out.println("\nItemset: " + tempNode.getItemset());
             System.out.println("Support: " + support);
             System.out.println("Expected Support: " + expectSupport);
             System.out.println("Lower bound: " + lowerBound);
             System.out.println("Upper bound: " + upperBound);
 
-            if (support < this.minimumSupport) {
+            //skip itemset which have support || upper bound less than min support
+            if (Math.min(support, upperBound) < this.minimumSupport) {
                 tempChild.remove(node.getChild().size() - 1);
                 node.setChild(tempChild);
                 System.out.println("Pruned");
@@ -213,47 +194,34 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
                 continue;
             }
 
-            if (upperBound <= this.minimumSupport) {
-                tempChild.remove(node.getChild().size() - 1);
-                node.setChild(tempChild);
-                System.out.println("Pruned");
-
-                continue;
-            }
-
-            if (lowerBound >= minimumSupport) {
+            //if lower bound is larger than min support -> call PMFIM()
+            if (lowerBound >= this.minimumSupport) {
                 System.out.println("Frequent Node: " + tempNode);
 
-                //calc recursion ApproximatePMFIM()
+                //recursive call PMFIM()
                 result = ApproximatePMFIM(tempNode, probabilisticMaximalFrequentItemsetCollection, sortedItemList);
-                itemsetReturn = result.itemset;
-
                 System.out.println(node.getItemset() + " return value: " + result);
 
-                if (result.returnValue == 1 || result.returnValue == 0){
+                if (result == 1){
                     break;
                 }
 
             } else {
-                //calc approximate probabilistic support of item
-                ApproximateProbabilisticFrequentItemset<E> approximateProbabilisticFrequentItemset
-                        = new ApproximateProbabilisticFrequentItemset<>(uncertainDatabase, itemsetJ);
+                //calc probabilistic support of itemset
+                ApproximateProbabilisticFrequentItemset<E> probabilisticFrequentItemset = new ApproximateProbabilisticFrequentItemset<>(this.uncertainDatabase, itemsetJ);
+                int probabilisticSupport = probabilisticFrequentItemset
+                        .calculateProbabilisticSupport(this.minimumProbabilisticConfidence);
 
-                int approximateProbabilisticSupport = approximateProbabilisticFrequentItemset
-                        .calculateProbabilisticSupport(minimumProbabilisticConfidence);
+                System.out.println("Probabilistic support: " + probabilisticSupport);
 
-                System.out.println("Approximate probabilistic support: " + approximateProbabilisticSupport);
-
-                if (approximateProbabilisticSupport >= this.minimumSupport) {
+                if (probabilisticSupport >= this.minimumSupport) {
                     System.out.println("Frequent Node: " + tempNode);
 
-                    //calc recursion ApproximatePMFIM()
+                    //recursive call PMFIM()
                     result = ApproximatePMFIM(tempNode, probabilisticMaximalFrequentItemsetCollection, sortedItemList);
-                    itemsetReturn = result.itemset;
-
                     System.out.println(node.getItemset() + " return value: " + result);
 
-                    if (result.returnValue == 1 || result.returnValue == 0){
+                    if (result == 1){
                         break;
                     }
 
@@ -263,20 +231,35 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
                     node.setChild(tempChild);
                     System.out.println(node.getItemset() + " return value: " + result);
                     System.out.println("Pruned");
-
                 }
             }
         }
 
-        if (node.getChild().isEmpty() && !probabilisticMaximalFrequentItemsetCollection.contains(node.getItemset())) {
+        if (node.getChild().isEmpty() && !isCollectionContainItemset(probabilisticMaximalFrequentItemsetCollection, itemsetOfNode)) {
             //add itemset into ApproximatePMFI collection
-            probabilisticMaximalFrequentItemsetCollection.add(node.getItemset());
+            probabilisticMaximalFrequentItemsetCollection.add(itemsetOfNode);
             System.out.println("PMFI collection: " + probabilisticMaximalFrequentItemsetCollection);
 
-            return new ItemsetReturnData<>(node.getItemset(), 0);
+            return 0;
         }
 
         return result;
+    }
+
+    /**
+     * This method check whether any itemset in collection contain itemset
+     * @param itemsetsCollection
+     * @param itemset
+     * @return whether any itemset in collection contain itemset
+     */
+    private boolean isCollectionContainItemset(Set<List<E>> itemsetsCollection, List<E> itemset){
+        for(List<E> currItemset : itemsetsCollection){
+            if(new HashSet<>(currItemset).containsAll(itemset)){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -285,15 +268,15 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
      * @param sortedItemList
      * @return Item order larger than current item in sorted item list
      */
-    private List<List<E>> getItemsetJOrderLargerThanI(ItemsetTuple<E> itemsetI, List<E> sortedItemList){
+    private List<List<E>> getItemsetJOrderLargerThanI(List<E> itemsetI, List<E> sortedItemList){
         List<List<E>> itemsetJOrderLargerThanI = new ArrayList<>();
 
-        int itemISize = itemsetI.getItemset().size();
+        int itemISize = itemsetI.size();
         int indexOfLastItemI = -1;
 
         //get index of last item of itemset in Sorted Item List
         if (itemISize > 0){
-            indexOfLastItemI = sortedItemList.lastIndexOf(itemsetI.getItemset().get(itemISize - 1));
+            indexOfLastItemI = sortedItemList.lastIndexOf(itemsetI.get(itemISize - 1));
         }
 
         //return [] if last item in itemset is last item in Sorted Item List
@@ -303,7 +286,7 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
 
         //get Item J larger than curr Item I in Sorted Item List
         for(int i = indexOfLastItemI + 1; i < sortedItemList.size(); i++){
-            List<E> tempItem = new ArrayList<>(itemsetI.getItemset());
+            List<E> tempItem = new ArrayList<>(itemsetI);
             tempItem.add(sortedItemList.get(i));
             itemsetJOrderLargerThanI.add(tempItem);
         }

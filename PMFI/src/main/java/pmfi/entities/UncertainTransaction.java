@@ -42,13 +42,13 @@ public class UncertainTransaction<E>{
      * @return probabilistic of itemset in transaction
      */
     public double getProbabilistic(List<E> itemset){
-        double pItem = 1.0;
+        double pItemset = 1.0;
 
         for(E item: itemset){
-            pItem *= transaction.getOrDefault(item, 0.0);
+            pItemset *= transaction.getOrDefault(item, 0.0);
         }
 
-        return pItem;
+        return pItemset;
     }
 
     @Override

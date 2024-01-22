@@ -66,8 +66,8 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
         double variance = 0.0;
 
         //sum of probability * (1 - probability) itemset in UD
-        for(UncertainTransaction<E> transaction : this.uncertainDatabase.getUncertainDatabase()){
-            double probabilisticItemset = transaction.getProbabilistic(this.inputItemset);
+        for(UncertainTransaction<E> transaction : uncertainDatabase.getUncertainDatabase()){
+            double probabilisticItemset = transaction.getProbabilistic(inputItemset);
 
             expectation += probabilisticItemset;
             variance += probabilisticItemset * (1.0 - probabilisticItemset);
@@ -84,19 +84,19 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
     public int calculateProbabilisticSupport(double minProbabilisticConfidence) {
         //calc mean and standard deviation of itemset
         //first : mean; second : variance
-        Pair<Double, Double> meanAndVariance = calculateMeanAndVariance();
+        //Pair<Double, Double> meanAndVariance = calculateMeanAndVariance();
 
-        double mean = meanAndVariance.getFirst();
-        double variance = meanAndVariance.getSecond();
+        double mean = calculateExpectation();
+        double variance = calculateVariance();
         double stdDev = Math.sqrt(variance);
 
-        if(stdDev == 0){
-            return 0; //can't use normal distribution
-        }
+//        if(stdDev == 0){
+//            return 0; //can't use normal distribution
+//        }
 
         //using cumulative probability to calculate probabilistic support of itemset
         NormalDistribution normalDistribution = new NormalDistribution(mean, stdDev);
-        double cumulativeProbability = normalDistribution.cumulativeProbability(1.0 - minProbabilisticConfidence);
+        double cumulativeProbability = normalDistribution.cumulativeProbability(1 - minProbabilisticConfidence);
 
         return (int) (Math.pow(cumulativeProbability, -1) * Math.sqrt(variance) + mean);
     }

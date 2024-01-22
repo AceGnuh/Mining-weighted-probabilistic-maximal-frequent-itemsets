@@ -22,8 +22,8 @@ public class Main {
 //            System.out.println(Arrays.toString(runTimes[i]));
 //        }
 
-        Test.example1();
-        Test.example2();
+//        Test.example1();
+//        Test.example2();
 
     }
 
