@@ -174,7 +174,7 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
             }
 
             //calc support, expected support, lower and upper bound of itemset
-            FrequentItemset<E> frequentItemset = new FrequentItemset<>(uncertainDatabase, tempNode.getItemset());
+            FrequentItemset<E> frequentItemset = new FrequentItemset<>(uncertainDatabase, itemsetJ);
             int support = frequentItemset.calculateSupport();
             double expectSupport = frequentItemset.calculateExpectedSupport();
             double lowerBound = frequentItemset.calculateLowerBound(expectSupport, minimumProbabilisticConfidence);

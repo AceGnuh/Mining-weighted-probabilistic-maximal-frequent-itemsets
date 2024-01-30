@@ -93,7 +93,7 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
         }
 
         //sorted itemset tuple list by the increase of expect support
-        sortedItemsetTupleList.sort((o1, o2) -> Double.compare(o1.getProbabilisticSupport(), o2.getProbabilisticSupport()));
+        sortedItemsetTupleList.sort((o1, o2) -> Double.compare(o1.getExpectSupport(), o2.getExpectSupport()));
 
         //get item by increase of expect support from sortedItemsetTupleList
         List<E> sortedItemList = new ArrayList<>();
@@ -173,7 +173,7 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
             }
 
             //calc support, expected support, lower and upper bound of itemset
-            FrequentItemset<E> frequentItemset = new FrequentItemset<>(uncertainDatabase, tempNode.getItemset());
+            FrequentItemset<E> frequentItemset = new FrequentItemset<>(uncertainDatabase, itemsetJ);
             int support = frequentItemset.calculateSupport();
             double expectSupport = frequentItemset.calculateExpectedSupport();
             double lowerBound = frequentItemset.calculateLowerBound(expectSupport, minimumProbabilisticConfidence);
@@ -208,7 +208,8 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
 
             } else {
                 //calc probabilistic support of itemset
-                ApproximateProbabilisticFrequentItemset<E> probabilisticFrequentItemset = new ApproximateProbabilisticFrequentItemset<>(this.uncertainDatabase, itemsetJ);
+                ApproximateProbabilisticFrequentItemset<E> probabilisticFrequentItemset
+                        = new ApproximateProbabilisticFrequentItemset<>(this.uncertainDatabase, itemsetJ);
                 int probabilisticSupport = probabilisticFrequentItemset
                         .calculateProbabilisticSupport(this.minimumProbabilisticConfidence);
 

@@ -84,21 +84,17 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
     public int calculateProbabilisticSupport(double minProbabilisticConfidence) {
         //calc mean and standard deviation of itemset
         //first : mean; second : variance
-        //Pair<Double, Double> meanAndVariance = calculateMeanAndVariance();
+        Pair<Double, Double> meanAndVariance = calculateMeanAndVariance();
 
-        double mean = calculateExpectation();
-        double variance = calculateVariance();
+        double mean = meanAndVariance.getFirst();
+        double variance = meanAndVariance.getSecond();
         double stdDev = Math.sqrt(variance);
-
-//        if(stdDev == 0){
-//            return 0; //can't use normal distribution
-//        }
 
         //using cumulative probability to calculate probabilistic support of itemset
         NormalDistribution normalDistribution = new NormalDistribution(mean, stdDev);
-        double cumulativeProbability = normalDistribution.cumulativeProbability(1 - minProbabilisticConfidence);
+        double inverseCumulativeProbability = normalDistribution.inverseCumulativeProbability(1.0 - minProbabilisticConfidence);
 
-        return (int) (Math.pow(cumulativeProbability, -1) * Math.sqrt(variance) + mean);
+        return (int) (inverseCumulativeProbability * Math.sqrt(variance) + mean);
     }
 
     /**
