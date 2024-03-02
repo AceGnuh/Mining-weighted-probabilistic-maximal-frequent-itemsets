@@ -7,7 +7,7 @@
 
 - PMFI: Probabilistic maximal frequent itemset
 
-- wPFI: weighted probabilistic maximal freuquent itemset
+- wPFI: weighted probabilistic maximal frequent itemset
 
 - PMFI_wPMFI: cải tiến từ thuật toán PMFI
 
