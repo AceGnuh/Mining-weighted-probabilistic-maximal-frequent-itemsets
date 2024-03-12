@@ -3,9 +3,9 @@ package test;
 import pmfi.entities.UncertainDatabase;
 import pmfi.entities.WeightedTable;
 import pmfi.functions.ProbabilisticMaximalFrequentItemsetTree;
-import pmfi.algorithms.ApproximatePMFIT;
+import pmfi.algorithms.AWPMFIT;
 
-import pmfi.algorithms.PMFIT;
+import pmfi.algorithms.WPMFIT;
 import pmfi.utils.DatasetUtil;
 
 import java.nio.file.Paths;
@@ -44,12 +44,12 @@ public class TestUtil {
         System.out.println(weightedTable);
 
         //run algorithms
-        ProbabilisticMaximalFrequentItemsetTree pmfit = new PMFIT(uncertainDatabase, weightedTable, minSupport, minConfidence);
+        ProbabilisticMaximalFrequentItemsetTree pmfit = new WPMFIT(uncertainDatabase, weightedTable, minSupport, minConfidence);
 
         //get time at start algorithm
         long start = System.nanoTime();
 
-        Set<List> result =  pmfit.findAllPMFI();
+        Set<List> result =  pmfit.findAllWPMFI();
         System.out.println("Result : " + result);
 //        List inputItemset = new ArrayList(List.of(76, 100, 85, 31, 49));
 //        SummedSupportProbabilisticVector summedSupportProbabilisticVector = new SummedSupportProbabilisticVector(uncertainDatabase, inputItemset);
@@ -103,12 +103,12 @@ public class TestUtil {
         minSupport = lengthDb * minSupport;
 
         //run algorithms
-        ProbabilisticMaximalFrequentItemsetTree pmfit = new ApproximatePMFIT(uncertainDatabase, weightedTable, minSupport, minConfidence);
+        ProbabilisticMaximalFrequentItemsetTree pmfit = new AWPMFIT(uncertainDatabase, weightedTable, minSupport, minConfidence);
 
         //get time at start algorithm
         long start = System.nanoTime();
 
-        System.out.println(pmfit.findAllPMFI());
+        System.out.println(pmfit.findAllWPMFI());
 
         //memory when we run algorithm
         long memoryTotal = runtime.totalMemory();

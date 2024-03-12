@@ -15,15 +15,16 @@ import java.util.Set;
  *
  * @param <E> type of items
  */
-public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisticFrequentItemset {
-    private final UncertainDatabase<E> uncertainDatabase;
-    private WeightedTable<E> weightedTable;
-    private final List<E> inputItemset;
+public class ApproximateProbabilisticFrequentItemset<E> extends FrequentItemset<E> implements IProbabilisticFrequentItemset {
+//    private final UncertainDatabase<E> uncertainDatabase;
+//    private WeightedTable<E> weightedTable;
+//    private final List<E> inputItemset;
 
     public ApproximateProbabilisticFrequentItemset(UncertainDatabase<E> uncertainDatabase, WeightedTable weightedTable, List<E> inputItemset) {
-        this.uncertainDatabase = uncertainDatabase;
-        this.weightedTable = weightedTable;
-        this.inputItemset = inputItemset;
+//        this.uncertainDatabase = uncertainDatabase;
+//        this.weightedTable = weightedTable;
+//        this.inputItemset = inputItemset;
+        super(uncertainDatabase, weightedTable, inputItemset);
     }
 
     /**
@@ -34,7 +35,7 @@ public class ApproximateProbabilisticFrequentItemset<E> implements IProbabilisti
         double expectation = 0.0;
 
         //sum of probability itemset in UD
-        for(UncertainTransaction<E> transaction : this.uncertainDatabase.getUncertainDatabase()){
+        for(UncertainTransaction<E> transaction : super.uncertainDatabase.getUncertainDatabase()){
             double probabilisticItemset = transaction.getProbabilistic(this.inputItemset);
 
             expectation += probabilisticItemset;

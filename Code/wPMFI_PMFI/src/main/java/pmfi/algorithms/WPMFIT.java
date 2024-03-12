@@ -15,7 +15,7 @@ import java.util.Set;
  *
  * @param <E> type of items
  */
-public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
+public class WPMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
     /**
      * Root of probabilistic maximal frequent itemset tree
      */
@@ -26,7 +26,7 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
     private double minimumProbabilisticConfidence;
     private Set<E> distinctItemList;
 
-    public PMFIT(UncertainDatabase<E> uncertainDatabase, WeightedTable<E> weightedTable, double minimumSupport, double minimumProbabilisticConfidence) {
+    public WPMFIT(UncertainDatabase<E> uncertainDatabase, WeightedTable<E> weightedTable, double minimumSupport, double minimumProbabilisticConfidence) {
         this.uncertainDatabase = uncertainDatabase;
         this.weightedTable = weightedTable;
         this.distinctItemList = uncertainDatabase.getDistinctItem();
@@ -39,7 +39,7 @@ public class PMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
      * @return probabilistic maximal frequent item collection
      */
     @Override
-    public Set<List<E>> findAllPMFI(){
+    public Set<List<E>> findAllWPMFI(){
         Set<List<E>> probabilisticMaximalFrequentItemsetCollection = new HashSet<>();
 
         //step 1: get distinct item and sorted them by incremental order according to their expected support

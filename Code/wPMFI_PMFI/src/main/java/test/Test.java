@@ -1,11 +1,11 @@
 package test;
 
-import pmfi.algorithms.ApproximatePMFIT;
+import pmfi.algorithms.AWPMFIT;
 import pmfi.entities.UncertainDatabase;
 import pmfi.entities.UncertainTransaction;
 import pmfi.entities.WeightedTable;
 import pmfi.functions.ProbabilisticMaximalFrequentItemsetTree;
-import pmfi.algorithms.PMFIT;
+import pmfi.algorithms.WPMFIT;
 import pmfi.supports.FrequentItemset;
 
 
@@ -155,11 +155,11 @@ public class Test {
         double minimumSupport = 2;
         double minProbabilisticConfidence = 0.2;
 
-        ProbabilisticMaximalFrequentItemsetTree pmfit = new PMFIT(uncertainDatabase, weightedTable, minimumSupport, minProbabilisticConfidence);
+        ProbabilisticMaximalFrequentItemsetTree pmfit = new AWPMFIT(uncertainDatabase, weightedTable, minimumSupport, minProbabilisticConfidence);
 
         //Probabilistic maximal frequent itemset
         System.out.println();
-        System.out.println("Weighted Probabilistic Maximal Frequent Itemset Collection: " + pmfit.findAllPMFI());
+        System.out.println("Weighted Probabilistic Maximal Frequent Itemset Collection: " + pmfit.findAllWPMFI());
 
 //        System.out.println();
 //        System.out.println("Probabilistic Frequent Itemset Tree with pre-order");
@@ -202,9 +202,9 @@ public class Test {
         double minimumSupport = 1;
         double minProbabilisticConfidence = 0.1;
 
-        ProbabilisticMaximalFrequentItemsetTree tree = new PMFIT(uncertainDatabase, weightedTable, minimumSupport, minProbabilisticConfidence);
+        ProbabilisticMaximalFrequentItemsetTree tree = new AWPMFIT(uncertainDatabase, weightedTable, minimumSupport, minProbabilisticConfidence);
 
-        System.out.println(tree.findAllPMFI());
+        System.out.println(tree.findAllWPMFI());
 
         FrequentItemset frequentItemset = new FrequentItemset(uncertainDatabase, weightedTable, List.of("A", "B"));
         double exSupport = frequentItemset.calculateExpectedSupport();

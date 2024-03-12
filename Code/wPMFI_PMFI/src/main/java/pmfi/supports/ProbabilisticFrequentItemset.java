@@ -12,17 +12,15 @@ import java.util.Set;
  * Provide method calculate probabilistic support, whether itemset is frequent and itemset is maximal frequent
  * @param <E> type of items
  */
-public class ProbabilisticFrequentItemset<E> {
-    private UncertainDatabase<E> uncertainDatabase;
-    private WeightedTable<E> weightedTable;
-    private List<E> inputItemset;
+public class ProbabilisticFrequentItemset<E> extends FrequentItemset {
     private double[] summedSupportProbabilisticData;
     private Set<E> distinctItemDatabase;
 
     public ProbabilisticFrequentItemset(UncertainDatabase<E> uncertainDatabase, WeightedTable<E> weightedTable, Set<E> distinctItemDatabase, List<E> inputItemset) {
-        this.uncertainDatabase = uncertainDatabase;
-        this.weightedTable = weightedTable;
-        this.inputItemset = inputItemset;
+//        this.uncertainDatabase = uncertainDatabase;
+//        this.weightedTable = weightedTable;
+//        this.inputItemset = inputItemset;
+        super(uncertainDatabase, weightedTable, inputItemset);
         SummedSupportProbabilisticVector<E> summedSupportProbabilisticVector = new SummedSupportProbabilisticVector<>(uncertainDatabase, inputItemset);
         this.summedSupportProbabilisticData = summedSupportProbabilisticVector.getSummedSupportProbabilisticVector();
         this.distinctItemDatabase = distinctItemDatabase;

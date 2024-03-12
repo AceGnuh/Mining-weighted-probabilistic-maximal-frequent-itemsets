@@ -5,11 +5,10 @@ import pmfi.supports.FrequentItemset;
 import pmfi.entities.UncertainDatabase;
 import pmfi.supports.ApproximateProbabilisticFrequentItemset;
 import pmfi.functions.ProbabilisticMaximalFrequentItemsetTree;
-import pmfi.helper.ListHelper;
 
 import java.util.*;
 
-public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree {
+public class AWPMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree {
     /**
      * Root of probabilistic maximal frequent itemset tree
      */
@@ -21,7 +20,7 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
 
     private WeightedTable<E> weightedTable;
 
-    public ApproximatePMFIT(UncertainDatabase<E> uncertainDatabase, WeightedTable<E> weightedTable, double minimumSupport, double minimumProbabilisticConfidence) {
+    public AWPMFIT(UncertainDatabase<E> uncertainDatabase, WeightedTable<E> weightedTable, double minimumSupport, double minimumProbabilisticConfidence) {
         this.uncertainDatabase = uncertainDatabase;
         this.weightedTable = weightedTable;
         this.distinctItemList = uncertainDatabase.getDistinctItem();
@@ -34,7 +33,7 @@ public class ApproximatePMFIT<E> implements ProbabilisticMaximalFrequentItemsetT
      * @return probabilistic maximal frequent item collection
      */
     @Override
-    public Set<List<E>> findAllPMFI(){
+    public Set<List<E>> findAllWPMFI(){
         Set<List<E>> probabilisticMaximalFrequentItemsetCollection = new HashSet<>();
 
         //step 1: get distinct item and sorted them by incremental order according to their expected support

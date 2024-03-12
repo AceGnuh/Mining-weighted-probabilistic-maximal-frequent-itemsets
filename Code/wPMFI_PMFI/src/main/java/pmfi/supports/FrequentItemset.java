@@ -13,9 +13,13 @@ import java.util.Set;
  * @param <E> type of items
  */
 public class FrequentItemset<E> implements IFrequentItemset, IBound {
-    private final UncertainDatabase<E> uncertainDatabase;
-    private final List<E> inputItemset;
-    private WeightedTable<E> weightedTable;
+    protected UncertainDatabase<E> uncertainDatabase;
+    protected List<E> inputItemset;
+    protected WeightedTable<E> weightedTable;
+
+    public FrequentItemset() {
+        this(null, null, null);
+    }
 
     public FrequentItemset(UncertainDatabase<E> uncertainDatabase, WeightedTable<E> weightedTable, List<E> inputItemset)
     {

@@ -19,7 +19,7 @@ public class SummedSupportProbabilisticVector <E>{
     private final double[] summedSupportProbabilisticVector;
 
     public SummedSupportProbabilisticVector(UncertainDatabase<E> uncertainDatabase, List<E> inputItemset) {
-        this.summedSupportProbabilisticVector = this.DC(uncertainDatabase.getUncertainDatabase(), inputItemset);
+        this.summedSupportProbabilisticVector = this.divideAndConquer(uncertainDatabase.getUncertainDatabase(), inputItemset);
     }
 
     public double[] getSummedSupportProbabilisticVector() {
@@ -32,7 +32,7 @@ public class SummedSupportProbabilisticVector <E>{
      * @param pattern
      * @return Summed support probabilistic vector
      */
-    private double[] DC(List<UncertainTransaction<E>> transactions, List<E> pattern) {
+    private double[] divideAndConquer(List<UncertainTransaction<E>> transactions, List<E> pattern) {
         int n = transactions.size();
 
         // Base case
@@ -47,8 +47,8 @@ public class SummedSupportProbabilisticVector <E>{
         List<UncertainTransaction<E>> D2 = transactions.subList(n / 2, n);
 
         // Recursive calls
-        double[] f1X = DC(D1, pattern);
-        double[] f2X = DC(D2, pattern);
+        double[] f1X = divideAndConquer(D1, pattern);
+        double[] f2X = divideAndConquer(D2, pattern);
 
         // Convolution using FFT
         return convolutionFFT(f1X, f2X);

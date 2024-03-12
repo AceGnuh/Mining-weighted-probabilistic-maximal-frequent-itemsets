@@ -6,7 +6,7 @@ public class Main {
         double minimumConfidence = 0.9;
 
 //        Test.example1();
-//        Test.example2();
+        Test.example2();
 //        Test.example3();
 
 //        TestT40I10D100K.testPMFI(minimumSupport, minimumConfidence);
@@ -20,7 +20,7 @@ public class Main {
 //        TestAccidents.testApproximatePMFIT(minimumSupport, minimumConfidence);
 
 //        TestUS.testPMFI(minimumSupport, minimumConfidence);
-        TestUS.testApproximatePMFIT(minimumSupport, minimumConfidence);
+//        TestUS.testApproximatePMFIT(minimumSupport, minimumConfidence);
 
     }
 
