@@ -23,11 +23,11 @@ public class Test {
 
         Map<String, Double> map1 = new HashMap<>();
         map1.put("A", 0.6);
-        map1.put("B", 0.7);
+        map1.put("B", 0.8);
 
         Map<String, Double> map2 = new HashMap<>();
-        map2.put("A", 0.2);
-        map2.put("C", 0.3);
+        map2.put("A", 0.7);
+        map2.put("C", 0.2);
 
 //        Map<Integer, Double> map1 = new HashMap<>();
 //        map1.put(1, 0.6);
@@ -54,18 +54,26 @@ public class Test {
         System.out.println("Uncertain database");
         System.out.println(uncertainDatabase);
 
-        int minimumSupport = 1;
+        Map<String, Double> weighted = new HashMap<>();
+        weighted.put("A", 0.8);
+        weighted.put("B", 0.5);
+        weighted.put("C", 0.3);
+
+
+        WeightedTable weightedTable = new WeightedTable(weighted);
+
+        double minimumSupport = 1;
         double minProbabilisticConfidence = 0.1;
 //        List inputItem = new ArrayList(List.of("A"));
 //
 //        SummedSupportProbabilisticVector summedSupportProbabilisticVector = new SummedSupportProbabilisticVector(uncertainDatabase, inputItem);
 //        System.out.println(Arrays.toString(summedSupportProbabilisticVector.getSummedSupportProbabilisticVector()));
 
-//        ProbabilisticMaximalFrequentItemsetTree pmfit = new PMFIT(uncertainDatabase, minimumSupport, minProbabilisticConfidence);
+        ProbabilisticMaximalFrequentItemsetTree pmfit = new WPMFIT(uncertainDatabase, weightedTable, minimumSupport, minProbabilisticConfidence);
 //
 //        //Probabilistic maximal frequent itemset
-//        System.out.println();
-//        System.out.println("Probabilistic Frequent Itemset Tree: " + pmfit.findAllPMFI());
+        System.out.println();
+        System.out.println("Probabilistic Frequent Itemset Tree: " + pmfit.findAllWPMFI());
 //
 //        ////Probabilistic maximal frequent itemset tree
 //        System.out.println();

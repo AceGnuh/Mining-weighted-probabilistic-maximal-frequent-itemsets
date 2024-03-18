@@ -5,8 +5,8 @@ public class Main {
         double minimumSupport = 0.1;
         double minimumConfidence = 0.9;
 
-//        Test.example1();
-        Test.example2();
+        Test.example1();
+//        Test.example2();
 //        Test.example3();
 
 //        TestT40I10D100K.testPMFI(minimumSupport, minimumConfidence);
