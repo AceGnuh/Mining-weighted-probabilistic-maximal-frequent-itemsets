@@ -1,0 +1,9 @@
+
+//            if(!itemsetJOrderLargerThanIList.isEmpty()){
+//                if(itemsetJOrderLargerThanIList.get(itemsetJOrderLargerThanIList.size() - 1).equals(node.getItemset())){
+//                    return 0;
+//                }
+//                else {
+//                    return -1;
+//                }
+//            }

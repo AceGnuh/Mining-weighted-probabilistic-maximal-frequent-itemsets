@@ -5,13 +5,9 @@
 
 > Code: chứa code các thuật toán 
 
-- PMFI: Probabilistic maximal frequent itemset
+- wpmfi: weighted probabilistic maximal frequent itemset cải biên từ PMFI
 
-- wPFI: weighted probabilistic maximal frequent itemset
-
-- PMFI_wPMFI: cải tiến từ thuật toán PMFI
-
-- wPFI_wPMFi: cải tiến từ thuật toán wPFI
+- wpmfi_apriori: weighted probabilistic maximal frequent itemset cải tiến từ wPFI_Apriori
 
 > Tài liệu: chứa các tài liệu tham khảo
 
@@ -21,11 +17,23 @@
 
 ## How to run project ?
 
+- Di chuyển tới thư mục chứa code
+
 ### Compile code
-- javac Main.java 
+- javac -d bin -cp lib/* pmfi/entities/*.java pmfi/supports/*.java pmfi/utils/*.java pmfi/algorithms/*.java pmfi/functions/*.java test/*.java Main.java
 
 ### Run
-- java Main
+- java -cp ".;lib/commons-math3-3.6.1.jar;bin;" Main algorithms nameDataset minSupport minConfidence
+
+#### Giải thích tham số
+
+- algorithms: [WPMFIM: 1, AWPMFIM: 2]
+
+- nameDataset: tên bộ dữ liệu
+
+- minSupport: độ hỗ trợ tối thiểu
+
+- minConfidence: độ tin cậy tối thiểu
 
 ## Structure of project:
 
