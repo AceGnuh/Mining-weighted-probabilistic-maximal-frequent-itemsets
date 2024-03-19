@@ -25,6 +25,8 @@
 ### Run
 - java -cp ".;lib/commons-math3-3.6.1.jar;bin;" Main algorithms nameDataset minSupport minConfidence
 
+- java -cp ".;lib/commons-math3-3.6.1.jar;bin;" Main 1 connect4 0.3 0.9 (sử dụng thuật toán WPMFIM, dataset: connect4, min support: 0.3, min confidence: 0.9)
+
 #### Giải thích tham số
 
 - algorithms: [WPMFIM: 1, AWPMFIM: 2]
