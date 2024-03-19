@@ -20,7 +20,7 @@
 - Di chuyển tới thư mục chứa code
 
 ### Compile code
-- javac -d bin -cp lib/* pmfi/entities/**.java pmfi/supports/**.java pmfi/utils/*.java pmfi/algorithms/*.java pmfi/functions/*.java test/*.java Main.java
+- javac -d bin -cp lib/* pmfi/entities/\*.java pmfi/supports/\*.java pmfi/utils/\*.java pmfi/algorithms/\*.java pmfi/functions/\*.java test/\*.java Main.java
 
 ### Run
 - java -cp ".;lib/commons-math3-3.6.1.jar;bin;" Main algorithms nameDataset minSupport minConfidence
