@@ -32,7 +32,7 @@ public class DatasetUtil<E> {
         UncertainDatabase<E> _uncertainDatabase = new UncertainDatabase<>();
 
         //init Normal Distribution
-        NormalDistribution distribution = new NormalDistribution(mean, Math.sqrt(variance));
+        //NormalDistribution distribution = new NormalDistribution(mean, Math.sqrt(variance));
 
         //read dataset
         try{

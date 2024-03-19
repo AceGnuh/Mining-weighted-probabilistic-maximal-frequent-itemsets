@@ -1,6 +1,6 @@
 package wPFI.test;
 
-import wPFI.algorithm.AlgoW_PFI_Apriori;
+import wPFI.algorithms.AlgoW_PFI_Apriori;
 import wPFI.entities.UncertainDatabase;
 import wPFI.entities.UncertainTransaction;
 import wPFI.entities.WeightedTable;

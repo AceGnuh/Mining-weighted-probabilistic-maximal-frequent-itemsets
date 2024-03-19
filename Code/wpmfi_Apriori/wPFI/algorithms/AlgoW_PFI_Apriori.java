@@ -1,4 +1,4 @@
-package wPFI.algorithm;
+package wPFI.algorithms;
 
 import org.apache.commons.math3.distribution.PoissonDistribution;
 import wPFI.entities.UncertainDatabase;
@@ -60,8 +60,8 @@ public class AlgoW_PFI_Apriori <E> {
                 wPFI.add(wPFI_k);
             }
 
-            System.out.printf("size-%d wPFI:%n", k);
-            System.out.println(wPFI_k);
+            // System.out.printf("size-%d wPFI:%n", k);
+            // System.out.println(wPFI_k);
             k++;
         }
 

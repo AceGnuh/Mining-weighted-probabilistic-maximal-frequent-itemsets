@@ -18,7 +18,7 @@ public class TestRunTimeUtil {
 
         for(int i = 0 ; i < minSupportList.length; i++){
             for(int j = 0; j < minConfidence.length; j++){
-                runTimeList[i][j] = TestUtil.testMinSupport(nameDataset, nameWeighted, mean, variance, minSupportList[i], minConfidence[j], scaleFactor, isProbabilityModel);
+                runTimeList[i][j] = TestUtil.test(nameDataset, minSupportList[i], minConfidence[j]);
 
             }
         }

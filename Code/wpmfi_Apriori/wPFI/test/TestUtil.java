@@ -1,6 +1,6 @@
 package wPFI.test;
 
-import wPFI.algorithm.AlgoW_PFI_Apriori;
+import wPFI.algorithms.AlgoW_PFI_Apriori;
 import wPFI.entities.UncertainDatabase;
 import wPFI.entities.WeightedTable;
 import wPFI.supports.ProbabilisticFrequentItemset;
@@ -16,7 +16,7 @@ import java.util.Set;
 public class TestUtil {
     private static long MB = 1024 * 1024;
     private static long MILI_SECOND = 1000 * 1000;
-    private static String path = Paths.get("").toAbsolutePath() + "\\src\\main\\java\\wPFI\\datasets\\";
+    private static String path = Paths.get("").toAbsolutePath() + "\\wPFI\\datasets\\";
     private static Runtime runtime = Runtime.getRuntime();
 
     /**
@@ -29,17 +29,17 @@ public class TestUtil {
      * @param scaleFactor
      * @return time run algorithm (ms)
      */
-    public static int testMinSupport(String nameDataset, String nameWeighted, double mean, double variance, double minSupport, double minConfidence, double scaleFactor, boolean isProbabilityModel){
-        String pathDataset = path + nameDataset;
-        String pathWeighted = path + nameWeighted;
+    public static int test(String nameDataset, double minSupport, double minConfidence){
+        String pathDataset = path + nameDataset+ ".data";
+        // String pathWeighted = path + nameWeighted;
 
         //read dataset
-        DatasetUtil datasetUtil = new DatasetUtil(pathDataset, mean, variance);
+        DatasetUtil datasetUtil = new DatasetUtil(pathDataset, 0.5, 0.125);
         UncertainDatabase uncertainDatabase = datasetUtil.getUncertainDatabase();
-        System.out.println(uncertainDatabase);
+        //System.out.println(uncertainDatabase);
 
         WeightedTable weightedTable = DatasetUtil.generateWeightedTable(uncertainDatabase);
-        System.out.println(weightedTable);
+        //System.out.println(weightedTable);
 
         //get length Db
         int lengthDb = datasetUtil.getUncertainDatabase().getUncertainDatabase().size();
@@ -51,8 +51,8 @@ public class TestUtil {
         //get time at start algorithm
         long start = System.nanoTime();
 
-        Set<Set<String>> result = algoWPfiApriori.runAlgorithm(scaleFactor, isProbabilityModel);
-        System.out.println(result);
+        Set<Set<String>> result = algoWPfiApriori.runAlgorithm(0.6, true);
+        System.out.println("Weighted probabilistic maximal frequent itemset: " +result);
 
         //memory when we run algorithm
         long memoryTotal = runtime.totalMemory();
@@ -74,8 +74,8 @@ public class TestUtil {
         System.out.println("Memory usage: ");
         System.out.println(memoryUsage / MB + " MB");
 
-        System.out.println("Write data");
-        DatasetUtil.writeData(mean, variance);
+        // System.out.println("Write data");
+        // DatasetUtil.writeData(0.5, 0.125);
 
 //                Set inputItemset = new HashSet(List.of( 13));
 //

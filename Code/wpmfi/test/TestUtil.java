@@ -26,8 +26,7 @@ public class TestUtil {
      * @param minConfidence
      */
     public static void testPMFI(String nameDataset, String nameWeighted, double mean, double variance, double minSupport, double minConfidence){
-        String pathDataset = path + nameDataset;
-        String pathWeighted = path + nameWeighted;
+        String pathDataset = path + nameDataset + ".data";
 
         //read dataset
         DatasetUtil datasetUtil = new DatasetUtil(pathDataset, mean, variance);
@@ -88,7 +87,7 @@ public class TestUtil {
      * @param minConfidence
      */
     public static void testApproximatePMFIT(String nameDataset, double mean, double variance, double minSupport, double minConfidence){
-        String pathDataset = path + nameDataset;
+        String pathDataset = path + nameDataset + ".data";
 
         //read dataset
         DatasetUtil datasetUtil = new DatasetUtil(pathDataset, mean, variance);

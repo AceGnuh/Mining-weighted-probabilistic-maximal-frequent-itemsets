@@ -8,12 +8,12 @@
 - Di chuyển tới thư mục chứa code
 
 ### Compile code
-- javac -d bin -cp lib/* wPFI/entities/\*.java wPFI/supports/\*.java wPFI/utils/\*.java wPFI/algorithms/\*.java wPFI/functions/\*.java wPFI/test/\*.java Main.java
+- javac -d bin -cp lib/* wPFI/entities/\*.java wPFI/supports/\*.java wPFI/utils/\*.java wPFI/algorithms/\*.java wPFI/test/\*.java Main.java
 
 ### Run
 - java -cp ".;lib/commons-math3-3.6.1.jar;bin;" Main algorithms nameDataset minSupport minConfidence
 
-- java -cp ".;lib/commons-math3-3.6.1.jar;bin;" Main connect4 0.3 0.9 (sử dụng thuật toán WPMFIM, dataset: connect4, min support: 0.3, min confidence: 0.9)
+- java -cp ".;lib/commons-math3-3.6.1.jar;bin;" Main T40I10D100K_10K 0.1 0.6 (dataset: T40I10D100K_10K, min support: 0.3, min confidence: 0.9)
 
 #### Giải thích tham số
 

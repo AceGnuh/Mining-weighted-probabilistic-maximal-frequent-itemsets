@@ -1,31 +1,23 @@
-import wPFI.test.Test;
-import wPFI.test.TestRunTimeUtil;
-
-import java.util.Arrays;
+import wPFI.test.TestUtil;
 
 public class Main {
     public static void main(String[] args) {
-        String nameDataset = "us_10K.data";
-        String nameWeighted = "weighted_connect4_10K.data";
-        double[] minimumSupport = { 0.1};
-        double[] minimumConfidence = {0.9};
-        double scaleFactor = 0.6;
-        boolean isProbabilityModel = true;
 
-        int[][] runTimes = TestRunTimeUtil.getRunTimeList(nameDataset, nameWeighted, minimumSupport, minimumConfidence, scaleFactor, isProbabilityModel);
-
-        System.out.println();
-        System.out.println("Min Support: ");
-        System.out.println(Arrays.toString(minimumSupport));
-        System.out.println();
-        System.out.println("Run Time: ");
-        for(int i = 0; i < runTimes.length; i++){
-            System.out.println(Arrays.toString(runTimes[i]));
+        if(args.length != 3 ){
+            System.out.println("Please input 3 arguments: \nname dataset (T40I10D100K_10K, connect4_10K, accidents_10K, us_10K), \nminimum support, \nminimum confidence!!!");
+            return;
         }
 
-//        Test.example1();
-//        Test.example2();
+        try{
+            String nameDataset= args[0];
+            double minSupport = Double.parseDouble(args[1]);
+            double minConfidence = Double.parseDouble(args[2]);
 
+            TestUtil.test(nameDataset, minSupport, minConfidence);
+
+        }catch(Exception e){
+            System.out.println("Please input 3 arguments: \nname dataset (T40I10D100K_10K, connect4_10K, accidents_10K, us_10K), \nminimum support, \nminimum confidence!!!");
+        }
     }
 
 }
