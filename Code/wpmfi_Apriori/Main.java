@@ -1,7 +1,12 @@
 import wPFI.test.TestUtil;
-
+import wPFI.test.Test;
 public class Main {
     public static void main(String[] args) {
+
+        if(args[0].equals("test")){
+            Test.example2();
+            return;
+        }
 
         if(args.length != 3 ){
             System.out.println("Please input 3 arguments: \nname dataset (T40I10D100K_10K, connect4_10K, accidents_10K, us_10K), \nminimum support, \nminimum confidence!!!");
