@@ -27,8 +27,6 @@
 
 > Uncertain database
 
-> Uncertain database
-
 > ID	 ---   Giao dịch
 >
 > TID1	{A: 0.5} {B: 0.7} {D: 0.8} {E: 0.9}

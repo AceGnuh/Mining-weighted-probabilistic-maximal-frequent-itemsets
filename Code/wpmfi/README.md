@@ -49,7 +49,7 @@
 
 #### Thực thi chương trình
 
-- Compile code: - javac -d bin -cp lib/* pmfi/entities/\*.java pmfi/supports/\*.java pmfi/utils/\*.java pmfi/algorithms/\*.java pmfi/functions/\*.java test/\*.java Main.java
+- Compile code: javac -d bin -cp lib/* pmfi/entities/\*.java pmfi/supports/\*.java pmfi/utils/\*.java pmfi/algorithms/\*.java pmfi/functions/\*.java test/\*.java Main.java
 
 
 - Run code: java -cp ".;lib/commons-math3-3.6.1.jar;bin;" Main test

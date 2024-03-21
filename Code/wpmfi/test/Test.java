@@ -163,7 +163,7 @@ public class Test {
         double minimumSupport = 2;
         double minProbabilisticConfidence = 0.2;
 
-        ProbabilisticMaximalFrequentItemsetTree pmfit = new AWPMFIT(uncertainDatabase, weightedTable, minimumSupport, minProbabilisticConfidence);
+        ProbabilisticMaximalFrequentItemsetTree pmfit = new WPMFIT(uncertainDatabase, weightedTable, minimumSupport, minProbabilisticConfidence);
 
         //Probabilistic maximal frequent itemset
         System.out.println();
