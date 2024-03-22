@@ -7,9 +7,11 @@
 
 - wpmfi: weighted probabilistic maximal frequent itemset cải biên từ PMFI
 
-- wpmfi_apriori: weighted probabilistic maximal frequent itemset cải tiến từ wPFI_Apriori
+- wpmfi_apriori: weighted probabilistic maximal frequent itemset cải biên từ wPFI_Apriori
 
 > Tài liệu: chứa các tài liệu tham khảo
+>
+> Sơ đồ: chứa sơ đồ trong bài báo cáo
 
 > wPFI: chứa code bài báo Efficient weighted probabilistic frequent itemset mining in uncertain databases 
 
