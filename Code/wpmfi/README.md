@@ -27,7 +27,7 @@
 
 ### Dữ liệu mẫu
 
-[Uncertain database](https://github.com/AceGnuh/Mining-weighted-probabilistic-maximal-frequent-itemsets/blob/main/S%C6%A1%20%C4%91%E1%BB%93/Sample%20Data.png)
+![plot](../../Sơ%20đồ/Sample%20Data.png)
 
 #### Thực thi chương trình
 
