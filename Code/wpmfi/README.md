@@ -1,6 +1,16 @@
 
 # Weighted probabilistic maximal frequent itemset (WPMFIM)
 
+# Language: Java
+
+# Enviroment:
+
+> JDK 18 
+
+# Data
+
+- download data từ link: https://github.com/AceGnuh/data-cdnc vào thư mục: pmfi/datasets
+
 # Source code:
 
 ## How to run project ?
