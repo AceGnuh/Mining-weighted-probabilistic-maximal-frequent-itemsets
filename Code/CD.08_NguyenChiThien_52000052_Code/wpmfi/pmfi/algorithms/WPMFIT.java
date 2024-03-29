@@ -118,10 +118,10 @@ public class WPMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
         List<E> sortedItemList = new ArrayList<>();
         sortedItemsetTupleList.forEach((currItem) -> sortedItemList.add(currItem.getItemset().get(0)) );
 
-        //System.out.println("Sorted Item List");
-        // for(ItemsetTuple<E> itemsetTuple : sortedItemsetTupleList){
-        //     System.out.println(itemsetTuple);
-        // }
+        System.out.println("Sorted Item List");
+        for(ItemsetTuple<E> itemsetTuple : sortedItemsetTupleList){
+            System.out.println(itemsetTuple);
+        }
 
         return sortedItemList;
     }
@@ -138,10 +138,10 @@ public class WPMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
 
         List<List<E>> itemsetJOrderLargerThanIList = this.getItemsetJOrderLargerThanI(itemsetOfNode, sortedItemList);
 
-        // System.out.println();
-        // System.out.println("-----*-----");
-        // System.out.println("Current item: " + node.getItemset());
-        // System.out.println("Item J Order Larger Than I List: " + itemsetJOrderLargerThanIList );
+        System.out.println();
+        System.out.println("-----*-----");
+        System.out.println("Current item: " + node.getItemset());
+        System.out.println("Item J Order Larger Than I List: " + itemsetJOrderLargerThanIList );
 
         for (int i = 0; i < itemsetJOrderLargerThanIList.size(); i++) {
 
@@ -161,8 +161,9 @@ public class WPMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
             double lowerBound = frequentItemset.calculateLowerBound(expectSupport, this.minimumProbabilisticConfidence) ;
             double upperBound = frequentItemset.calculateUpperBound(expectSupport, this.minimumProbabilisticConfidence);
 
-            //System.out.println("\nItemset: " + tempNode.getItemset());
-            //System.out.println("Lower bound: " + lowerBound + " --*-- Upper bound: " + upperBound  );
+            System.out.println("\nItemset: " + tempNode.getItemset());
+            System.out.println("Expected support: "+ expectSupport + " --*-- Support: " + support);
+            System.out.println("Lower bound: " + lowerBound + " --*-- Upper bound: " + upperBound  );
 
             //skip itemset which have support less than min support
             if (Math.min(support, upperBound) < minimumSupport) {
@@ -184,7 +185,7 @@ public class WPMFIT<E> implements ProbabilisticMaximalFrequentItemsetTree<E> {
                 ProbabilisticFrequentItemset<E> probabilisticFrequentItemset = new ProbabilisticFrequentItemset<>(uncertainDatabase, weightedTable, itemsetJ);
                 double probabilisticSupport = probabilisticFrequentItemset.calculateWeightedProbabilisticSupport(minimumProbabilisticConfidence);
 
-                //System.out.println("Probabilistic of itemset: " + probabilisticSupport);
+                System.out.println("Probabilistic of itemset: " + probabilisticSupport);
 
                 if (probabilisticSupport >= minimumSupport) {
                     //System.out.println("Frequent Node: " + tempNode);

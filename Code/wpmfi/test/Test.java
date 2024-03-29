@@ -22,20 +22,12 @@ public class Test {
     public static void example1(){
 
         Map<String, Double> map1 = new HashMap<>();
-        map1.put("A", 0.6);
-        map1.put("B", 0.8);
+        map1.put("1", 0.6);
+        map1.put("2", 0.8);
 
         Map<String, Double> map2 = new HashMap<>();
-        map2.put("A", 0.7);
-        map2.put("C", 0.2);
-
-//        Map<Integer, Double> map1 = new HashMap<>();
-//        map1.put(1, 0.6);
-//        map1.put(2, 0.7);
-//
-//        Map<Integer, Double> map2 = new HashMap<>();
-//        map2.put(1, 0.2);
-//        map2.put(3, 0.3);
+        map2.put("1", 0.7);
+        map2.put("3", 0.2);
 
         UncertainTransaction transaction1
                 = new UncertainTransaction(1, map1);
@@ -55,30 +47,21 @@ public class Test {
         System.out.println(uncertainDatabase);
 
         Map<String, Double> weighted = new HashMap<>();
-        weighted.put("A", 0.8);
-        weighted.put("B", 0.5);
-        weighted.put("C", 0.3);
+        weighted.put("1", 0.8);
+        weighted.put("2", 0.5);
+        weighted.put("3", 0.3);
 
 
         WeightedTable weightedTable = new WeightedTable(weighted);
 
         double minimumSupport = 1;
         double minProbabilisticConfidence = 0.1;
-//        List inputItem = new ArrayList(List.of("A"));
-//
-//        SummedSupportProbabilisticVector summedSupportProbabilisticVector = new SummedSupportProbabilisticVector(uncertainDatabase, inputItem);
-//        System.out.println(Arrays.toString(summedSupportProbabilisticVector.getSummedSupportProbabilisticVector()));
 
         ProbabilisticMaximalFrequentItemsetTree pmfit = new WPMFIT(uncertainDatabase, weightedTable, minimumSupport, minProbabilisticConfidence);
 //
 //        //Probabilistic maximal frequent itemset
         System.out.println();
         System.out.println("Probabilistic Frequent Itemset Tree: " + pmfit.findAllWPMFI());
-//
-//        ////Probabilistic maximal frequent itemset tree
-//        System.out.println();
-//        System.out.println("Probabilistic Frequent Itemset Tree with pre-order");
-//        pmfit.preOrder();
     }
 
     /**
@@ -86,50 +69,50 @@ public class Test {
      */
     public static void example2(){
         Map<String, Double> map1 = new HashMap<>();
-        map1.put("A", 0.5);
-        map1.put("B", 0.7);
-        map1.put("D", 0.8);
-        map1.put("E", 0.9);
+        map1.put("1", 0.5);
+        map1.put("2", 0.7);
+        map1.put("4", 0.8);
+        map1.put("5", 0.9);
         UncertainTransaction transaction1
                 = new UncertainTransaction(1, map1);
 
         Map<String, Double> map2 = new HashMap<>();
-        map2.put("B", 0.6);
-        map2.put("C", 0.8);
-        map2.put("D", 0.6);
-        map2.put("E", 0.8);
+        map2.put("2", 0.6);
+        map2.put("3", 0.8);
+        map2.put("4", 0.6);
+        map2.put("5", 0.8);
         UncertainTransaction transaction2
                 = new UncertainTransaction(2, map2);
 
         Map<String, Double> map3 = new HashMap<>();
-        map3.put("C", 0.6);
-        map3.put("D", 0.9);
-        map3.put("E", 0.5);
+        map3.put("3", 0.6);
+        map3.put("4", 0.9);
+        map3.put("5", 0.5);
         UncertainTransaction transaction3
                 = new UncertainTransaction(3, map3);
 
         Map<String, Double> map4 = new HashMap<>();
-        map4.put("A", 0.6);
-        map4.put("C", 0.7);
-        map4.put("D", 0.8);
-        map4.put("E", 0.8);
+        map4.put("1", 0.6);
+        map4.put("3", 0.7);
+        map4.put("4", 0.8);
+        map4.put("5", 0.8);
         UncertainTransaction transaction4
                 = new UncertainTransaction(4, map4);
 
         Map<String, Double> map5 = new HashMap<>();
-        map5.put("A", 0.8);
-        map5.put("B", 0.9);
-        map5.put("C", 0.5);
-        map5.put("D", 0.6);
-        map5.put("E", 0.7);
+        map5.put("1", 0.8);
+        map5.put("2", 0.9);
+        map5.put("3", 0.5);
+        map5.put("4", 0.6);
+        map5.put("5", 0.7);
 
         UncertainTransaction transaction5
                 = new UncertainTransaction(5, map5);
 
         Map<String, Double> map6 = new HashMap<>();
-        map6.put("B", 0.6);
-        map6.put("D", 0.9);
-        map6.put("E", 0.8);
+        map6.put("2", 0.6);
+        map6.put("4", 0.9);
+        map6.put("5", 0.8);
         UncertainTransaction transaction6
                 = new UncertainTransaction(6, map6);
 
@@ -149,11 +132,11 @@ public class Test {
         System.out.println(uncertainDatabase);
 
         Map<String, Double> weighted = new HashMap<>();
-        weighted.put("A", 0.3);
-        weighted.put("B", 0.9);
-        weighted.put("C", 0.5);
-        weighted.put("D", 0.6);
-        weighted.put("E", 0.9);
+        weighted.put("1", 0.3);
+        weighted.put("2", 0.9);
+        weighted.put("3", 0.5);
+        weighted.put("4", 0.6);
+        weighted.put("5", 0.9);
 
 
         WeightedTable weightedTable = new WeightedTable(weighted);

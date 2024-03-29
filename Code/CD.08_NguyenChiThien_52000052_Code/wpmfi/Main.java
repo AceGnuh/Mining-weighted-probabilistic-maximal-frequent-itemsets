@@ -3,7 +3,13 @@ import test.*;
 public class Main {
     public static void main(String[] args) {
 
-        if(args[0].equals("test")){
+        if(args[0].equals("test-ex1")){
+            Test.example1();
+
+            return;
+        }
+
+        if(args[0].equals("test-ex2")){
             Test.example2();
 
             return;

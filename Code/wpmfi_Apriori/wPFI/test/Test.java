@@ -20,13 +20,12 @@ public class Test {
     public static void example1(){
 
         Map<String, Double> map1 = new HashMap<>();
-        map1.put("Milk", 0.4);
-        map1.put("Fruit", 1.0);
-        map1.put("Video", 0.3);
+        map1.put("1", 0.6);
+        map1.put("2", 0.8);
 
         Map<String, Double> map2 = new HashMap<>();
-        map2.put("Milk", 1.0);
-        map2.put("Fruit", 0.8);
+        map2.put("1", 0.7);
+        map2.put("3", 0.2);
 
         UncertainTransaction transaction1
                 = new UncertainTransaction(1, map1);
@@ -42,31 +41,19 @@ public class Test {
                 )
         ));
 
+        System.out.println("Uncertain database");
         System.out.println(uncertainDatabase);
 
         Map<String, Double> weighted = new HashMap<>();
-        weighted.put("Milk", 0.4);
-        weighted.put("Fruit", 0.9);
-        weighted.put("Video", 0.6);
-
+        weighted.put("1", 0.8);
+        weighted.put("2", 0.5);
+        weighted.put("3", 0.3);
         WeightedTable weightedTable = new WeightedTable(weighted);
 
-        double minimumSupport = 2;
-        double minProbabilisticConfidence = 0.2;
+        double minimumSupport = 1;
+        double minProbabilisticConfidence = 0.1;
         double scaleFactor = 0;
-        boolean isProbabilityModelBase = true;
-
-//        Set inputItemset = new HashSet(List.of("Milk", "Fruit", "Video"));
-//
-//        SummedSupportProbabilisticVector summedSupportProbabilisticVector = new SummedSupportProbabilisticVector(uncertainDatabase, inputItemset);
-//        System.out.println(Arrays.toString(summedSupportProbabilisticVector.getSummedSupportProbabilisticVector()));
-//
-//        ProbabilisticFrequentItemset probabilisticFrequentItemsetFrequentItemset
-//                = new ProbabilisticFrequentItemset(uncertainDatabase, weightedTable, inputItemset );
-//        double weightedProbabilisticItemset = probabilisticFrequentItemsetFrequentItemset
-//                .calculateWeightedProbabilisticItemset(minimumSupport);
-//
-//        System.out.println(weightedProbabilisticItemset);
+        boolean isProbabilityModelBase = false;
 
         AlgoW_PFI_Apriori algo = new AlgoW_PFI_Apriori(uncertainDatabase, weightedTable, minimumSupport, minProbabilisticConfidence);
 
@@ -81,50 +68,50 @@ public class Test {
      */
     public static void example2(){
         Map<String, Double> map1 = new HashMap<>();
-        map1.put("A", 0.5);
-        map1.put("B", 0.7);
-        map1.put("D", 0.8);
-        map1.put("E", 0.9);
+        map1.put("1", 0.5);
+        map1.put("2", 0.7);
+        map1.put("4", 0.8);
+        map1.put("5", 0.9);
         UncertainTransaction transaction1
                 = new UncertainTransaction(1, map1);
 
         Map<String, Double> map2 = new HashMap<>();
-        map2.put("B", 0.6);
-        map2.put("C", 0.8);
-        map2.put("D", 0.6);
-        map2.put("E", 0.8);
+        map2.put("2", 0.6);
+        map2.put("3", 0.8);
+        map2.put("4", 0.6);
+        map2.put("5", 0.8);
         UncertainTransaction transaction2
                 = new UncertainTransaction(2, map2);
 
         Map<String, Double> map3 = new HashMap<>();
-        map3.put("C", 0.6);
-        map3.put("D", 0.9);
-        map3.put("E", 0.5);
+        map3.put("3", 0.6);
+        map3.put("4", 0.9);
+        map3.put("5", 0.5);
         UncertainTransaction transaction3
                 = new UncertainTransaction(3, map3);
 
         Map<String, Double> map4 = new HashMap<>();
-        map4.put("A", 0.6);
-        map4.put("C", 0.7);
-        map4.put("D", 0.8);
-        map4.put("E", 0.8);
+        map4.put("1", 0.6);
+        map4.put("3", 0.7);
+        map4.put("4", 0.8);
+        map4.put("5", 0.8);
         UncertainTransaction transaction4
                 = new UncertainTransaction(4, map4);
 
         Map<String, Double> map5 = new HashMap<>();
-        map5.put("A", 0.8);
-        map5.put("B", 0.9);
-        map5.put("C", 0.5);
-        map5.put("D", 0.6);
-        map5.put("E", 0.7);
+        map5.put("1", 0.8);
+        map5.put("2", 0.9);
+        map5.put("3", 0.5);
+        map5.put("4", 0.6);
+        map5.put("5", 0.7);
 
         UncertainTransaction transaction5
                 = new UncertainTransaction(5, map5);
 
         Map<String, Double> map6 = new HashMap<>();
-        map6.put("B", 0.6);
-        map6.put("D", 0.9);
-        map6.put("E", 0.8);
+        map6.put("2", 0.6);
+        map6.put("4", 0.9);
+        map6.put("5", 0.8);
         UncertainTransaction transaction6
                 = new UncertainTransaction(6, map6);
 
@@ -144,12 +131,11 @@ public class Test {
         System.out.println(uncertainDatabase);
 
         Map<String, Double> weighted = new HashMap<>();
-        weighted.put("A", 0.3);
-        weighted.put("B", 0.9);
-        weighted.put("C", 0.5);
-        weighted.put("D", 0.6);
-        weighted.put("E", 0.9);
-        weighted.put("F", 0.9);
+        weighted.put("1", 0.3);
+        weighted.put("2", 0.9);
+        weighted.put("3", 0.5);
+        weighted.put("4", 0.6);
+        weighted.put("5", 0.9);
 
         WeightedTable weightedTable = new WeightedTable(weighted);
         System.out.println("Weighted table");
@@ -166,19 +152,4 @@ public class Test {
         System.out.println();
         System.out.println("Weighted Probabilistic Maximal Frequent Itemsets:");
         System.out.println(result);
-
-//        Set inputItemset = new HashSet(List.of( "E", "D"));
-//
-//        SummedSupportProbabilisticVector summedSupportProbabilisticVector = new SummedSupportProbabilisticVector(uncertainDatabase, inputItemset);
-//        System.out.println(Arrays.toString(summedSupportProbabilisticVector.getSummedSupportProbabilisticVector()));
-//
-//        ProbabilisticFrequentItemset probabilisticFrequentItemsetFrequentItemset
-//                = new ProbabilisticFrequentItemset(uncertainDatabase, weightedTable, inputItemset );
-//        double weightedProbabilisticItemset = probabilisticFrequentItemsetFrequentItemset
-//                .calculateWeightedProbabilisticItemset(minimumSupport);
-//
-//        System.out.println(inputItemset + " : w PFI : " + weightedProbabilisticItemset);
-    }
-
-
 }
