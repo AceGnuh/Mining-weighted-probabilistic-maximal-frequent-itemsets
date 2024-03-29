@@ -152,4 +152,5 @@ public class Test {
         System.out.println();
         System.out.println("Weighted Probabilistic Maximal Frequent Itemsets:");
         System.out.println(result);
+    }
 }
